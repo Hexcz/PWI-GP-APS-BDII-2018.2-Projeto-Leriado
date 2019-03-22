@@ -20,8 +20,8 @@ private TextoDAOImpDB textoDao;
 public void inicio() {
 	texto = new Texto();
 	publicacao = new Publicacao();
-	texto.setPublicacao(publicacao);
 	publicacao.setConteudo("Conteúdo de teste de publicação");
+	texto.setPublicacao(publicacao);	
 	usuario = new Usuario();
 	usuario.setId(1);
 	texto.setUsuario(usuario);

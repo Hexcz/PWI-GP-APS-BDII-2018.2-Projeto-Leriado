@@ -43,6 +43,8 @@ public class TextoDAOImpDB implements TextoDAO {
 				texto.setAtivo(rs.getBoolean("ativo"));
 				texto.setDatahora(rs.getTimestamp("datahora").toLocalDateTime());
 			}
+			texto.getPublicacao().setTextoId(texto.getId());
+			new PublicacaoDAOImpDB().cria(texto.getPublicacao());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("Falha ao criar texto");

@@ -11,155 +11,76 @@ import com.ifpb.edu.model.dao.publicacao.PublicacaoDAO;
 import com.ifpb.edu.model.domain.publicacao.Publicacao;
 import com.ifpb.edu.model.jdbc.ConnectionFactory;
 import com.ifpb.edu.model.jdbc.DataAccessException;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 
 public class PublicacaoDAOImpDB implements PublicacaoDAO {
 
-	private Connection connection;
+	private MongoDatabase dataBase;
+	private MongoCollection<Publicacao> collection;
 
 	public PublicacaoDAOImpDB() {
-		connection = ConnectionFactory.getInstance().getConnection();
-	}
-
-	private void lerTabela(Publicacao publicacao, ResultSet rs) throws DataAccessException, SQLException {
-		new TextoDAOImpDB().buscar(rs.getInt("textoid"), publicacao);
-		publicacao.setRelevancia(rs.getInt("relevancia"));
+		dataBase = ConnectionFactory.getInstance().getMongoDataBase();
+		collection = dataBase.getCollection("Publicacao", Publicacao.class);
 	}
 
 	@Override
 	public void cria(Publicacao publicacao) throws DataAccessException {
-		TextoDAOImpDB textoDAO = new TextoDAOImpDB();
-		try {
-			textoDAO.cria(publicacao);
-			String query = "INSERT INTO publicacao (textoid,relevancia) VALUES (?,?)";
-			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, publicacao.getId());
-			stm.setInt(2, publicacao.getRelevancia());
-			stm.execute();
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao criar publicação");
-		}
+		collection.insertOne(publicacao);
 	}
 
 	@Override
 	public void edita(Publicacao publicacao) throws DataAccessException {
-		TextoDAOImpDB textoDAO = new TextoDAOImpDB();
-		try {
-			if (textoDAO.tipo(publicacao) != TipoTexto.PUBLICACAO)
-				throw new Exception();
-			textoDAO.edita(publicacao);
-			String query = "UPDATE publicacao SET " + "relevancia = ? " + "WHERE textoid = ? ";
-			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, publicacao.getRelevancia());
-			stm.setInt(2, publicacao.getId());
-			stm.execute();
-		} catch (Exception e) {
+		BasicDBObject updBasicDBObject = new BasicDBObject();
+		updBasicDBObject.append("_id", publicacao.getTextoId());
+		UpdateResult rs = collection.replaceOne(updBasicDBObject, publicacao);
+		if(rs.getModifiedCount() == 0) {
 			throw new DataAccessException("Falha ao editar publicação");
 		}
-
 	}
 
 	@Override
 	public void exclui(Publicacao publicacao) throws DataAccessException {
-		TextoDAOImpDB textoDAO = new TextoDAOImpDB();
-		try {
-			if (textoDAO.tipo(publicacao) != TipoTexto.PUBLICACAO)
-				throw new Exception();
-			textoDAO.exclui(publicacao);
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao excluir publicação");
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public Publicacao buscar(int id) throws DataAccessException {
-		Publicacao publicacao = new Publicacao();
-		publicacao.setId(id);
-		buscar(publicacao);
-		return publicacao;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void buscar(Publicacao publicacao) throws DataAccessException {
-		try {
-			int id = publicacao.getId();
-			buscar(id, publicacao);
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao buscar publicação");
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void buscar(int id, Publicacao publicacao) throws DataAccessException {
-		TextoDAOImpDB textoDAO = new TextoDAOImpDB();
-		try {
-			textoDAO.buscar(id, publicacao);
-			if (textoDAO.tipo(publicacao) == TipoTexto.FALHA)
-				throw new Exception();
-			String query = "SELECT * FROM publicacao " + "WHERE textoid = ?";
-			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, id);
-			ResultSet rs = stm.executeQuery();
-			if (rs.next()) {
-				lerTabela(publicacao, rs);
-			} else
-				throw new Exception();
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao buscar publicação");
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public int quant() throws DataAccessException {
-		try {
-			String query = "SELECT COUNT(*) FROM texto " + "WHERE TipoTexto(id) = 'PUBLICACAO' ";
-			PreparedStatement stm = connection.prepareStatement(query);
-			ResultSet rs = stm.executeQuery();
-			if (rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao recuperar a quantidade de publicações");
-		}
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<Publicacao> lista() throws DataAccessException {
-		List<Publicacao> publicacoes = new ArrayList<Publicacao>();
-		try {
-			String query = "SELECT * FROM publicacao " + "WHERE TipoTexto(textoid) = 'PUBLICACAO' ";
-			PreparedStatement stm = connection.prepareStatement(query);
-			ResultSet rs = stm.executeQuery();
-			while (rs.next()) {
-				Publicacao publicacao = new Publicacao();
-				lerTabela(publicacao, rs);
-				publicacoes.add(publicacao);
-			}
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao listar publicações");
-		}
-		return publicacoes;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Publicacao> lista(int inicio, int quant) throws DataAccessException {
-		List<Publicacao> publicacoes = new ArrayList<Publicacao>();
-		try {
-			String query = "SELECT * FROM publicacao " + "WHERE TipoTexto(textoid) = 'PUBLICACAO' "
-					+ " OFFSET ? LIMIT ? ";
-			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, inicio);
-			stm.setInt(2, quant);
-			ResultSet rs = stm.executeQuery();
-			while (rs.next()) {
-				Publicacao publicacao = new Publicacao();
-				lerTabela(publicacao, rs);
-				publicacoes.add(publicacao);
-			}
-		} catch (Exception e) {
-			throw new DataAccessException("Falha ao listar publicações");
-		}
-		return publicacoes;
+		// TODO Auto-generated method stub
+		return null;
 	}
-
+	
 }

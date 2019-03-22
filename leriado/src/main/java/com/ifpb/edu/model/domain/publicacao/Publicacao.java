@@ -2,8 +2,11 @@ package com.ifpb.edu.model.domain.publicacao;
 
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+
 public class Publicacao {
-		
+	
+	@BsonId
 	private int textoId = 0;
 	private String titulo;
 	private String conteudo;
