@@ -310,10 +310,34 @@ public class UsuarioDaoImpl implements UsuarioDao{
 			String query = "SELECT * FROM usuario WHERE "
 					+ " EXISTS (SELECT FROM segue WHERE (segueid = ?) AND (seguidoid = id) ) AND"
 					+ " EXISTS (SELECT FROM segue WHERE (segueid = id) AND (seguidoid = ?) ) "
-					+ " ORDER BY nome ";
+					+ " ORDER BY LOWER(semAcento(nome)) ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, usuario.getId());
 			stm.setInt(2, usuario.getId());
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				lista.add(lerTabela(rs));
+			}
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao listar amigos");
+		}
+		return lista;
+	}
+
+	@Override
+	public List<Usuario> amigos(Usuario usuario, int inicio, int quant) throws DataAccessException {
+		List<Usuario> lista = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM usuario WHERE "
+					+ " EXISTS (SELECT FROM segue WHERE (segueid = ?) AND (seguidoid = id) ) AND"
+					+ " EXISTS (SELECT FROM segue WHERE (segueid = id) AND (seguidoid = ?) ) "
+					+ " ORDER BY LOWER(semAcento(nome)) "
+					+ " OFFSET ? LIMIT ? ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, usuario.getId());
+			stm.setInt(2, usuario.getId());
+			stm.setInt(3, inicio);
+			stm.setInt(4, quant);
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
 				lista.add(lerTabela(rs));

@@ -61,7 +61,7 @@ public class UsuarioTeste {
 		List<Usuario> amigos = null;
 		try {
 			usuario.setId(3);
-			amigos = usuarioDAO.amigos(usuario);
+			amigos = usuarioDAO.amigos(usuario,0,1);
 			for (Usuario user : amigos) {
 				System.out.print(user.getId() + " ");
 				System.out.println(user.getNome());
