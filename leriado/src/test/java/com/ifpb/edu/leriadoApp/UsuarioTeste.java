@@ -105,5 +105,15 @@ public class UsuarioTeste {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void qtdAmigosTeste() {
+		usuario.setId(1);
+		try {
+			System.out.println(usuarioDAO.qtdAmigos(usuario));
+		}catch (Exception e) {
+			e.printStackTrace();			
+		}
+	}
 
 }

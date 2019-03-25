@@ -347,6 +347,25 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}
 		return lista;
 	}
-	
+
+	@Override
+	public int qtdAmigos(Usuario usuario) throws DataAccessException {
+		try {
+			String query = "SELECT COUNT(*) FROM usuario WHERE "
+					+ " EXISTS (SELECT FROM segue WHERE (segueid = ?) AND (seguidoid = id) ) AND"
+					+ " EXISTS (SELECT FROM segue WHERE (segueid = id) AND (seguidoid = ?) ) ";					
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, usuario.getId());
+			stm.setInt(2, usuario.getId());			
+			ResultSet rs = stm.executeQuery();
+			if (rs.next())
+				return rs.getInt(1);
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao listar amigos");
+		}
+		return 0;
+	}
+
+		
 	
 }
