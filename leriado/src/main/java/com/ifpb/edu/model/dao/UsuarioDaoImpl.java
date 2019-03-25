@@ -366,6 +366,65 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		return 0;
 	}
 
-		
+	@Override
+	public List<Usuario> solicitacoesAmizades(Usuario self) throws DataAccessException {
+		List<Usuario> lista = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM segue S JOIN usuario U ON U.id = S.segueid WHERE "
+					+ " NOT EXISTS (SELECT FROM segue A WHERE (S.segueid = A.seguidoid) AND (S.seguidoid = A.segueid)) AND "
+					+ " S.seguidoid = ? "
+					+ " ORDER BY S.datahora DESC ";					
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, self.getId());			
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				lista.add(lerTabela(rs));
+			}
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao listar solicitação de amizades.");
+		}
+		return lista;
+	}
+
+	@Override
+	public List<Usuario> solicitacoesAmizades(Usuario self, int inicio, int quant) throws DataAccessException {
+		List<Usuario> lista = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM segue S JOIN usuario U ON U.id = S.segueid WHERE "
+					+ " NOT EXISTS (SELECT FROM segue A WHERE (S.segueid = A.seguidoid) AND (S.seguidoid = A.segueid)) AND "
+					+ " S.seguidoid = ? "
+					+ " ORDER BY S.datahora DESC "
+					+ " OFFSET ? LIMIT ?";					
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, self.getId());		
+			stm.setInt(2, inicio);
+			stm.setInt(3, quant);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				lista.add(lerTabela(rs));
+			}
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao listar solicitação de amizades.");
+		}
+		return lista;
+	}
+
+	@Override
+	public int qtdSolicitacoesAmizades(Usuario self) throws DataAccessException {
+		try {
+			String query = "SELECT COUNT(*) FROM segue S JOIN usuario U ON U.id = S.segueid WHERE "
+					+ " NOT EXISTS (SELECT FROM segue A WHERE (S.segueid = A.seguidoid) AND (S.seguidoid = A.segueid)) AND "
+					+ " S.seguidoid = ? ";										
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, self.getId());			
+			ResultSet rs = stm.executeQuery();
+			if (rs.next())
+				return rs.getInt(1);
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao recuperar a quantidade de solicitações de amizade.");
+		}
+		return 0;
+	}
+	
 	
 }

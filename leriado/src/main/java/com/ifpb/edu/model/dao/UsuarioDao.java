@@ -21,5 +21,8 @@ public interface UsuarioDao {
 	void desfazerAmizade(Usuario usuario1, Usuario usuario2) throws DataAccessException;
 	List<Usuario> amigos(Usuario usuario) throws DataAccessException;
 	List<Usuario> amigos(Usuario usuario, int inicio, int quant) throws DataAccessException;
-	int qtdAmigos(Usuario usuario) throws DataAccessException;	
+	int qtdAmigos(Usuario usuario) throws DataAccessException;
+	List<Usuario> solicitacoesAmizades(Usuario self) throws DataAccessException;
+	List<Usuario> solicitacoesAmizades(Usuario self, int inicio, int quant) throws DataAccessException;
+	int qtdSolicitacoesAmizades(Usuario self) throws DataAccessException;
 }

@@ -48,9 +48,9 @@ public class UsuarioTeste {
 		Usuario seguidor;
 		try {
 			seguidor = usuarioDAO.buscarPorId(4);
-			usuario = usuarioDAO.buscarPorId(3);
+			usuario = usuarioDAO.buscarPorId(1);
 			usuarioDAO.seguir(seguidor, usuario);
-			usuarioDAO.seguir(usuario, seguidor);
+			//usuarioDAO.seguir(usuario, seguidor);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
@@ -111,6 +111,31 @@ public class UsuarioTeste {
 		usuario.setId(1);
 		try {
 			System.out.println(usuarioDAO.qtdAmigos(usuario));
+		}catch (Exception e) {
+			e.printStackTrace();			
+		}
+	}
+	
+	@Test
+	public void solicitacaoAmizadeTeste() {
+		List<Usuario> usuarios = null;
+		usuario.setId(1);
+		try {			
+			usuarios = usuarioDAO.solicitacoesAmizades(usuario,0,1);
+			for (Usuario user : usuarios) {
+				System.out.print(user.getId() + " ");
+				System.out.println(user.getNome());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void qtdSolicitacaoAmizadeTeste() {
+		usuario.setId(1);
+		try {
+			System.out.println(usuarioDAO.qtdSolicitacoesAmizades(usuario));
 		}catch (Exception e) {
 			e.printStackTrace();			
 		}
