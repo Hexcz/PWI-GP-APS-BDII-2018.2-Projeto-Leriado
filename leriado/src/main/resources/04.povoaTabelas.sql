@@ -14,4 +14,13 @@ INSERT INTO grupo(nome,descricao,foto)
 INSERT INTO grupo(nome,descricao,foto)
 		VALUES('Aprendendo Redis','Grupo para discutir conteúdos sobre Redis','c32995b0aaf1fc361c5f3fd907af47b3');
 
+/*POVOANDO TABELA SEGUE*/
+INSERT INTO segue(segueid,seguidoid)
+	VALUES(1,2);
+INSERT INTO segue(segueid,seguidoid)
+	VALUES(2,1);
+INSERT INTO segue(segueid,seguidoid)
+	VALUES(1,3);
+INSERT INTO segue(segueid,seguidoid)
+	VALUES(3,1);
 

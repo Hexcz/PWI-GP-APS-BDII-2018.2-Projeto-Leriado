@@ -73,7 +73,7 @@ public class MarcaDAOImpDB implements MarcaDAO {
 		UsuarioDaoImpl usuarioDAO = new UsuarioDaoImpl();
 		try {
 			int ti = texto.getId();
-			texto = textoDAO.buscar(ti).orElseThrow(null);
+			texto = textoDAO.buscar(ti);
 			String query = "SELECT usuarioid FROM marca " + "WHERE  textoid = ? ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, ti);

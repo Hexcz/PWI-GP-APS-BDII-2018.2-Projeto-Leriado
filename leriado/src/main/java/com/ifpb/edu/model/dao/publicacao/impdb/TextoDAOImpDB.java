@@ -18,16 +18,23 @@ import com.ifpb.edu.model.jdbc.DataAccessException;
 public class TextoDAOImpDB implements TextoDAO {
 
 	private Connection connection;
+	private PublicacaoDAOImpDB publicacaoDAO;
+	private UsuarioDaoImpl usuarioDAO;
 
 	public TextoDAOImpDB() {
 		connection = ConnectionFactory.getInstance().getConnection();
+		publicacaoDAO = new PublicacaoDAOImpDB();
+		usuarioDAO = new UsuarioDaoImpl();
 	}
 
 	private void lerTabela(Texto texto, ResultSet rs) throws DataAccessException, SQLException {
 		texto.setId(rs.getInt("id"));
 		texto.setAtivo(rs.getBoolean("ativo"));
-		texto.setDatahora(rs.getTimestamp("datahora").toLocalDateTime());
-		texto.setUsuario(new UsuarioDaoImpl().buscarPorId(rs.getInt("usuarioid")));
+		texto.setDatahora(rs.getTimestamp("datahora").toLocalDateTime());		
+		texto.setUsuario(usuarioDAO.buscarPorId(rs.getInt("usuarioid")));
+		texto.setQtdCurtidas(rs.getInt("qtdCurtidas"));
+		texto.setQtdComentarios(rs.getInt("qtdComentarios"));
+		texto.setPublicacao(publicacaoDAO .buscar(rs.getInt("id")));
 	}
 
 	@Override
@@ -82,14 +89,14 @@ public class TextoDAOImpDB implements TextoDAO {
 	}
 
 	@Override
-	public Optional<Texto> buscar(int id) throws DataAccessException {
+	public Texto buscar(int id) throws DataAccessException {
 		Texto texto = new Texto();
 		try {
 			buscar(id, texto);
 		} catch (Exception e) {
 			throw new DataAccessException("Falha ao buscar texto");
 		}
-		return Optional.of(texto);
+		return texto;
 	}
 
 	@Override

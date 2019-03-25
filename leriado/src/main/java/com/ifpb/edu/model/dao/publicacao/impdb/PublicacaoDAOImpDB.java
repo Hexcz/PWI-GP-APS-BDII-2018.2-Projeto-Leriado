@@ -1,9 +1,7 @@
 package com.ifpb.edu.model.dao.publicacao.impdb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import com.ifpb.edu.model.jdbc.DataAccessException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
 public class PublicacaoDAOImpDB implements PublicacaoDAO {
@@ -43,44 +42,50 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 
 	@Override
 	public void exclui(Publicacao publicacao) throws DataAccessException {
-		// TODO Auto-generated method stub
+		DeleteResult rs = collection.deleteOne(eq("_id",(publicacao.getTextoId())));
+		if(rs.getDeletedCount()==0)
+			throw new DataAccessException("Falha ao deletar publicacao");
 		
 	}
 
 	@Override
-	public Publicacao buscar(int id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+	public Publicacao buscar(int id) throws DataAccessException {		 		
+		return collection.find(eq("_id",id)).first();
 	}
 
 	@Override
 	public void buscar(Publicacao publicacao) throws DataAccessException {
-		// TODO Auto-generated method stub
+		int id = publicacao.getTextoId();
+		publicacao = buscar(id);
 		
 	}
 
 	@Override
 	public void buscar(int id, Publicacao publicacao) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
+		publicacao = buscar(id);		
 	}
 
 	@Override
 	public int quant() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) collection.countDocuments();
 	}
 
 	@Override
 	public List<Publicacao> lista() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Publicacao> pubs = new ArrayList<Publicacao>();
+		for (Publicacao publicacao : collection.find()) {
+			pubs.add(publicacao);			
+		}
+		return pubs;
 	}
 
 	@Override
 	public List<Publicacao> lista(int inicio, int quant) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Publicacao> pubs = new ArrayList<Publicacao>();
+		for (Publicacao publicacao : collection.find().skip(inicio).limit(quant)) {
+			pubs.add(publicacao);			
+		}
+		return pubs;
 	}
 	
 }
