@@ -170,16 +170,18 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 	
 	@Override
-	public List<Usuario> buscarNome(String nome) throws DataAccessException {
+	public List<Usuario> buscar(String consulta) throws DataAccessException {
 		List<Usuario> usuarios = new ArrayList<>();
 		try {
 			String query ="SELECT * FROM usuario WHERE "
 					+ " ((semAcento(nome) ilike semAcento(?)) OR " + 
-					" (semAcento(sobrenome) ilike semAcento(?))) "
+					" (semAcento(sobrenome) ilike semAcento(?)) OR "
+					+ "(semAcento(email) ilike semAcento(?))) "
 					+ " ORDER BY LOWER(semAcento(nome)) ";
 			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setString(1, "%"+nome+"%");
-			stm.setString(2, "%"+nome+"%");
+			stm.setString(1, "%"+consulta+"%");
+			stm.setString(2, "%"+consulta+"%");
+			stm.setString(3, "%"+consulta+"%");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				usuarios.add(lerTabela(rs));
@@ -194,19 +196,21 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	
 
 	@Override
-	public List<Usuario> buscarNome(String nome, int inicio, int quant) throws DataAccessException {
+	public List<Usuario> buscar(String consulta, int inicio, int quant) throws DataAccessException {
 		List<Usuario> usuarios = new ArrayList<>();
 		try {
 			String query ="SELECT * FROM usuario WHERE "
 					+ " ((semAcento(nome) ilike semAcento(?)) OR " + 
-					" (semAcento(sobrenome) ilike semAcento(?)))"					
+					" (semAcento(sobrenome) ilike semAcento(?)) OR "
+					+ "(semAcento(email) ilike semAcento(?))) "					
 					+ " ORDER BY LOWER(semAcento(nome)) "
 					+ " OFFSET ? LIMIT ? ";
 			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setString(1, "%"+nome+"%");
-			stm.setString(2, "%"+nome+"%");
-			stm.setInt(3, inicio);
-			stm.setInt(4, quant);
+			stm.setString(1, "%"+consulta+"%");
+			stm.setString(2, "%"+consulta+"%");
+			stm.setString(3, "%"+consulta+"%");
+			stm.setInt(4, inicio);
+			stm.setInt(5, quant);
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				usuarios.add(lerTabela(rs));

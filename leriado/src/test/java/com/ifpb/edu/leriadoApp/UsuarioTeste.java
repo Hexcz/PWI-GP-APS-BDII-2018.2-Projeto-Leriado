@@ -87,7 +87,7 @@ public class UsuarioTeste {
 	public void buscarNomeTeste() {
 		List<Usuario> usuarios = null;
 		try {			
-			usuarios = usuarioDAO.buscarNome("a",1,2);
+			usuarios = usuarioDAO.buscar("rrobertoricardoyagorodrigues@oas.com",0,2);
 			for (Usuario user : usuarios) {
 				System.out.print(user.getId() + " ");
 				System.out.println(user.getNome());

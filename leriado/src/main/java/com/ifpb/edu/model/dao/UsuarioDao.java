@@ -13,8 +13,8 @@ public interface UsuarioDao {
 	void remover(Integer idUsuario) throws DataAccessException;
 	Usuario buscarPorId(Integer id) throws DataAccessException;
 	Usuario buscarPorEmail(String email) throws DataAccessException;
-	List<Usuario> buscarNome(String nome) throws DataAccessException;
-	List<Usuario> buscarNome(String nome, int inicio, int quant) throws DataAccessException;
+	List<Usuario> buscar(String consulta) throws DataAccessException;
+	List<Usuario> buscar(String consulta, int inicio, int quant) throws DataAccessException;
 	int qtdBuscarNome(String nome) throws DataAccessException;
 	boolean login(String email, String senha) throws DataAccessException;
 	void seguir(Usuario seguidor, Usuario seguido) throws DataAccessException;
