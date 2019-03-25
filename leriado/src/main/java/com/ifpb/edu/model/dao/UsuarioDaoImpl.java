@@ -175,7 +175,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		try {
 			String query ="SELECT * FROM usuario WHERE "
 					+ " ((semAcento(nome) ilike semAcento(?)) OR " + 
-					" (semAcento(sobrenome) ilike semAcento(?)))";
+					" (semAcento(sobrenome) ilike semAcento(?))) "
+					+ " ORDER BY LOWER(semAcento(nome)) ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setString(1, "%"+nome+"%");
 			stm.setString(2, "%"+nome+"%");
@@ -188,6 +189,52 @@ public class UsuarioDaoImpl implements UsuarioDao{
 			throw new DataAccessException("Falha ao buscar usuario pelo nome");
 		}
 		return usuarios;
+	}
+	
+	
+
+	@Override
+	public List<Usuario> buscarNome(String nome, int inicio, int quant) throws DataAccessException {
+		List<Usuario> usuarios = new ArrayList<>();
+		try {
+			String query ="SELECT * FROM usuario WHERE "
+					+ " ((semAcento(nome) ilike semAcento(?)) OR " + 
+					" (semAcento(sobrenome) ilike semAcento(?)))"					
+					+ " ORDER BY LOWER(semAcento(nome)) "
+					+ " OFFSET ? LIMIT ? ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setString(1, "%"+nome+"%");
+			stm.setString(2, "%"+nome+"%");
+			stm.setInt(3, inicio);
+			stm.setInt(4, quant);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				usuarios.add(lerTabela(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("Falha ao buscar usuario pelo nome");
+		}
+		return usuarios;
+	}
+
+	@Override
+	public int qtdBuscarNome(String nome) throws DataAccessException {
+		try {
+			String query ="SELECT COUNT(*) FROM usuario WHERE "
+					+ " ((semAcento(nome) ilike semAcento(?)) OR " + 
+					" (semAcento(sobrenome) ilike semAcento(?)))";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setString(1, "%"+nome+"%");
+			stm.setString(2, "%"+nome+"%");
+			ResultSet rs = stm.executeQuery();
+			if(rs.next())
+				return rs.getInt(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("Falha ao buscar usuario pelo nome");
+		}
+		return 0;
 	}
 
 	@Override

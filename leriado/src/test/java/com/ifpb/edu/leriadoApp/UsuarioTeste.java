@@ -87,12 +87,21 @@ public class UsuarioTeste {
 	public void buscarNomeTeste() {
 		List<Usuario> usuarios = null;
 		try {			
-			usuarios = usuarioDAO.buscarNome("eloa");
+			usuarios = usuarioDAO.buscarNome("a",1,2);
 			for (Usuario user : usuarios) {
 				System.out.print(user.getId() + " ");
 				System.out.println(user.getNome());
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void qtdBuscarNomeTeste() {
+		try {
+			System.out.println(usuarioDAO.qtdBuscarNome("eloa"));
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

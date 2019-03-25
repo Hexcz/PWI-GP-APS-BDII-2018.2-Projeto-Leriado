@@ -14,10 +14,12 @@ public interface UsuarioDao {
 	Usuario buscarPorId(Integer id) throws DataAccessException;
 	Usuario buscarPorEmail(String email) throws DataAccessException;
 	List<Usuario> buscarNome(String nome) throws DataAccessException;
-	int QtdBuscarNome(String nome) throws DataAccessException;
+	List<Usuario> buscarNome(String nome, int inicio, int quant) throws DataAccessException;
+	int qtdBuscarNome(String nome) throws DataAccessException;
 	boolean login(String email, String senha) throws DataAccessException;
 	void seguir(Usuario seguidor, Usuario seguido) throws DataAccessException;
 	void desfazerAmizade(Usuario usuario1, Usuario usuario2) throws DataAccessException;
 	List<Usuario> amigos(Usuario usuario) throws DataAccessException;
+	
 	
 }
