@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
 	private String senha;
 	private String nome;
 	private String sobrenome;
+	private String arquivoFoto;
 	private String sexo;
 	private LocalDate datanasc;
 	private Integer acesso;
@@ -76,6 +77,12 @@ public class Usuario implements Serializable {
 	}
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}	
+	public String getArquivoFoto() {
+		return arquivoFoto;
+	}
+	public void setArquivoFoto(String arquivoFoto) {
+		this.arquivoFoto = arquivoFoto;
 	}
 	public String getSexo() {
 		return sexo;
