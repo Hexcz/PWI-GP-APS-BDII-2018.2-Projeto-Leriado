@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="file.css" />
+	<h:outputScript library="js" name="locale.js"/>
+	
+	<!-- JQUERY -->
+	<script src="resources/js/JQuery.js"/>
+	<!-- MASCARAS JQUERY PLUGIN -->
+	<script src="resources/js/jQuery-Mask-Plugin-master/src/jquery.mask.js"/>
+	<!-- MASCARAS JQUERY CONFIG -->
+	<script src="resources/js/mascaras.js"/>
+	<!-- MATERIALIZE CSS-->
+	<link rel="stylesheet" href="resources/css/materialize.css"/>
+		<!-- MATERIALIZE JS -->
+	<script src="resources/js/materialize.js"/>
+	<!-- ICONS MATERIALIZA -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet"/>
+		<!-- CUSTOM -->
+	<link rel="stylesheet" href="resources/css/custom.css"/>
+	<title>Leriado</title>
+</h:head>
+<h:body>	  
+    <!--CABEÇALHO-->
+	<ui:insert name="cabecalho">
+		 <ui:include src="../includes/header.xhtml"></ui:include>
+	</ui:insert>
+    <!--CORPO-->
+	<ui:insert name="conteudo">
+		<p>Conteúdo da página</p>
+	</ui:insert>
+    <!--RODAPE-->
+	<ui:insert name="rodape">
+		<ui:include src="../includes/footer.xhtml"/> 
+	</ui:insert>
+</h:body>
+</html>

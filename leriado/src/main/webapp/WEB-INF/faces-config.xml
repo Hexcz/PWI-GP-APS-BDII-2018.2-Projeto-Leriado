@@ -8,11 +8,16 @@
 		<phase-listener>br.edu.ifpb.pweb1.listener.AuthListener</phase-listener>
 	</lifecycle>
 
-	<converter>
-		<display-name>DateConverter</display-name>
-		<converter-id>dateConverter</converter-id>
-		<converter-class>br.edu.ifpb.pweb1.converter.DateConverter</converter-class>
-	</converter>
+	
+	<application>
+     	   <locale-config>
+     	        <default-locale>pt</default-locale>
+     	   </locale-config>
+	   <resource-bundle>
+		<base-name>messages.mensagens</base-name>
+		<var>msg</var>
+	   </resource-bundle>
+     </application>
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>

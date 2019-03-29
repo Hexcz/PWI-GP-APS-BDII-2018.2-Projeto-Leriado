@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<!--CASATRO-->
+<section>
+	<h4>Comece um Leriado</h4>
+	<h5>É na poíva, e sempre será.</h5>
+	<h:form id="formCadastro" class="col s12">
+		<div class="row">
+			<div class="col s6 input-field">
+				<p:inputText id="nome" name="nome" value="#{cadastroBean.usuario.nome}" maxlength="50" 
+					required="true" requiredMessage="O nome é obrigatório"/>
+				<label for="nome">Nome</label>
+				<p:messages autoUpdate="true" for="nome" id="msg-nome" globalOnly="false" />
+			</div>
+			<div class="col s6 input-field">
+				<p:inputText id="sobrenome" name="sobrenome" value="#{cadastroBean.usuario.sobrenome}" maxlength="100" 
+					required="true" requiredMessage="O sobrenome é obrigatório"/>
+				<label for="sobrenome">Sobrenome</label>
+				<p:messages autoUpdate="true" for="sobrenome" id="msg-sobrenome" globalOnly="false" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 input-field">
+				<p:inputText id="email" name="email" value="#{cadastroBean.usuario.email}" maxlength="100" 
+					class="validate" type="email" 
+					pattern="^[\w\.\-]+@([\w\-]+\.)+[A-Za-z]{2,4}$" required="true" requiredMessage="O e-mail é obrigatório"/>
+				<label for="email">Email</label>
+				<p:messages autoUpdate="true" for="email" id="msg-email" globalOnly="false" />
+			</div>
+			<div class="col s6 input-field">
+				<p:password id="senha" name="senha" value="#{cadastroBean.usuario.senha}" maxlength="50"
+					required="true" requiredMessage="A senha é obrigatória"
+					feedback="true"	weakLabel="Muito fraca" goodLabel="Senha razoável"
+					strongLabel="Senha forte" promptLabel="Informe uma senha"
+					pattern=".{8,}"	inline="true" /><label for="senha">Senha</label>
+				<p:messages autoUpdate="true" for="senha" id="msg-senha" globalOnly="false" />				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 input-field">
+				<p class="col s6">
+					<p:selectOneRadio id="sexo" name="sexo" value="#{cadastroBean.usuario.sexo}" 
+					required="true" requiredMessage="O a informação do sexo é obrigatória">
+						<f:selectItem itemLabel="Masculino" itemValue="M"/>
+						<f:selectItem itemLabel="Feminino" itemValue="M"/>
+					</p:selectOneRadio>	<label for="sexo">Sexo</label>
+					<p:messages autoUpdate="true" for="sexo" id="msgsexo" globalOnly="false" />				
+				</p>
+				
+			</div>
+			<div class="col s6 input-field">
+				<p:inputText id="telefone" name="telefone" value="#{cadastroBean.usuario.telefone}" maxlength="30"
+					required="true" requiredMessage="O telefone é obrigatório"
+					pattern="^\(\d{2}\) \d{4}\d?-\d{4}$" /> <label for="telefone">Telefone</label>
+				<p:messages autoUpdate="true" for="telefone" id="msg-telefone" globalOnly="false" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 input-field">
+				<p:inputMask id="data" name="data" value="#{cadastroBean.usuario.datanasc}" mask="99/99/9999"
+				required="true" requiredMessage="A data de nascimento é obrigatório">
+					<f:converter converterId="dateConverter" />
+				</p:inputMask>	
+				<label for="data">Data de Nascimento</label>
+				<p:messages autoUpdate="true" for="data" id="msg-data" globalOnly="false" />
+			</div>
+			<div class="col s6 input-field">
+				<p:inputText  id="numero" name="numero" value="#{cadastroBean.usuario.numero}" maxlength="10" 
+				type="text" pattern="\d+" required="true" requiredMessage="O número da casa é obrigatório" />
+				 <label	for="numero">Número de casa</label>
+				 <p:messages autoUpdate="true" for="numero" id="msg-numero" globalOnly="false" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 input-field">
+				<p:inputText id="rua" name="rua" value="#{cadastroBean.usuario.rua}" maxlength="100"
+				   type="text" required="true" requiredMessage="O nome da rua é obrigatório" /> <label for="rua">Rua</label>
+				<p:messages autoUpdate="true" for="rua" id="msg-rua" globalOnly="false" />
+			</div>
+			<div class="col s6 input-field">
+				<p:inputText id="cidade" name="cidade" value="#{cadastroBean.usuario.cidade}" maxlength="100"
+				type="text" required="true" requiredMessage="O nome da cidade é obrigatório"   /> <label for="Cidade">Cidade</label>
+				<p:messages autoUpdate="true" for="cidade" id="msg-cidade" globalOnly="false" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 input-field">
+				<p:inputText id="cep" name="cep" value="#{cadastroBean.usuario.cep}" maxlength="50"
+					type="text" required="true" requiredMessage="O CEP é obrigatório"  pattern="\d{5}-\d{3}" /> <label
+					for="cep">CEP</label>
+				<p:messages autoUpdate="true" for="cep" id="msg-cep" globalOnly="false" />
+			</div>
+			<div class="col s6 input-field">
+				<p:inputText id="estado" name="estado" value="#{cadastroBean.usuario.estado}" maxlength="50"
+				 type="text" required="true" requiredMessage= "O estado é obrigatório"
+				 /> <label for="estado">Estado</label>
+				 <p:messages autoUpdate="true" for="estado" id="msg-estado" globalOnly="false" />
+			</div>
+		</div>
+		<div class="input-field">
+			<p:commandButton value="Que o Leriado comece!!" class="btn waves-effect waves-light"
+				action="#{cadastroBean.cadastrar}" />			
+		</div>
+	</h:form>
+</section>
+</html>

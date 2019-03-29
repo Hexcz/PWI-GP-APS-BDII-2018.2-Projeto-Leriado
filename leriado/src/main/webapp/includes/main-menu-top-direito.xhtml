@@ -14,10 +14,17 @@
 	<div class="nav-wrapper">
 		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<ul class="right hide-on-med-and-down">
-			<li><a href="#"><i class="material-icons right">group</i>Meus Grupos</a></li>
-			<div data-target="slide-out" class="sidenav-trigger "> 
-				<li><a href="#"><i class="material-icons right">face</i>nome do usuário aqui</a></li>
-			</div>
+			<li>
+				<a href="#"><i class="material-icons right">group</i>Meus Grupos</a></li>
+
+			<li>
+				<div data-target="slide-out" class="sidenav-trigger ">
+					<a href="#"><i class="material-icons right">face</i>
+						#{loginBean.usuarioLogado.nome}						
+					</a>
+				</div>
+			</li>
+
 		</ul>
 	</div>
 </div>
@@ -33,13 +40,19 @@
 						type="file" name="file" onchange="this.form.submit()" />
 				</div>
 			</form>
-			<a href="#"> <span class="white-text name">usuarioLogado.nome
-					usuarioLogado.sobrenome</span></a> <a href="#"><span
-				class="white-text email"> usuarioLogado.email </span></a>
+			<a href="#"> 
+				<span class="white-text name">
+					#{loginBean.usuarioLogado.nome}
+					#{loginBean.usuarioLogado.sobrenome}
+				</span></a> 
+			<a href="#">
+				<span class="white-text email"> 
+					#{loginBean.usuarioLogado.email} 
+				</span>
+			</a>
 		</div>
 	</li>
-	<li><a href="#"><i class="material-icons">edit</i>Atualizar
-			Conta</a></li>
+	<li><a href="#"><i class="material-icons">edit</i>Atualizar	Conta</a></li>
 	<li><a class="modal-trigger" href="#modal1"><i
 			class="material-icons">remove</i>Remover Conta</a></li>
 	<li><div class="divider"></div></li>
@@ -72,9 +85,16 @@
 						onchange="this.form.submit()" />
 				</div>
 			</form>
-			<a href="#"> <span class="white-text name">usuarioLogado.nome
-					usuarioLogado.sobrenome</span></a> <a href="#"><span
-				class="white-text email">usuarioLogado.email</span></a>
+			<a href="#">
+				<span class="white-text name">
+					#{loginBean.usuarioLogado.nome}
+					#{loginBean.usuarioLogado.sobrenome}
+			</span></a>
+			<a href="#"> 
+				<span class="white-text email">
+					#{loginBean.usuarioLogado.email} 
+				</span>
+			</a>
 		</div>
 	</li>
 	<li><a href="meusGrupos.jsp"><i class="material-icons">group</i>Meus

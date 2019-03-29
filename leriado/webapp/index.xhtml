@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="layout/main-layout.xhtml">
+
+	<!-- LOGIN -->
+	<ui:define name="mainmenutopodireita">
+		<ui:include src="includes/login.xhtml"></ui:include>
+	</ui:define>
+	<!-- LOGIN -->
+	<ui:define name="conteudo">
+		<div class="row orange lighten-5 separador"></div>
+		<div class="orange lighten-5">
+			<div class="container hide-on-med-and-down">
+				<div class="row">
+					<!-- MENSAGEM TELA INICIAL -->
+					<div class="col s6">											
+						<ui:include src="includes/mensagem-inicial.xhtml"></ui:include>
+					</div>
+					<!-- CADASTRO -->
+					<div class="col s6">
+						<p:messages autoUpdate="true" id="msg" globalOnly="true" />
+						<ui:include src="includes/cadastro.xhtml"></ui:include>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

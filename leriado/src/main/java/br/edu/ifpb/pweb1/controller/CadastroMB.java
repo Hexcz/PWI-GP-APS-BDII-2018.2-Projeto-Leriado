@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
 
 import br.edu.ifpb.pweb1.model.dao.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
@@ -17,7 +16,6 @@ public class CadastroMB {
 	
 	private Logger log;
 	
-	@Inject
 	private Usuario usuario;
 	
 	@PostConstruct

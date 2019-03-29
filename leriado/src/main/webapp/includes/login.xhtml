@@ -11,19 +11,19 @@
 				<div class="row">
 					<div class="input-field col l6">
 						<!-- <label for="email">Email</label> -->
-						<p:inputText id="email" name="email" placeholder="e-mail" value="#{loginBean.email}"  class="validate camposLogin" type="text"
-							required="true" requiredMessage="O e-mail é necessário" 
+						<p:inputText id="email" name="email" placeholder="#{msg['login.login']}" value="#{loginBean.email}"  class="validate camposLogin" type="text"
+							required="true" requiredMessage="#{msg['login.senha.placeholder']}" 
 							 pattern="^[\w\.\-]+@([\w\-]+\.)+[A-Za-z]{2,4}$"/>
 						
 					</div>
 					<div class="input-field col l5">
 						<!--<label for="senha" >Senha</label> -->
-						<p:password id="senha" name="senha" placeholder="senha" value="#{loginBean.senha}" class="camposLogin"
+						<p:password id="senha" name="senha" placeholder="#{msg['login.senha']}" value="#{loginBean.senha}" class="camposLogin"
 							required="true" requiredMessage="A senha é necessária" 
 							pattern=".{8,}" /> 
 					</div>
 					<div class="input-field col l1">
-						<p:commandButton type="submit" class="btn waves-effect waves-light" value="enviar"
+						<p:commandButton type="submit" class="btn waves-effect waves-light" value="#{msg['login.entrar']}"
 						action="#{loginBean.efetuarLogin}" />
 					</div>
 				</div>

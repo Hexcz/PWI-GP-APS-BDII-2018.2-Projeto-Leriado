@@ -1,35 +1,54 @@
-
-<footer class="page-footer">
-	<div class="container">
-		<div class="row">
-			<div class="col l6 s12">
-				<img class="logo" src="resources/img/logobranco.png" />
-				<p class="grey-text text-lighten-4">
-					Projeto desenvolvido como requisito parcial para obteção de
-					aprovação nas disciplinas de Programação para Web I e Banco de
-					Dados II, no curso de Análise e Desenvolvimento de Sistemas, no
-					Instituto Federal de Educação, Ciência e Tecnologia da Paraíba <i>Campus</i>
-					Cajazeiras.<br /> Prof. Me. Diego Ernesto Rosa Pessoa - Programação
-					para Web I.<br /> Prof. Me. Francisco Paulo de Freitas Neto - Banco
-					de Dados II.
-				</p>
-			</div>
-			<div class="col l4 offset-l2 s12">
-				<h5 class="white-text">Equipe de desenvolvedores</h5>
-				<ul>
-					<li>Ian Carneiro Teixeira de Araújo</li>
-					<li>Isleimar de Souza Oliveira</li>
-					<li>José David Emanoell Feitoza Braga</li>
-					<li>Leanderson Coelho dos Santos</li>
-					<li>Luz de Esperanza Apolo Pereira</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="footer-copyright">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<div class="container">
+	<div class="page-footer">
 		<div class="container">
-			© 2019 Carambola Inc.
-			<!--  <a class="grey-text text-lighten-4 right" href="#!">Mais Links</a> -->
+			<div class="row">
+				<div class="col l6 s12">
+					<img class="logo" src="resources/img/logobranco.png" />
+					<p class="grey-text text-lighten-4">
+						Projeto desenvolvido como requisito parcial para obteção de
+						aprovação nas disciplinas de Programação para Web I e Banco de
+						Dados II, no curso de Análise e Desenvolvimento de Sistemas, no
+						Instituto Federal de Educação, Ciência e Tecnologia da Paraíba <i>Campus</i>
+						Cajazeiras.<br /> Prof. Me. Diego Ernesto Rosa Pessoa -
+						Programação para Web I.<br /> Prof. Me. Francisco Paulo de
+						Freitas Neto - Banco de Dados II.
+					</p>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5 class="white-text">Equipe de desenvolvedores</h5>
+					<ul>
+						<li>Ian Carneiro Teixeira de Araújo</li>
+						<li>Isleimar de Souza Oliveira</li>
+						<li>José David Emanoell Feitoza Braga</li>
+						<li>Leanderson Coelho dos Santos</li>
+						<li>Luz de Esperanza Apolo Pereira</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col s10">© 2019 Carambola Inc.</div>
+					<div class="col s2">
+						<h:form>
+							<h:selectOneMenu valueChangeListener="#{idiomaBean.mudarIdioma}"
+								styleClass="display: inline-block !important;"
+								onchange="submit()" value="#{idiomaBean.idioma}">
+								<f:selectItem itemLabel="Inglês" itemValue="en" styleClass="display: inline-block !important;" />
+								<f:selectItem itemLabel="Português" itemValue="pt" styleClass="display: inline-block !important;"/>
+							</h:selectOneMenu>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
-</footer>
+</div>
+</html>
