@@ -5,22 +5,31 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="layout/main-layout.xhtml">
-	<!-- LOGIN -->
-	<ui:define name="topoesquerda">
-		<h5>Você entrou</h5>
+	<!-- MAIN MENU -->
+	<ui:define name="mainmenutopodireita">
+		<ui:include src="includes/main-menu-top-direito.xhtml" />
 	</ui:define>
-	<!-- LOGIN -->
 	<ui:define name="conteudo">
-		<div class="row orange lighten-5 separador"></div>
 		<div class="orange lighten-5">
 			<div class="container hide-on-med-and-down">
 				<div class="row">
-					<h2>FEED</h2>
+					<!-- MENU USUÁRIO -->
+					<div class="col s2">						
+						<ui:include src="includes/main-menu-usuario.xhtml" />
+					</div>
+					
+					<!-- FEED -->
+					<div class="col s8">						
+						<ui:include src="includes/main-feed.xhtml" />
+					</div>
+					
+					<!-- AMIGOS -->
+					<div class="col s2">
+						<ui:include src="includes/main-amigos.xhtml" />
+					</div>
 				</div>
 			</div>
-		</div>
-
-
+		</div>	
 	</ui:define>
 
 </ui:composition>

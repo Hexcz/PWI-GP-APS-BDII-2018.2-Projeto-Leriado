@@ -21,8 +21,8 @@ public class AuthListener implements PhaseListener{
 		return false;		
 	}
 	
-	private void irPara(PhaseEvent event, FacesContext context, String destino) {				 
-		event.getFacesContext().getApplication().getNavigationHandler().handleNavigation(context, null, destino);
+	private void irPara(String destino) {				 
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, destino);
 	}
 		
 	@Override
@@ -34,27 +34,23 @@ public class AuthListener implements PhaseListener{
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 				
 		if(request.getSession() == null) {			
-			irPara(event, context,"goLogin");	
-			return;
+			irPara("goLogin");
 		}	
 		
 		LoginMB loginMb = (LoginMB)request.getSession(false).getAttribute("loginBean");
-				
-		System.out.println(loginMb);
-		
+			
 		isRestrito = !isPublica(viewId);
 		
 		isLogado = ((loginMb != null) && (loginMb.getUsuarioLogado() != null));
 		
 		//NÃO ESTÁ LOGADO EM PÁGINA RESTRITA
 		if (!isLogado && isRestrito){			
-			irPara(event, context,"goLogin");
+			irPara("goLogin");
 		}
 		//ESTÁ LOGADO EM PÁGINA PÚBLICA
 		if (isLogado && !isRestrito){			
-			irPara(event, context,"goHome");
-		}
-			
+			irPara("goHome");
+		}			
 	}
 
 	@Override

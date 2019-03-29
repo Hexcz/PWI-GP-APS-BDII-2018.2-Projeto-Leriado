@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15536439107960" configfile="/leriado/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="122" y="466" id="pf15536444398777" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15536444398789 pf155364497733812 pf15537121788754 pf15537121788755" path="index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf155364443987811" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf15536444398789 pf15536865097613 pf15537074557961 pf15537121788755" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" x="338" y="562" id="pf155364497733813" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf155364497733812" path="/cadastro-sucesso.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15536865097614" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15536865097613 pf15537073893490" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" id="pf15536895131558" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf15537073893490 pf15537074557962 pf15537121788754" path="/home.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" id="pf15537074557963" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15537074557962 pf15537074557961" path="cadastro-sucesso.xhtml"/>
-  <links id="pf15536444398789" target="pf155364443987811" source="pf15536444398777" outcome="falha" redirect="true" fromaction="#{cadastroBean.cadastrar}"/>
-  <links id="pf155364497733812" target="pf155364497733813" source="pf15536444398777" outcome="sucesso" redirect="true" fromaction="#{cadastroBean.cadastrar}"/>
-  <links id="pf15536865097613" target="pf155364443987811" source="pf15536865097614" outcome="goLogin"/>
-  <links id="pf15537073893490" target="pf15536895131558" source="pf15536865097614" outcome="goHome"/>
-  <links id="pf15537074557962" target="pf15536895131558" source="pf15537074557963" outcome="sucesso" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
-  <links id="pf15537074557961" target="pf155364443987811" source="pf15537074557963" outcome="falha" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
-  <links id="pf15537121788754" target="pf15536895131558" source="pf15536444398777" outcome="sucesso" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
-  <links id="pf15537121788755" target="pf155364443987811" source="pf15536444398777" outcome="falha" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15538576436750" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15538576436761 pf15538576436762" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15538576436763" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf15538576436761 pf15538576436764 pf15538576436765 pf15538576436766" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" id="pf15538576436767" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15538576436762 pf15538576436768 pf15538576436769" path="/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf155385764367610" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf155385764367611 pf15538576436764 pf15538576436768 pf15538576436765" path="index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" id="pf155385764367612" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf155385764367611" path="/cadastro-sucesso.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" id="pf155385764367613" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15538576436769 pf15538576436766" path="cadastro-sucesso.xhtml"/>
+  <links id="pf15538576436761" target="pf15538576436763" source="pf15538576436750" outcome="goLogin" redirect="true"/>
+  <links id="pf15538576436762" target="pf15538576436767" source="pf15538576436750" outcome="goHome" redirect="true"/>
+  <links id="pf155385764367611" target="pf155385764367612" source="pf155385764367610" outcome="sucesso" redirect="true" fromaction="#{cadastroBean.cadastrar}"/>
+  <links id="pf15538576436764" target="pf15538576436763" source="pf155385764367610" outcome="falha" redirect="true" fromaction="#{cadastroBean.cadastrar}"/>
+  <links id="pf15538576436768" target="pf15538576436767" source="pf155385764367610" outcome="sucesso" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
+  <links id="pf15538576436765" target="pf15538576436763" source="pf155385764367610" outcome="falha" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
+  <links id="pf15538576436769" target="pf15538576436767" source="pf155385764367613" outcome="sucesso" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
+  <links id="pf15538576436766" target="pf15538576436763" source="pf155385764367613" outcome="falha" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
 </pageflow:Pageflow>
