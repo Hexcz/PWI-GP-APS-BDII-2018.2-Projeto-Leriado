@@ -12,14 +12,10 @@
             </h:panelGrid>
         </p:tab>        
     </p:accordionPanel>
-	
-	
-	<h:dataTable var="publicacao" value="#{feedBean.publicacoes}">
-		<h:column>
-			<f:facet name="header"><h:outputText value="titulo"/></f:facet>
-			<h:outputText value="#{publicacao.titulo}"/>
-		</h:column>
-	</h:dataTable>
-	
-	
+	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
+		<h5><h:outputText value="#{publicacao.compartilha.usuario.nome}"></h:outputText></h5>
+		<h5><h:outputText value="#{publicacao.compartilha.texto.publicacao.titulo}"/></h5>
+		<p><h:outputText value="#{publicacao.compartilha.texto.publicacao.conteudo}"/></p>
+		
+	</ui:repeat>
 </html>

@@ -115,7 +115,7 @@ public class TextoDAOImpDB implements TextoDAO {
 	@Override
 	public void buscar(int id, Texto texto) throws DataAccessException {
 		try {
-			String query = "SELECT *, tipotexto(id) AS tipo FROM texto " + "WHERE id = ? ";
+			String query = "SELECT * FROM texto " + "WHERE id = ? ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, id);
 			ResultSet rs = stm.executeQuery();
@@ -147,7 +147,7 @@ public class TextoDAOImpDB implements TextoDAO {
 	public List<Texto> lista() throws DataAccessException {
 		List<Texto> textos = new ArrayList<Texto>();
 		try {
-			String query = "SELECT *, tipotexto(id) AS tipo FROM texto ";
+			String query = "SELECT * FROM texto ";
 			Statement stm = connection.createStatement();
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
@@ -166,7 +166,7 @@ public class TextoDAOImpDB implements TextoDAO {
 	public List<Texto> lista(int inicio, int quant) throws DataAccessException {
 		List<Texto> textos = new ArrayList<Texto>();
 		try {
-			String query = "SELECT *, tipotexto(id) AS tipo FROM texto" + " OFFSET ? LIMIT ? ";
+			String query = "SELECT * FROM texto" + " OFFSET ? LIMIT ? ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, inicio);
 			stm.setInt(2, quant);

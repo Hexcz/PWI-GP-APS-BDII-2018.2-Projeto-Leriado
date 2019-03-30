@@ -17,14 +17,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
-import org.primefaces.model.UploadedFile;
-
 import br.edu.ifpb.pweb1.model.dao.GrupoDaoImpl;
 import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.CompartilhaDAOImpDB;
-import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.PublicacaoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.TextoDAOImpDB;
 import br.edu.ifpb.pweb1.model.domain.Grupo;
-import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.domain.publicacao.Arquivo;
 import br.edu.ifpb.pweb1.model.domain.publicacao.Compartilha;
 import br.edu.ifpb.pweb1.model.domain.publicacao.Publicacao;

@@ -42,6 +42,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		usuario.setEstado(rs.getString("estado"));
 		usuario.setNumero(rs.getString("numero"));
 		usuario.setCep(rs.getString("cep"));
+		
 		return usuario;
 	}
 
