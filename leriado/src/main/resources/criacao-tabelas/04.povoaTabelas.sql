@@ -24,3 +24,27 @@ INSERT INTO segue(segueid,seguidoid)
 INSERT INTO segue(segueid,seguidoid)
 	VALUES(3,1);
 
+/*POVOANDO TABELA PARTICIPAGRUPO*/
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(1,1);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(1,2);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(1,3);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(2,1);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(2,2);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(3,1);
+INSERT INTO participagrupo(usuarioid,grupoid)
+	VALUES(3,3);
+
+/*POVOANDO TABELA ADMGRUPO*/
+INSERT INTO admgrupo(usuarioid,grupoid)
+	VALUES(1,1);
+INSERT INTO admgrupo(usuarioid,grupoid)
+	VALUES(2,2);
+INSERT INTO admgrupo(usuarioid,grupoid)
+	VALUES(1,3);
+

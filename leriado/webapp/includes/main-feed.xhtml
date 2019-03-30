@@ -4,5 +4,22 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<h5>FEED</h5>
+	
+	 <p:accordionPanel prependId="false">
+        <p:tab title="Mensagem">
+            <h:panelGrid columns="2" cellpadding="10">                
+               	<ui:include src="criar-mensagem.xhtml" />
+            </h:panelGrid>
+        </p:tab>        
+    </p:accordionPanel>
+	
+	
+	<h:dataTable var="publicacao" value="#{feedBean.publicacoes}">
+		<h:column>
+			<f:facet name="header"><h:outputText value="titulo"/></f:facet>
+			<h:outputText value="#{publicacao.titulo}"/>
+		</h:column>
+	</h:dataTable>
+	
+	
 </html>

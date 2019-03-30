@@ -1,10 +1,10 @@
-MACTH(n)
+MATCH(n)
 DETACH DELETE n
 
 CREATE
 	(r:Usuario{id:1,nome: "Roberto"}),
 	(e:Usuario{id:2,nome: "Eloá"}),
-	(s:Usuario{id:3,nome: "Sophie"})
+	(s:Usuario{id:3,nome: "Sophie"}),
 
 (r)-[:SEGUE]->(e),
 (e)-[:SEGUE]->(r),

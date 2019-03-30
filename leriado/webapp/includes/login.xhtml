@@ -9,7 +9,7 @@
 		<ul class="right hide-on-med-and-down">
 			<h:form id="formlogin"> 
 				<div class="row">
-					<div class="input-field col l6">
+					<div class="input-field col l5">
 						<!-- <label for="email">Email</label> -->
 						<p:inputText id="email" name="email" placeholder="#{msg['login.login']}" value="#{loginBean.email}"  class="validate camposLogin" type="text"
 							required="true" requiredMessage="#{msg['login.senha.placeholder']}" 
@@ -22,7 +22,7 @@
 							required="true" requiredMessage="A senha é necessária" 
 							pattern=".{8,}" /> 
 					</div>
-					<div class="input-field col l1">
+					<div class="input-field col l2">
 						<p:commandButton type="submit" class="btn waves-effect waves-light" value="#{msg['login.entrar']}"
 						action="#{loginBean.efetuarLogin}" />
 					</div>

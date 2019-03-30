@@ -10,6 +10,8 @@ public class Publicacao {
 	private int textoId = 0;
 	private String titulo;
 	private String conteudo;
+	private String latitude;
+	private String longitude;
 	private List<Arquivo> arquivos;	
 
 	public Publicacao() {
@@ -45,6 +47,22 @@ public class Publicacao {
 
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public List<Arquivo> getArquivos() {

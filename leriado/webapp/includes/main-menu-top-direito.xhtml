@@ -8,14 +8,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.sidenav').sidenav();
-	});
+	});	
 </script>
+
 <div class="container">
 	<div class="nav-wrapper">
 		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<ul class="right hide-on-med-and-down">
 			<li>
-				<a href="#"><i class="material-icons right">group</i>Meus Grupos</a></li>
+				<a href="#"><i class="material-icons right">group</i><h:outputText value="#{msg['menu.meusgrupos']}"/></a></li>
 
 			<li>
 				<div data-target="slide-out" class="sidenav-trigger ">
@@ -42,9 +43,9 @@
 			</form>
 			<a href="#"> 
 				<span class="white-text name">
-					#{loginBean.usuarioLogado.nome}
-					#{loginBean.usuarioLogado.sobrenome}
-				</span></a> 
+						<h:outputText value="#{loginBean.usuarioLogado.nome} " />
+						<h:outputText value="#{loginBean.usuarioLogado.sobrenome}" />
+			</span></a> 
 			<a href="#">
 				<span class="white-text email"> 
 					#{loginBean.usuarioLogado.email} 
@@ -52,11 +53,32 @@
 			</a>
 		</div>
 	</li>
-	<li><a href="#"><i class="material-icons">edit</i>Atualizar	Conta</a></li>
-	<li><a class="modal-trigger" href="#modal1"><i
-			class="material-icons">remove</i>Remover Conta</a></li>
+	<li>
+		<!-- EDITAR -->
+		<h:form>
+			<h:commandLink action="#{loginBean.logout}" class="waves-effect waves-teal btn-flat">				
+				<i class="material-icons left">edit</i><h:outputText value="#{msg['menu.atualizarconta']}"/>
+			</h:commandLink>			
+		</h:form>
+		
+	</li>
+	<li>
+		<!-- REMOVER A CONTA -->
+		
+		<a class="modal-trigger"
+		href="#modal1"><i
+			class="material-icons">remove</i>Remover Conta</a>
+				
+	</li>
 	<li><div class="divider"></div></li>
-	<li><a href="#"><i class="material-icons">arrow_back</i>Logout</a></li>
+	<li>
+		<!-- SAIR -->
+		<h:form>
+			<h:commandLink action="#{loginBean.logout}" class="waves-effect waves-teal btn-flat">				
+				<i class="material-icons left">arrow_back</i><h:outputText value="#{msg['menu.sair']}"/>
+			</h:commandLink>			
+		</h:form>
+	</li>
 	<li><a class="subheader">Leriado</a></li>
 </ul>
 
@@ -64,12 +86,12 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
 	<div class="modal-content">
-		<h4>APAGAR CONTA</h4>
-		<p>Você tem certeza que deseja apagar a conta</p>
+		<h4><h:outputText value="#{msg['menu.modal.apagarconta']}"/></h4>
+		<p><h:outputText value="#{msg['menu.modal.apagarconta.msg']}"/></p>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-		<a href="#" class="modal-close waves-effect waves-green btn-flat">Apagar</a>
+		<a href="#" class="modal-close waves-effect waves-green btn-flat"><h:outputText value="#{msg['menu.modal.cancelar']}"/></a>
+		<a href="#" class="modal-close waves-effect waves-green btn-flat"><h:outputText value="#{msg['menu.modal.apagar']}"/></a>
 	</div>
 </div>
 
@@ -97,14 +119,11 @@
 			</a>
 		</div>
 	</li>
-	<li><a href="meusGrupos.jsp"><i class="material-icons">group</i>Meus
-			Grupos</a></li>
-	<li><a href="#"><i class="material-icons">edit</i>Atualizar
-			Conta</a></li>
-	<li><a href="#"><i class="material-icons">remove</i>Remover
-			Conta</a></li>
+	<li><a href="meusGrupos.jsp"><i class="material-icons">group</i><h:outputText value="#{msg['menu.meusgrupos']}"/></a></li>
+	<li><a href="#"><i class="material-icons">edit</i><h:outputText value="#{msg['menu.atualizarconta']}"/></a></li>
+	<li><a href="#"><i class="material-icons">remove</i><h:outputText value="#{msg['menu.removerconta']}"/></a></li>
 	<li><div class="divider"></div></li>
-	<li><a href="#"><i class="material-icons">arrow_back</i>Logout</a></li>
+	<li><a href="#"><i class="material-icons">arrow_back</i><h:outputText value="#{msg['menu.sair']}"/></a></li>
 	<li><a class="subheader">Leriado</a></li>
 </ul>
 

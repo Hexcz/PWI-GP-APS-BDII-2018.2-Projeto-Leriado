@@ -7,17 +7,39 @@
 	<div class="col s12 l12">
 		<ul class="collection ">
 			<!-- USUARIO -->
-			<li class="collection-item avatar"><img
-				src="resources/img/perfilDefault.png" class="circle" /><b> Nome
-					do Usuário</b></li>
-			<b class="grey-text text-darken-3">Feed</b>
+			<li class="collection-item avatar"><img	src="resources/img/perfilDefault.png" class="circle" />
+				<b>
+					<h:outputText value="#{loginBean.usuarioLogado.nome} "/>
+					<h:outputText value="#{loginBean.usuarioLogado.sobrenome}"/> 
+				</b>
+			</li>
+			<b class="grey-text text-darken-3">
+				<h:outputText value="#{msg['menu.usuario.feed']}"/></b>
+				
 			<div class="divider"></div>
-			<a href="#" class="collection-item">Feed de Notícias</a>
-			<b class="grey-text text-darken-3">Grupos que você participa:</b>
+			
+			<a href="#" class="collection-item">
+				<h:outputText value="#{msg['menu.usuario.feednoticia']}"/>
+			</a>
+			<b class="grey-text text-darken-3">
+				<h:outputText value="#{msg['menu.usuario.grupoparticipa']}"/>
+				<ul>
+				<ui:repeat var="grupo" value="#{loginBean.seusGrupos}">
+				 <li><h:outputText value="#{grupo}"/></li>
+				</ui:repeat>
+			</ul>
+			</b>
 			<div class="divider"></div>
-			<b class="grey-text text-darken-3">Gerenciar seus grupos:</b>
+			<b class="grey-text text-darken-3">
+			<h:outputText  value="#{msg['menu.usuario.gerenciargrupos']}"/>
+			<ul>
+				<ui:repeat var="grupo" value="#{loginBean.seusGrupos}">
+				 <li><h:outputText value="#{grupo}"/></li>
+				</ui:repeat>
+			</ul>
+			</b>
 			<div class="divider"></div>
-			<a href="#" class="collection-item">Meus Grupos</a>
+			<a href="#" class="collection-item"><h:outputText value="#{msg['menu.usuario.meusgrupos']}"/></a>
 		</ul>
 	</div>
 </div>

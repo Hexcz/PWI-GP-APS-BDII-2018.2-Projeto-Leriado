@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import br.edu.ifpb.pweb1.model.dao.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.dao.publicacao.TextoDAO;
+import br.edu.ifpb.pweb1.model.domain.publicacao.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.publicacao.Texto;
 import br.edu.ifpb.pweb1.model.jdbc.ConnectionFactory;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
@@ -51,7 +52,9 @@ public class TextoDAOImpDB implements TextoDAO {
 				texto.setDatahora(rs.getTimestamp("datahora").toLocalDateTime());
 			}
 			texto.getPublicacao().setTextoId(texto.getId());
-			new PublicacaoDAOImpDB().cria(texto.getPublicacao());
+			Publicacao publicacao = texto.getPublicacao();
+			publicacao.setTextoId(texto.getId());
+			new PublicacaoDAOImpDB().cria(publicacao);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("Falha ao criar texto");
