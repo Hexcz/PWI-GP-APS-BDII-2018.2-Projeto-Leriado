@@ -1,6 +1,9 @@
+
+================COMANDO 1
 MATCH(n)
 DETACH DELETE n
 
+================COMANDO 2
 CREATE
 	(r:Usuario{id:1,nome: "Roberto"}),
 	(e:Usuario{id:2,nome: "Eloá"}),
