@@ -3,5 +3,18 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	<h5>AMIGOS</h5>
+	<div class="row ">
+	<h:form>
+ 		<div class="row">
+ 			<h6><h:outputText value="Amigos"/> </h6>	
+ 		</div>
+ 		<ul>
+	 		<ui:repeat var="amigo" value="#{amigoBean.amigos}">
+	 			<li><h:outputLabel value="#{amigo.nome}"/></li>	 							
+			</ui:repeat>
+		</ul>
+		<h:outputLabel value="Total de amigos:"/>
+		<h:outputLabel value="#{amigoBean.qtdAmigos}"/>
+	</h:form>
+	</div> 	 	
 </html>

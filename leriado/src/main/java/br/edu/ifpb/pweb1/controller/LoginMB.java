@@ -44,9 +44,7 @@ public class LoginMB {
 				senha = "";				
 				
 				seusGrupos = new GrupoDaoImpl().buscarGruposUsuarioParticipa(usuarioLogado.getId());
-				
-				System.out.println(seusGrupos);
-				
+								
 				return "sucesso";
 			}			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,

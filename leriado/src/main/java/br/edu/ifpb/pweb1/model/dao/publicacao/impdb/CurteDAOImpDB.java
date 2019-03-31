@@ -21,10 +21,17 @@ public class CurteDAOImpDB implements CurteDAO{
 	public CurteDAOImpDB() {
 		connection = ConnectionFactory.getInstance().getConnection();
 	}
+	
+	private void atualizaTexto(int textoid) throws DataAccessException{
+		TextoDAOImpDB textoDao = new TextoDAOImpDB(); 
+		Texto texto = textoDao.buscar(textoid);
+		texto.setQtdCurtidas(quant(texto));
+		textoDao.edita(texto);
+	}
 
 	@Override
 	public void cria(Curte curte) throws DataAccessException{
-		cria(curte.getTexto().getId(), curte.getUsuario().getId());
+		cria(curte.getTexto().getId(), curte.getUsuario().getId());		
 	}
 		
 	@Override
@@ -36,6 +43,7 @@ public class CurteDAOImpDB implements CurteDAO{
 			stm.setInt(1,textoId);
 			stm.setInt(2,usuarioId);			
 			stm.executeUpdate();
+			atualizaTexto(textoId);
 		}catch (Exception e) {
 			throw new DataAccessException("Falha ao criar curtida");
 		}
@@ -56,7 +64,8 @@ public class CurteDAOImpDB implements CurteDAO{
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1,textoId);
 			stm.setInt(2, usuarioId);
-			stm.executeUpdate();			
+			stm.executeUpdate();	
+			atualizaTexto(textoId);
 		}catch (Exception e) {			
 			throw new DataAccessException("Falha ao excluir curtida");
 		}		

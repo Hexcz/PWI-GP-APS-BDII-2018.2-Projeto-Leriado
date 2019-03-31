@@ -77,26 +77,15 @@ public class PublicacaoMB {
 			List<Arquivo> arquivos = new ArrayList<>();
 			GrupoDaoImpl grupoDao = new GrupoDaoImpl(); 
 			Grupo grupo = grupoDao.busca(grupoDao.buscaIdPorNome(grupoCompartilhado));
-			
-			
-			System.out.println("Titulo: " + titulo);
-			System.out.println("Conteúdo: " + conteudo);
-			System.out.println("Localização: " + localizacao);
-			System.out.println("Latitude: " + latitude);
-			System.out.println("Longitude: " + longitude);
-			System.out.println("Grupo Compartilhado: " + grupoCompartilhado);		
-			
 			if( arquivo != null) {				
-				String nomeArquivo = md5(LocalDateTime.now().toString() + "-" + arquivo.getSubmittedFileName());
-				System.out.println("Arquivo: " + nomeArquivo);
+				String nomeArquivo = md5(LocalDateTime.now().toString() + "-" + arquivo.getSubmittedFileName());				
 				try (InputStream file = arquivo.getInputStream()){
 					arquivos.add(new Arquivo(nomeArquivo, arquivo.getSubmittedFileName(), arquivo.getSize(), "Nenhuma", true));
 					Files.copy(file , new File(imgSource + nomeArquivo).toPath(), StandardCopyOption.REPLACE_EXISTING);			
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
-			
+			}			
 			publicacao.setTitulo(titulo);
 			publicacao.setConteudo(conteudo);
 			if(localizacao) {
@@ -123,17 +112,11 @@ public class PublicacaoMB {
 					loginMb.getUsuarioLogado(),
 					texto,
 					grupo));
-			
-			System.out.println("Publicação realizada");
-			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 		limpar();
-		return "";
+		return "feed";
 		
 	}
 
