@@ -64,12 +64,17 @@ public class TextoDAOImpDB implements TextoDAO {
 	@Override
 	public void edita(Texto texto) throws DataAccessException {
 		try {
-			String query = "UPDATE texto SET " + "ativo=?,datahora=?,usuarioid=?" + "WHERE id=?";
+			String query = "UPDATE texto SET " 
+					+ " ativo=?,datahora=?,usuarioid=?, qtdCurtidas=?, qtdComentarios=? "
+					+ " WHERE id=? ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setBoolean(1, texto.getAtivo());			
 			stm.setTimestamp(2, java.sql.Timestamp.valueOf(texto.getDatahora()));
 			stm.setInt(3, texto.getUsuario().getId());
-			stm.setInt(4, texto.getId());
+			stm.setInt(4, texto.getQtdCurtidas());
+			stm.setInt(5, texto.getQtdComentarios());
+			stm.setInt(6, texto.getId());
+			
 			stm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,5 +186,13 @@ public class TextoDAOImpDB implements TextoDAO {
 		}
 		return textos;
 	}
+
+	@Override
+	public void atualizeContagem(Texto texto) throws DataAccessException {		
+		texto.setQtdCurtidas(new CurteDAOImpDB().quant(texto));
+		edita(texto);		
+	}
+	
+	
 
 }

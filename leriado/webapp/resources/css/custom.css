@@ -24,8 +24,16 @@ p {
 
 .imgUser{
 	width: 150px !important;
-	height: 150px !important;
-	
+	height: 150px !important;	
+}
+
+.imgAmigo{
+	width: 50px !important;
+	height: 50px !important;	
+}
+.imgCurte{
+	width: 20px !important;
+	height: 20px !important;
 }
 
 .publicacao{
@@ -34,6 +42,10 @@ p {
 	padding-left: 20px;
 	padding-right: 20px;
 	border-radius: 10px;
+}
+
+.semBorda tr, .semBorda td {  
+   border: none !important;  
 }
 
 label{

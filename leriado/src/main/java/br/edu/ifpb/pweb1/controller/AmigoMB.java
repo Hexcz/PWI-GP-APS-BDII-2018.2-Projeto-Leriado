@@ -35,6 +35,7 @@ public class AmigoMB {
 			qtdAmigos = usuarioDao.qtdAmigos(loginMb.getUsuarioLogado());
 			qtdSolicitacoes = usuarioDao.qtdSolicitacoesAmizades(loginMb.getUsuarioLogado());
 			amigos = usuarioDao.amigos(loginMb.getUsuarioLogado());
+			usuarioDao.carregarFotoPerfil(amigos);
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
 		}

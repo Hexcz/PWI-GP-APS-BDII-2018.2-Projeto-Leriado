@@ -171,7 +171,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}catch (Exception e) {
 			throw new DataAccessException("Falha ao carregar foto do perifl");
 		}
-	}
+	}	
 
 	@Override
 	public String carregarFotoPerfil(int usuarioId) throws DataAccessException {
@@ -195,6 +195,13 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}catch (Exception e) {
 			throw new DataAccessException("Falha ao carregar foto do perifl");
 		}
+	}
+	
+	@Override
+	public void carregarFotoPerfil(List<Usuario> usuarios) throws DataAccessException {
+		for (Usuario usuario : usuarios) {
+			carregarFotoPerfil(usuario);			
+		}		
 	}
 
 	@Override

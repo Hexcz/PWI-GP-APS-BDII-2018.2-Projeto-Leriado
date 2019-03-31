@@ -70,10 +70,12 @@ public class PublicacaoMB {
 			List<Arquivo> arquivos = new ArrayList<>();
 			GrupoDaoImpl grupoDao = new GrupoDaoImpl(); 
 			Grupo grupo = grupoDao.busca(grupoDao.buscaIdPorNome(grupoCompartilhado));
-			/*Salvando o arquivo na pasta do servidor*/
-			String nomeArquivo = GerirArquivos.salvarArquivoPasta(arquivo, pathServImagem);
 			
-			arquivos.add(new Arquivo(nomeArquivo, arquivo.getSubmittedFileName(), arquivo.getSize(), "Nenhuma", true));			
+			if (arquivo != null) {
+				/*Salvando o arquivo na pasta do servidor*/
+				String nomeArquivo = GerirArquivos.salvarArquivoPasta(arquivo, pathServImagem);			
+				arquivos.add(new Arquivo(nomeArquivo, arquivo.getSubmittedFileName(), arquivo.getSize(), "Nenhuma", true));
+			}
 					
 			publicacao.setTitulo(titulo);
 			publicacao.setConteudo(conteudo);

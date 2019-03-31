@@ -7,7 +7,8 @@
 	<div class="col s12 l12">
 		<ul class="collection ">
 			<!-- USUARIO -->
-			<li class="collection-item avatar"><img	src="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}" class="circle" />
+			<li class="collection-item avatar">
+				<img	src="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}" class="circle" />
 				<b>
 					<h:outputText value="#{loginBean.usuarioLogado.nome} "/>
 					<h:outputText value="#{loginBean.usuarioLogado.sobrenome}"/> 
@@ -27,7 +28,8 @@
 				<ui:repeat var="grupo" value="#{loginBean.seusGrupos}">
 				 <li><h:outputText value="#{grupo}"/></li>
 				</ui:repeat>
-			</ul>
+				</ul>
+				<h:outputLabel value="#{loginBean.quantGruposParticipa}"/>
 			</b>
 			<div class="divider"></div>
 			<b class="grey-text text-darken-3">

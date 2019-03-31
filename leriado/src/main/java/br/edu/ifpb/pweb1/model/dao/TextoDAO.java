@@ -12,8 +12,9 @@ public interface TextoDAO {
 	void exclui(Texto texto) throws DataAccessException;	
 	Texto buscar(int id) throws DataAccessException;
 	void buscar(Texto texto) throws DataAccessException;
-	void buscar(int id, Texto texto) throws DataAccessException;
+	void buscar(int id, Texto texto) throws DataAccessException;	
 	int quant() throws DataAccessException;
 	List<Texto> lista() throws DataAccessException;
 	List<Texto>lista(int inicio,int quant) throws DataAccessException;
+	void atualizeContagem(Texto texto) throws DataAccessException;
 }

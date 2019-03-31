@@ -10,6 +10,7 @@ import javax.faces.bean.RequestScoped;
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.FeedPublicacaoDAOImpDB;
+import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
 import br.edu.ifpb.pweb1.model.domain.FeedPublicacao;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
@@ -56,16 +57,22 @@ public class FeedMB {
 		int usuarioId = loginMb.getUsuarioLogado().getId();
 		
 		try {
-			if (curteDao.existe(textoId, usuarioId)) {
-				curteDao.exclui(textoId, usuarioId);
+			int qtdCurtidas = publicacao.getCompartilha().getTexto().getQtdCurtidas();
+			boolean curtido = publicacao.isCurtido();
+			if (curtido) {
+				curteDao.exclui(textoId, usuarioId);				
+				qtdCurtidas --;
 			}else {
 				curteDao.cria(textoId, usuarioId);
+				qtdCurtidas ++;				
 			}
+			publicacao.setCurtido(!curtido);
+			publicacao.getCompartilha().getTexto().setQtdCurtidas(qtdCurtidas);
+			new TextoDAOImpDB().atualizeContagem(publicacao.getCompartilha().getTexto());
 		} catch (DataAccessException e) {			
 			e.printStackTrace();
-		}		
-		listarPublicacoes();
-		return "feed";
+		}
+		return "";
 	}
 	
 	public FeedPublicacao getPublicacao() {

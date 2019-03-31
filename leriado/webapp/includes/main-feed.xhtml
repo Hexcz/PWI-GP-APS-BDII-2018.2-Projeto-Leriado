@@ -4,13 +4,16 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<!-- CRIAR MENSAGEM -->
-	 <p:accordionPanel prependId="false">
+	 <p:accordionPanel prependId="false" rendered="#{loginBean.quantGruposParticipa>0}">
         <p:tab title="Mensagem">
             <h:panelGrid columns="2" cellpadding="10">                
                	<ui:include src="criar-mensagem.xhtml" />
             </h:panelGrid>
         </p:tab>        
     </p:accordionPanel>
+    <p:panel rendered="#{loginBean.quantGruposParticipa==0}">
+    	<h:outputLabel value="Você só poderá realizar publicações quando fizer parte de algum grupo."/>
+    </p:panel>
     <!-- FEED -->
 	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
 		<ui:include src="mostrar-publicacao-feed.xhtml" />		

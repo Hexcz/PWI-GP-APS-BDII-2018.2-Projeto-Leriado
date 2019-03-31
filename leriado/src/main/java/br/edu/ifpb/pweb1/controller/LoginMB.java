@@ -15,13 +15,10 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
-import br.edu.ifpb.pweb1.model.dao.impdb.CompartilhaDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
 import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Arquivo;
-import br.edu.ifpb.pweb1.model.domain.Compartilha;
-import br.edu.ifpb.pweb1.model.domain.Grupo;
 import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
@@ -41,7 +38,8 @@ public class LoginMB {
 	private String senha;	
 	private String pathUrlImagem;
 	private String pathServImagem;
-	private UsuarioDaoImpl usuarioDao;	
+	private UsuarioDaoImpl usuarioDao;
+	private int quantGruposParticipa;
 	private List<String> seusGrupos;
 	private Part imagem;
 
@@ -79,12 +77,13 @@ public class LoginMB {
 	
 	public String carregarPerfil() {
 		try {
+			GrupoDaoImpl grupoDao = new GrupoDaoImpl();
 			usuarioDao.buscar(usuarioLogado);
 			usuarioDao.carregarFotoPerfil(usuarioLogado); //<=== CARREGAR A FOTO DO PERFIL
 			usuarioLogado.setSenha("");
-			senha = "";
-			seusGrupos = new GrupoDaoImpl().buscarGruposUsuarioParticipa(usuarioLogado.getId());
-			System.out.println("Perfil carregado");
+			senha = "";			
+			seusGrupos = grupoDao.buscarGruposUsuarioParticipa(usuarioLogado.getId());
+			quantGruposParticipa = seusGrupos.size();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,6 +116,7 @@ public class LoginMB {
 			
 				textoDao.cria(texto);	
 				usuarioDao.mudarFotoPerfil(usuarioLogado, texto);
+				usuarioLogado.setArquivoFoto(nomeArquivo);
 				carregarPerfil();
 			} catch (DataAccessException e) {
 				e.printStackTrace();
@@ -168,6 +168,14 @@ public class LoginMB {
 
 	public void setImagem(Part imagem) {
 		this.imagem = imagem;
+	}
+
+	public int getQuantGruposParticipa() {
+		return quantGruposParticipa;
+	}
+
+	public void setQuantGruposParticipa(int quantGruposParticipa) {
+		this.quantGruposParticipa = quantGruposParticipa;
 	}
 
 	public List<String> getSeusGrupos() {
