@@ -13,20 +13,39 @@
 				<p><small class="grey-text text-darken-2"> 	<h:outputText value="#{publicacao.compartilha.dataHora}"/></small></p>
 				<p><h:outputText value="#{publicacao.compartilha.texto.publicacao.conteudo}"/></p>
 				<p>	<small><h:outputText value="#{publicacao.compartilha.texto.qtdCurtidas}"/></small></p>
-				<!-- CURTIR -->
 				
-				<p:commandLink id="btCurtir" title="Curtir" rendered="#{publicacao.curtido==false}" ajax="true" immediate="true"
-					 action="#{feedBean.curtir}" update="formPublicacao"> 
-					<f:setPropertyActionListener value="#{publicacao}"	target="#{feedBean.publicacao}" />
-					<p:graphicImage styleClass="imgCurte" autoUpdate="true"  value="#{loginBean.pathUrlImagem}ncurtido.png"/>
-				</p:commandLink>		
+				<p:panelGrid styleClass="semBorda">					
+					<p:row styleClass="semBorda">
+						<p:column styleClass="semBorda">
+							<!-- CURTIR -->
+							<p:commandLink id="btCurtir" title="Curtir" rendered="#{publicacao.curtido==false}" ajax="true" immediate="true"
+								 action="#{feedBean.curtir}" update="formPublicacao"> 
+								<f:setPropertyActionListener value="#{publicacao}"	target="#{feedBean.publicacao}" />
+								<p:graphicImage styleClass="imgCurte" autoUpdate="true"  value="#{loginBean.pathUrlImagem}ncurtido.png"/>
+							</p:commandLink>		
+							
+							<p:commandLink id="btDescurtir" title="Descurtir"  rendered="#{publicacao.curtido==true}" ajax="true" immediate="true"	
+								 action="#{feedBean.curtir}" update="formPublicacao">
+								<f:setPropertyActionListener value="#{publicacao}"	target="#{feedBean.publicacao}" />
+								<p:graphicImage styleClass="imgCurte" autoUpdate="true"  value="#{loginBean.pathUrlImagem}curtido.png"/>
+							</p:commandLink> 
+						</p:column>
+						
+						<p:column>
+							<h:commandButton value="Compartilhar"/>
+						</p:column>
+						<p:column>
+							<p:inputText/>
+						</p:column>						
+						<p:column>							
+							<h:commandButton value="Comentar"/>
+						</p:column>
+						
+					</p:row>
+				</p:panelGrid>
 				
-				<p:commandLink id="btDescurtir" title="Descurtir"  rendered="#{publicacao.curtido==true}" ajax="true" immediate="true"	
-					 action="#{feedBean.curtir}" update="formPublicacao">
-					<f:setPropertyActionListener value="#{publicacao}"	target="#{feedBean.publicacao}" />
-					<p:graphicImage styleClass="imgCurte" autoUpdate="true"  value="#{loginBean.pathUrlImagem}curtido.png"/>
-				</p:commandLink>
-				<h:commandButton value="Compartilhar"/>				
+				
+								
 			</h:form>
 			<div class="divider"></div>
 		</div>

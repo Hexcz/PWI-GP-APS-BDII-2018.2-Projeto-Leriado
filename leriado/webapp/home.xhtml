@@ -19,8 +19,18 @@
 					</div>
 					
 					<!-- FEED -->
-					<div class="col s8">						
-						<ui:include src="includes/main-feed.xhtml" />
+					
+					<div class="col s8">
+						<!-- FEED PRINCIPAL -->						
+						<h:panelGroup rendered="#{loginBean.paginaAtual eq 'feed'}">																
+							<ui:include src="includes/main-feed.xhtml" />
+						</h:panelGroup>
+						<!-- FEED BUSCA AMIGO -->
+						<h:panelGroup rendered="#{loginBean.paginaAtual eq 'buscaAmigo'}">																
+							<ui:include src="includes/buscar-amigos.xhtml" />
+						</h:panelGroup>
+						
+						
 					</div>
 					
 					<!-- AMIGOS -->

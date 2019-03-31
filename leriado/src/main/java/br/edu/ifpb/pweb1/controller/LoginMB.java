@@ -42,6 +42,7 @@ public class LoginMB {
 	private int quantGruposParticipa;
 	private List<String> seusGrupos;
 	private Part imagem;
+	private String paginaAtual;
 
 
 	@PostConstruct
@@ -64,7 +65,8 @@ public class LoginMB {
 		try {
 			if (usuarioDao.login(email, senha)) {
 				usuarioLogado = usuarioDao.buscarPorEmail(email);
-				carregarPerfil();				
+				carregarPerfil();
+				paginaAtual = "feed";
 				return "sucesso";
 			}			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -168,6 +170,14 @@ public class LoginMB {
 
 	public void setImagem(Part imagem) {
 		this.imagem = imagem;
+	}
+
+	public String getPaginaAtual() {
+		return paginaAtual;
+	}
+
+	public void setPaginaAtual(String paginaAtual) {
+		this.paginaAtual = paginaAtual;
 	}
 
 	public int getQuantGruposParticipa() {

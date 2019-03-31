@@ -29,6 +29,17 @@
 				</ui:repeat>
 			</ul>
 			
+			<div class="row">
+				<div class="col s8">
+					<h:inputText value="#{amigoBean.queryAmigos}"/>	 			
+	 			</div>
+	 			<div class="col s4">
+	 				<h:commandLink action="#{amigoBean.buscarAmigos}">
+	 					<h:graphicImage width="20" value="resources/img/lupa.png"/>
+	 				</h:commandLink>	 				
+	 			</div>
+			</div>
+			
 		</h:form>
 	</p:panel> 	 	
 </html>

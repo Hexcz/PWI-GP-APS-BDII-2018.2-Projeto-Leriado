@@ -20,16 +20,26 @@ public class AmigoMB {
 	private UsuarioDaoImpl usuarioDao;
 	private List<Usuario> amigos;
 	private List<Usuario> solicitacoes;
+	private String queryAmigos;
 	
 	@ManagedProperty("#{loginBean}")
 	private LoginMB loginMb;
 	
 	@PostConstruct
 	private void incio() {
-		usuarioDao = new UsuarioDaoImpl();		
+		usuarioDao = new UsuarioDaoImpl();
+		queryAmigos = "";
 		listarAmigos();
 	}
 	
+	public String getQueryAmigos() {
+		return queryAmigos;
+	}
+
+	public void setQueryAmigos(String queryAmigos) {
+		this.queryAmigos = queryAmigos;
+	}
+
 	public String listarAmigos() {
 		try {
 			qtdAmigos = usuarioDao.qtdAmigos(loginMb.getUsuarioLogado());
@@ -39,6 +49,11 @@ public class AmigoMB {
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
 		}
+		return "";
+	}
+	
+	public String buscarAmigos() {
+		System.out.println(queryAmigos);
 		return "";
 	}
 
