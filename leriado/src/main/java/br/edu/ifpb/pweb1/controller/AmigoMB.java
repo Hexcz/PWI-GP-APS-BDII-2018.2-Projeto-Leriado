@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import br.edu.ifpb.pweb1.model.dao.UsuarioDaoImpl;
+import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 

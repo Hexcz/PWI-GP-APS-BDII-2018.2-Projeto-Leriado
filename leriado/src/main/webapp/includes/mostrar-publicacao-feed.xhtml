@@ -14,10 +14,10 @@
 			<p>	<small><h:outputText value="#{publicacao.compartilha.texto.qtdCurtidas}"/></small></p>
 			<!-- CURTIR -->			
 			<h:form>			
-				<h:commandButton  styleClass="waves-effect waves-light btn red" rendered="#{publicacao.curtido==true}" value="Descurtir"	action="#{feedBean.curtir}" ajax="true">
+				<h:commandButton  styleClass="waves-effect waves-light btn red" rendered="#{publicacao.curtido==true}" value="Descurtir" action="#{feedBean.curtir}" ajax="true">
 					<f:setPropertyActionListener value="#{publicacao}" target="#{feedBean.publicacao}"/>							
 				</h:commandButton>							
-				<h:commandButton styleClass="waves-effect waves-light btn grey" rendered="#{publicacao.curtido==false}" value="Curtir"	action="#{feedBean.curtir}" ajax="true">
+				<h:commandButton styleClass="waves-effect waves-light btn grey" rendered="#{publicacao.curtido==false}" value="Curtir" action="#{feedBean.curtir}" ajax="true">
 					<f:setPropertyActionListener value="#{publicacao}" target="#{feedBean.publicacao}"/>							
 				</h:commandButton>													
 			</h:form>

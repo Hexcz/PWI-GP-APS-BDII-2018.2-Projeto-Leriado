@@ -1,15 +1,11 @@
 package br.edu.ifpb.pweb1.controller;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -17,21 +13,21 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
-import br.edu.ifpb.pweb1.model.dao.GrupoDaoImpl;
-import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.CompartilhaDAOImpDB;
-import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.TextoDAOImpDB;
+import br.edu.ifpb.pweb1.model.dao.impdb.CompartilhaDAOImpDB;
+import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
+import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
+import br.edu.ifpb.pweb1.model.domain.Arquivo;
+import br.edu.ifpb.pweb1.model.domain.Compartilha;
 import br.edu.ifpb.pweb1.model.domain.Grupo;
-import br.edu.ifpb.pweb1.model.domain.publicacao.Arquivo;
-import br.edu.ifpb.pweb1.model.domain.publicacao.Compartilha;
-import br.edu.ifpb.pweb1.model.domain.publicacao.Publicacao;
-import br.edu.ifpb.pweb1.model.domain.publicacao.Texto;
+import br.edu.ifpb.pweb1.model.domain.Publicacao;
+import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
 @ManagedBean(name = "publicacaoBean")
 @RequestScoped
 public class PublicacaoMB {
 	
-	private String imgSource ="/home/isleimar/Imagens/imgSite/";
+	private String pathServImagem;
 	private String titulo;
 	private String conteudo;
 	private boolean localizacao;
@@ -46,18 +42,15 @@ public class PublicacaoMB {
 	@PostConstruct
 	private void iniciar() {
 		localizacao = true;
-	}
-	
-	private String md5(String texto) {
-		try {
-
-			MessageDigest m = MessageDigest.getInstance("MD5");
-			m.update(texto.getBytes(), 0, texto.length());
-			return new BigInteger(1, m.digest()).toString(16);
-		} catch (NoSuchAlgorithmException e) {
+		try{
+			Properties properties = new Properties();	
+			InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties");
+			properties.load(inputStream);
+			inputStream.close();
+			pathServImagem = properties.getProperty("path.serv.imagem");
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "";
 	}
 	
 	private void limpar() {
@@ -77,15 +70,11 @@ public class PublicacaoMB {
 			List<Arquivo> arquivos = new ArrayList<>();
 			GrupoDaoImpl grupoDao = new GrupoDaoImpl(); 
 			Grupo grupo = grupoDao.busca(grupoDao.buscaIdPorNome(grupoCompartilhado));
-			if( arquivo != null) {				
-				String nomeArquivo = md5(LocalDateTime.now().toString() + "-" + arquivo.getSubmittedFileName());				
-				try (InputStream file = arquivo.getInputStream()){
-					arquivos.add(new Arquivo(nomeArquivo, arquivo.getSubmittedFileName(), arquivo.getSize(), "Nenhuma", true));
-					Files.copy(file , new File(imgSource + nomeArquivo).toPath(), StandardCopyOption.REPLACE_EXISTING);			
-				}catch (Exception e) {
-					e.printStackTrace();
-				}
-			}			
+			/*Salvando o arquivo na pasta do servidor*/
+			String nomeArquivo = GerirArquivos.salvarArquivoPasta(arquivo, pathServImagem);
+			
+			arquivos.add(new Arquivo(nomeArquivo, arquivo.getSubmittedFileName(), arquivo.getSize(), "Nenhuma", true));			
+					
 			publicacao.setTitulo(titulo);
 			publicacao.setConteudo(conteudo);
 			if(localizacao) {

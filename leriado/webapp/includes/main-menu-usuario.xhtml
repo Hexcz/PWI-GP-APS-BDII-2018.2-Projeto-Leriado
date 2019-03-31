@@ -7,7 +7,7 @@
 	<div class="col s12 l12">
 		<ul class="collection ">
 			<!-- USUARIO -->
-			<li class="collection-item avatar"><img	src="resources/img/perfilDefault.png" class="circle" />
+			<li class="collection-item avatar"><img	src="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}" class="circle" />
 				<b>
 					<h:outputText value="#{loginBean.usuarioLogado.nome} "/>
 					<h:outputText value="#{loginBean.usuarioLogado.sobrenome}"/> 

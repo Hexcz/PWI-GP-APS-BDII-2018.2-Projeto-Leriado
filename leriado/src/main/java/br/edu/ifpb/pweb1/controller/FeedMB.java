@@ -7,10 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import br.edu.ifpb.pweb1.model.dao.publicacao.FeedPublicacaoDAO;
-import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.CurteDAOImpDB;
-import br.edu.ifpb.pweb1.model.dao.publicacao.impdb.FeedPublicacaoDAOImpDB;
-import br.edu.ifpb.pweb1.model.domain.publicacao.FeedPublicacao;
+import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
+import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
+import br.edu.ifpb.pweb1.model.dao.impdb.FeedPublicacaoDAOImpDB;
+import br.edu.ifpb.pweb1.model.domain.FeedPublicacao;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
 @ManagedBean(name="feedBean")

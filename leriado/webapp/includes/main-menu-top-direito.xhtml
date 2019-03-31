@@ -35,15 +35,18 @@
 	<li>
 		<div class="user-view">
 			<div class="background green"></div>
-			<form action="#" method="post" enctype="multipart/form-data">
-				<div class="file-field input-field">
-					<img class="circle" src="resources/img/perfilDefault.png" /> <input
-						type="file" name="file" onchange="this.form.submit()" />
+			<h:form id="formFoto" enctype="multipart/form-data">
+				<div class="file-field input-field">				
+					<h:graphicImage class="circle imgUser" value="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}">
+						<h:inputFile title="#{loginBean.usuarioLogado.nome}" value="#{loginBean.imagem}">
+							 <f:ajax render="formFoto" listener="#{loginBean.mudarFotoPerfil}" />
+						</h:inputFile>						
+					</h:graphicImage>
 				</div>
-			</form>
+			</h:form>
 			<a href="#"> 
 				<span class="white-text name">
-						<h:outputText value="#{loginBean.usuarioLogado.nome} " />
+						<h:outputText value="#{loginBean.usuarioLogado.nome}" />
 						<h:outputText value="#{loginBean.usuarioLogado.sobrenome}" />
 			</span></a> 
 			<a href="#">

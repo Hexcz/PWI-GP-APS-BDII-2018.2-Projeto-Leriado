@@ -2,7 +2,7 @@ package com.ifpb.edu.leriadoApp;
 
 import org.junit.Test;
 
-import br.edu.ifpb.pweb1.model.dao.GrupoDaoImpl;
+import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
 public class TesteGrupo {

@@ -158,14 +158,15 @@ CREATE TABLE compartilha(
 );
 
 /*CRIACAO DA TABELA FOTOPERFIL*/
--- CREATE TABLE fotoperfil(
--- 	usuarioid INT,
--- 	fotoid INT,	
--- 	CONSTRAINT fotoperfil_pk PRIMARY KEY (usuarioid,fotoid),
--- 	CONSTRAINT fotoperfil_usuarioid_fk FOREIGN KEY (usuarioid)
--- 		REFERENCES usuario(id)
--- 		ON UPDATE CASCADE ON DELETE CASCADE,
--- 	CONSTRAINT fotoperfil_fotoid_fk FOREIGN KEY (fotoid)
--- 		REFERENCES foto(publicacaoid)
--- 		ON UPDATE CASCADE ON DELETE CASCADE
--- );
+ CREATE TABLE fotoperfil(
+    datahora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ 	usuarioid INT,
+ 	textoid INT,	
+ 	CONSTRAINT fotoperfil_pk PRIMARY KEY (usuarioid,textoid),
+ 	CONSTRAINT fotoperfil_usuarioid_fk FOREIGN KEY (usuarioid)
+ 		REFERENCES usuario(id)
+ 		ON UPDATE CASCADE ON DELETE CASCADE,
+ 	CONSTRAINT fotoperfil_textoid_fk FOREIGN KEY (textoid)
+ 		REFERENCES texto(id)
+ 		ON UPDATE CASCADE ON DELETE CASCADE
+ );

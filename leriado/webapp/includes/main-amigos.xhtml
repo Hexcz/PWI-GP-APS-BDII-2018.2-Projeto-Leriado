@@ -10,7 +10,10 @@
  		</div>
  		<ul>
 	 		<ui:repeat var="amigo" value="#{amigoBean.amigos}">
-	 			<li><h:outputLabel value="#{amigo.nome}"/></li>	 							
+	 			<li>
+	 				<h:outputLabel value="#{amigo.nome} "/>
+	 				<h:outputLabel value="#{amigo.sobrenome}"/><br/>	 				
+	 			</li>	 							
 			</ui:repeat>
 		</ul>
 		<h:outputLabel value="Total de amigos:"/>
