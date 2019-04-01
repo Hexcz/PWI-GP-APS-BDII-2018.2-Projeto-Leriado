@@ -30,47 +30,49 @@
 						 	<p:outputLabel value="#{amigo.nome} #{amigo.sobrenome} "/>
 						 </div>	        		
 						 <div class="ui-g-3">
-						 	<h:form id="formAmigo">		
-						 		<h:outputLabel value="#{amigo.status}"/>					 				 	
+						 	<h:form id="formAmigo">	
+						 							 				 	
 				        		<!-- SOLICITAR AMIZADE -->				        		
-								<p:commandButton									
+								<p:commandLink									
 									value="Solicitar Amizade"
 									action="#{amigoBean.iniciarAmizade}"
 									update="formAmigo" ajax="true"									
 									rendered="#{amigo.status eq 'nada'}"
 									immediate="true">
 									<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-								</p:commandButton>
+								</p:commandLink>
 											 							
 								<!-- DESFAZER AMIZADE -->		
-								<p:commandButton  rendered="#{amigo.status eq 'amigo'}"
+								<p:commandLink  rendered="#{amigo.status eq 'amigo'}"
 									action="#{amigoBean.finalizarAmizade}" immediate="true"
 									update="formAmigo" ajax="true"
 									value="Desfazer Amizade">
 									<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-								</p:commandButton>								
+								</p:commandLink>								
 								<!-- DESFAZER SOLICITAÇÃO -->							
-								<p:commandButton  rendered="#{amigo.status eq 'enviado'}"
+								<p:commandLink  rendered="#{amigo.status eq 'enviado'}"
 									action="#{amigoBean.finalizarAmizade}" immediate="true"
 									update="formAmigo" ajax="true"
 									value="Desfazer Solicitação">
 									<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-								</p:commandButton>
+								</p:commandLink>
 													
 								<!-- AMIZADE FOI SOLICITADA -->		
 								<h:outputLabel rendered="#{amigo.status eq 'recebida'}">
+									<h:outputLabel value="Enviou uma solicitação de amizada, deseja "/>
 									<!-- ACEITAR SOLICITAÇÃO SOLICITADA -->	 								
-									<p:commandButton value="Aceitar Solicitação"
+									<p:commandLink value="Aceitar Solicitação"
 										action="#{amigoBean.iniciarAmizade}" immediate="true"
 										update="formAmigo" ajax="true">
 										<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-									</p:commandButton>
+									</p:commandLink>
+									<h:outputLabel value=" ou deseja "/>
 									<!-- RECUSAR SOLICITADA -->
-									<p:commandButton value="Recusar Solicitação"
+									<p:commandLink value="Recusar Solicitação"
 										action="#{amigoBean.finalizarAmizade}" immediate="true"
 										update="formAmigo" ajax="true">
 										<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-									</p:commandButton>																	
+									</p:commandLink>																	
 								</h:outputLabel>
 							</h:form>							
 						</div>

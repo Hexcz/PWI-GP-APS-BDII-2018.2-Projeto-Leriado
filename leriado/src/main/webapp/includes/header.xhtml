@@ -12,8 +12,12 @@
 				<div class="row">
 					<div class="col s7">
 						<!-- LOGOMARCA -->
-						<a href="#" class="brand-logo "><img class="logo"
-							src="resources/img/logobranco.png" /></a>
+						<h:form>
+							<p:commandLink 
+								action="#{loginBean.home}"	styleClass="brand-logo" ajax="false"> 
+								<p:graphicImage styleClass="logo" value="resources/img/logobranco.png"/>
+							</p:commandLink>
+						</h:form>						
 					</div>
 					<div class="col s5">
 						<!-- TOPO ESQUERDA -->

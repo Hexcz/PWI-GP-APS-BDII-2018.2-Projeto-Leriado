@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.neo4j.driver.v1.Driver;
+import org.neo4j.driver.v1.Record;
 import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.StatementResult;
 
 import br.edu.ifpb.pweb1.model.dao.UsuarioDao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
@@ -500,8 +502,27 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}
 		return 0;
 	}
-	
-	
+		
+	@Override
+	public List<Usuario> sugestaoAmizade(Usuario self) throws DataAccessException {
+		List<Usuario> sugs = new ArrayList<>();
+		try(Session session = driveNeo4j.session()){
+			 Map<String, Object> mapa = new HashMap<>();
+			 mapa.put("selfId", self.getId());
+			 
+			 StatementResult sr = session.run("MATCH (self:Usuario)--(:Usuario)--(sugestao:Usuario) "
+			 		+ " WHERE (self.id = $selfId) AND NOT (sugestao)--(self) "
+			 		+ " AND NOT (sugestao.id = self.id) " 
+			 		+ " RETURN DISTINCT sugestao.id ",mapa);
+			 
+			 while(sr.hasNext()){
+				 Record rc = sr.next();
+				 sugs.add(buscarPorId(rc.get("sugestao.id", 0)));
+			 }
+		}
+		return sugs;
+	}
+
 	@Override
 	public void mudarStatus(Usuario self, Usuario usuario) throws DataAccessException {
 		

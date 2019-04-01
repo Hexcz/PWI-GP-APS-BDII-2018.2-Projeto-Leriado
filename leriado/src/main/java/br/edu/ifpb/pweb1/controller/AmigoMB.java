@@ -22,6 +22,7 @@ public class AmigoMB {
 	private List<Usuario> amigos;
 	private List<Usuario> solicitacoes;
 	private List<Usuario> buscados;
+	private List<Usuario> sugestoes;
 	private String queryAmigos;
 	private Usuario amigo;
 	
@@ -50,7 +51,10 @@ public class AmigoMB {
 			qtdAmigos = usuarioDao.qtdAmigos(loginMb.getUsuarioLogado());
 			qtdSolicitacoes = usuarioDao.qtdSolicitacoesAmizades(loginMb.getUsuarioLogado());
 			amigos = usuarioDao.amigos(loginMb.getUsuarioLogado());
+			solicitacoes = usuarioDao.solicitacoesAmizades(loginMb.getUsuarioLogado());
 			usuarioDao.carregarFotoPerfil(amigos);
+			sugestoes = usuarioDao.sugestaoAmizade(loginMb.getUsuarioLogado());
+			usuarioDao.carregarFotoPerfil(sugestoes);
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
 		}
@@ -66,30 +70,29 @@ public class AmigoMB {
 			e.printStackTrace();
 		}
 		loginMb.setPaginaAtual("buscaAmigo");
+		queryAmigos="";
 		return "";
 	}
 	
-	public String iniciarAmizade() {
-		System.out.println("iniciarAmizade");
-		System.out.println(amigo);
+	public String iniciarAmizade() {		
 		try {
 			usuarioDao.seguir(loginMb.getUsuarioLogado(), amigo);
 			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), amigo);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}			
+		listarAmigos();
 		return "";
 	}
 	
-	public String finalizarAmizade() {
-		System.out.println("finalizarAmizade");
-		System.out.println(amigo);
+	public String finalizarAmizade() {		
 		try {
 			usuarioDao.desfazerAmizade(loginMb.getUsuarioLogado(), amigo);
 			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), amigo);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
+		listarAmigos();
 		return "";
 	}
 
@@ -133,6 +136,14 @@ public class AmigoMB {
 		this.buscados = buscados;
 	}
 	
+	public List<Usuario> getSugestoes() {
+		return sugestoes;
+	}
+
+	public void setSugestoes(List<Usuario> sugestoes) {
+		this.sugestoes = sugestoes;
+	}
+
 	public Usuario getAmigo() {
 		return amigo;
 	}

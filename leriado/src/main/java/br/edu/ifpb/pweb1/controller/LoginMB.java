@@ -61,6 +61,14 @@ public class LoginMB {
 		}
 	}
 	
+	public String home() {		
+		System.out.println("ir para casa");	
+		paginaAtual = "feed";
+		if (usuarioLogado != null)
+			return "doHome";
+		return "goLogin";
+	}
+	
 	public String efetuarLogin() {		
 		try {
 			if (usuarioDao.login(email, senha)) {
