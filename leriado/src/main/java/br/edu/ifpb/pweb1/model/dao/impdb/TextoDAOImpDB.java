@@ -9,22 +9,58 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.gson.Gson;
+
 import br.edu.ifpb.pweb1.model.dao.TextoDAO;
 import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.jdbc.ConnectionFactory;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
+import redis.clients.jedis.Jedis;
+
+import java.util.logging.Logger;
 
 public class TextoDAOImpDB implements TextoDAO {
 
 	private Connection connection;
 	private PublicacaoDAOImpDB publicacaoDAO;
 	private UsuarioDaoImpl usuarioDAO;
-
+	private Gson gson;
+	private Jedis jedis;
+	private Long jedisTimeout;
+	private static String prefRedis = "text";	
+	
+	private static Logger log = Logger.getLogger(TextoDAOImpDB.class.getName());
+	
 	public TextoDAOImpDB() {
 		connection = ConnectionFactory.getInstance().getConnection();
 		publicacaoDAO = new PublicacaoDAOImpDB();
 		usuarioDAO = new UsuarioDaoImpl();
+		/*Startando o redis*/
+		jedis = ConnectionFactory.getInstance().getRedis();
+		jedisTimeout = ConnectionFactory.getInstance().getRedisTimeout();
+		gson = new Gson();
+	}
+	
+	private void salvaRedis(Texto texto) {	
+		log.info("Salva Texto no Redis");
+		String json = gson.toJson(texto);
+		jedis.psetex(prefRedis+texto.getId(), jedisTimeout, json);		
+	}	
+	
+	private Texto buscaRedis(int id) {
+		log.info("Buscar Texto no Redis");
+		if(!jedis.exists(prefRedis+id))
+			return null;
+		String json = jedis.get(prefRedis+id);
+		jedis.psetex(prefRedis+id, jedisTimeout, json);
+		return gson.fromJson(json, Texto.class);
+	}
+	
+	private void excluiRedis(int id) {
+		log.info("Excluir Texto no Redis");
+		log.info("Salva no Redis");
+		jedis.del(prefRedis+id);		
 	}
 
 	private void lerTabela(Texto texto, ResultSet rs) throws DataAccessException, SQLException {
@@ -34,7 +70,8 @@ public class TextoDAOImpDB implements TextoDAO {
 		texto.setUsuario(usuarioDAO.buscarPorId(rs.getInt("usuarioid")));
 		texto.setQtdCurtidas(rs.getInt("qtdCurtidas"));
 		texto.setQtdComentarios(rs.getInt("qtdComentarios"));
-		texto.setPublicacao(publicacaoDAO .buscar(rs.getInt("id")));
+		texto.setPublicacao(publicacaoDAO.buscar(rs.getInt("id")));
+		salvaRedis(texto);
 	}
 
 	@Override
@@ -58,6 +95,7 @@ public class TextoDAOImpDB implements TextoDAO {
 			e.printStackTrace();
 			throw new DataAccessException("Falha ao criar texto");
 		}
+		salvaRedis(texto);
 		return texto.getId();
 	}
 
@@ -80,6 +118,7 @@ public class TextoDAOImpDB implements TextoDAO {
 			e.printStackTrace();
 			throw new DataAccessException("Falha ao editar texto");
 		}
+		salvaRedis(texto);
 	}
 
 	@Override
@@ -92,7 +131,7 @@ public class TextoDAOImpDB implements TextoDAO {
 		} catch (Exception e) {
 			throw new DataAccessException("Falha ao excluir texto");
 		}
-
+		excluiRedis(texto.getId());
 	}
 
 	@Override
@@ -118,6 +157,11 @@ public class TextoDAOImpDB implements TextoDAO {
 
 	@Override
 	public void buscar(int id, Texto texto) throws DataAccessException {
+		Texto ntexto = buscaRedis(id);
+		if(ntexto!=null) {
+			texto = ntexto;
+			return;
+		}
 		try {
 			String query = "SELECT * FROM texto " + "WHERE id = ? ";
 			PreparedStatement stm = connection.prepareStatement(query);
@@ -156,7 +200,7 @@ public class TextoDAOImpDB implements TextoDAO {
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				Texto texto = new Texto();
-				lerTabela(texto, rs);
+				lerTabela(texto, rs);				
 				textos.add(texto);
 			}
 
