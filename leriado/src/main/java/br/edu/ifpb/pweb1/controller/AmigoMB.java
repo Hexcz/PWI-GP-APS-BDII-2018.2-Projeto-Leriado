@@ -1,18 +1,19 @@
 package br.edu.ifpb.pweb1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
 @ManagedBean(name="amigoBean")
-@RequestScoped
+@ViewScoped
 public class AmigoMB {
 	
 	private int qtdAmigos;
@@ -20,15 +21,19 @@ public class AmigoMB {
 	private UsuarioDaoImpl usuarioDao;
 	private List<Usuario> amigos;
 	private List<Usuario> solicitacoes;
+	private List<Usuario> buscados;
 	private String queryAmigos;
+	private Usuario amigo;
 	
+
 	@ManagedProperty("#{loginBean}")
 	private LoginMB loginMb;
 	
 	@PostConstruct
 	private void incio() {
-		usuarioDao = new UsuarioDaoImpl();
+		usuarioDao = new UsuarioDaoImpl();		
 		queryAmigos = "";
+		buscados = new ArrayList<>();
 		listarAmigos();
 	}
 	
@@ -52,8 +57,39 @@ public class AmigoMB {
 		return "";
 	}
 	
-	public String buscarAmigos() {
-		System.out.println(queryAmigos);
+	public String buscarAmigos() {		
+		try {
+			buscados = usuarioDao.buscar(queryAmigos);
+			usuarioDao.carregarFotoPerfil(buscados);
+			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), buscados);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		loginMb.setPaginaAtual("buscaAmigo");
+		return "";
+	}
+	
+	public String iniciarAmizade() {
+		System.out.println("iniciarAmizade");
+		System.out.println(amigo);
+		try {
+			usuarioDao.seguir(loginMb.getUsuarioLogado(), amigo);
+			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), amigo);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}			
+		return "";
+	}
+	
+	public String finalizarAmizade() {
+		System.out.println("finalizarAmizade");
+		System.out.println(amigo);
+		try {
+			usuarioDao.desfazerAmizade(loginMb.getUsuarioLogado(), amigo);
+			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), amigo);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 		return "";
 	}
 
@@ -89,6 +125,22 @@ public class AmigoMB {
 		this.solicitacoes = solicitacoes;
 	}
 
+	public List<Usuario> getBuscados() {
+		return buscados;
+	}
+
+	public void setBuscados(List<Usuario> buscados) {
+		this.buscados = buscados;
+	}
+	
+	public Usuario getAmigo() {
+		return amigo;
+	}
+
+	public void setAmigo(Usuario amigo) {
+		this.amigo = amigo;
+	}
+
 	public LoginMB getLoginMb() {
 		return loginMb;
 	}
@@ -96,7 +148,6 @@ public class AmigoMB {
 	public void setLoginMb(LoginMB loginMb) {
 		this.loginMb = loginMb;
 	}
-	
-	
+
 
 }

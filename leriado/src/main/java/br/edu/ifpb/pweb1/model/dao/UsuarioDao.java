@@ -31,4 +31,7 @@ public interface UsuarioDao {
 	List<Usuario> solicitacoesAmizades(Usuario self) throws DataAccessException;
 	List<Usuario> solicitacoesAmizades(Usuario self, int inicio, int quant) throws DataAccessException;
 	int qtdSolicitacoesAmizades(Usuario self) throws DataAccessException;
+	void mudarStatus(Usuario self, Usuario usuario) throws DataAccessException;
+	void mudarStatus(Usuario self, List<Usuario> usuarios) throws DataAccessException;
+	
 }

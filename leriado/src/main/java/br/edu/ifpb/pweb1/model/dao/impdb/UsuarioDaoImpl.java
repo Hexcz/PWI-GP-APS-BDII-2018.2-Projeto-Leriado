@@ -266,8 +266,6 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		return usuarios;
 	}
 	
-	
-
 	@Override
 	public List<Usuario> buscar(String consulta, int inicio, int quant) throws DataAccessException {
 		List<Usuario> usuarios = new ArrayList<>();
@@ -503,5 +501,63 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		return 0;
 	}
 	
+	
+	@Override
+	public void mudarStatus(Usuario self, Usuario usuario) throws DataAccessException {
+		
+		try {
+			boolean segue = false;
+			boolean seguido = false;
+			PreparedStatement stm = null;
+			ResultSet rs = null;
+			if(self.getId() == usuario.getId()) {
+				usuario.setStatus("self");
+				return;
+			}
+			
+			String query = "SELECT FROM segue WHERE segueid = ? AND seguidoid = ? ";
+			stm = connection.prepareStatement(query);
+			stm.setInt(1, self.getId());
+			stm.setInt(2, usuario.getId());
+			rs = stm.executeQuery();
+			segue = (rs.next());
+			stm.close();
+			
+			stm = connection.prepareStatement(query);
+			stm.setInt(1, usuario.getId());
+			stm.setInt(2, self.getId());
+			rs = stm.executeQuery();
+			seguido = (rs.next());
+			stm.close();
+			
+			if(segue && seguido) {
+				usuario.setStatus("amigo");
+			}
+			
+			if(segue && !seguido) {
+				usuario.setStatus("enviado");
+			}
+			
+			if(!segue && seguido) {
+				usuario.setStatus("recebida");
+			}
+			
+			if(!segue && !seguido) {
+				usuario.setStatus("nada");
+			}
+			
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao mudar status de usuário");
+		}
+		
+	}
+
+	@Override
+	public void mudarStatus(Usuario self, List<Usuario> usuarios) throws DataAccessException {
+		for (Usuario usuario : usuarios) {
+			mudarStatus(self, usuario);
+		}
+		
+	}	
 	
 }

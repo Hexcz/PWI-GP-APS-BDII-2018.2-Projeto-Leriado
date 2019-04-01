@@ -23,6 +23,7 @@ public class Usuario implements Serializable {
 	private String estado; 
 	private String numero; 
 	private String cep;
+	private String status;
 	public Usuario(int id, String email, String senha, String nome, String sobrenome, String sexo, LocalDate datanasc,
 			Integer acesso, String telefone, String rua, String cidade, String estado, String numero, String cep) {
 		this.id = id;
@@ -137,9 +138,14 @@ public class Usuario implements Serializable {
 	}
 	public void setCep(String cep) {
 		this.cep = cep;
+	}	
+	
+	public String getStatus() {
+		return status;
 	}
-	
-	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "Usuario [id="+getId()+", email=" + email + ", senha=" + senha + ", nome=" + nome + ", sobrenome=" + sobrenome
