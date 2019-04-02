@@ -1,24 +1,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
 	<!-- CRIAR MENSAGEM -->
-	 <p:accordionPanel prependId="false" rendered="#{loginBean.quantGruposParticipa>0}">
-        <p:tab title="Mensagem">
-            <h:panelGrid columns="2" cellpadding="10">                
-               	<ui:include src="criar-mensagem.xhtml" />
-            </h:panelGrid>
-        </p:tab>        
-    </p:accordionPanel>
-    <p:panel rendered="#{loginBean.quantGruposParticipa==0}">
+ 	 <div class="row" jsf:rendered="#{loginBean.quantGruposParticipa>0}">                
+    	<ui:include src="criar-mensagem.xhtml" /> 
+	</div>
+	
+	 
+    <div class="row" jsf:rendered="#{loginBean.quantGruposParticipa==0}">
     	<h:outputLabel value="Você só poderá realizar publicações quando fizer parte de algum grupo."/>
-    </p:panel>
+    </div>
+    
     <!-- FEED -->
-    
-    
 	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
 		  <ui:include src="mostrar-publicacao-feed.xhtml" />  		
 	</ui:repeat> 
+	<!-- PAGINAÇÃO -->
+	<ui:include src="paginacao.xhtml" />
 	
 </html>

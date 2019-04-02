@@ -18,88 +18,90 @@
 	 			</div>
 			</div>
 		</p:panel>
-		<!-- AMIGOS -->		
-		<p:panel header="Seus amigos: #{amigoBean.qtdAmigos}">	 		
-	 		<ul>
-		 		<ui:repeat var="amigo" value="#{amigoBean.amigos}">
-		 			<li>	 				
-						<div class="row">
-							<div class="col s4">
-	 							<h:graphicImage class="circle imgAmigo" value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}"/>
-	 						</div>
-	 						<div class="col s8">
-	 							<div class="row">	 					
-		 							<h:outputLabel value="#{amigo.nome} #{amigo.sobrenome}"/>
-		 							
-	 							</div>
-	 						</div>	 
-	 					</div>	 									 				
-		 			</li>	 							
-				</ui:repeat>
-			</ul>			
-		</p:panel>	
-		<!-- SOLICITAÇÕES -->			
-		<p:dataList value="#{amigoBean.solicitacoes}" var="amigo" type="definition">
-			<f:facet name="header">
-				Solicitações de amizade			
-			</f:facet>			
-				<div class="row">			
-					<div class="col s3">
-						<h:graphicImage class="circle imgAmigo" value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}"/>
-					</div>
-					<div class="col s9">
-						<h:outputLabel value="#{amigo.nome} #{amigo.sobrenome}"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s1"></div>			
-					<div class="col s5">
-						<p:commandLink value="Aceitar"
-							action="#{amigoBean.iniciarAmizade}" immediate="true"
-							update="formAmigos" ajax="true">
-							<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-						</p:commandLink>
-					</div>
-					<div class="col s5">
-						<p:commandLink value="Recusar"
-							action="#{amigoBean.finalizarAmizade}" immediate="true"
-							update="formAmigos" ajax="true">
-							<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-						</p:commandLink>
-					</div>
-					<div class="col s1"></div>
-				</div>	
-		</p:dataList>
-		<!-- SUGESTOES -->		
-		<p:dataList value="#{amigoBean.sugestoes}" var="amigo" type="definition">
-			<f:facet name="header">
-				Sugestões de amizade			
-			</f:facet>			
-				<div class="row">			
-					<div class="col s3">
-						<h:graphicImage class="circle imgAmigo" value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}"/>
-					</div>
-						<div class="col s9">
-							<div class="row">
-								<h:outputLabel value="#{amigo.nome} #{amigo.sobrenome}"/>
-							</div>
-							<div class="row">
-								<div class="col s1"></div>
-								<div class="col s10">	
-									<p:commandLink value="Solicitar Amizade"
-										action="#{amigoBean.iniciarAmizade}" immediate="true"
-										update="formAmigos" ajax="true">
-										<f:setPropertyActionListener value="#{amigo}" target="#{amigoBean.amigo}" />
-									</p:commandLink>	
-								</div>				
-								<div class="col s1"></div>
-							</div>
-						</div>
-				</div>
-					
-		</p:dataList>
 		
 		
 		
-	</h:form> 	 	
+		<!-- AMIGOS -->
+	<ul class="collection">
+		<li class="collection-item orange darken-1 z-depth-4 white-text">
+			<span class="badge white-text">
+				<h:outputText value="#{amigoBean.qtdAmigos}"/>
+			</span>
+			Seus amigos			
+		</li>	
+		<p:repeat var="amigo" value="#{amigoBean.amigos}">
+		<li class="collection-item avatar white z-depth-4">
+			<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}" />
+			<span class="title"><h:outputText value="#{amigo.nome}"/></span>
+			<p >  
+				<h:outputText value="#{amigo.sobrenome}"/>
+			</p> <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		</li>
+		</p:repeat>
+	
+	<!-- SOLICITAÇÕES -->
+	
+		<li class="collection-item orange darken-1 z-depth-4 white-text">
+			<span class="badge white-text">
+				<h:outputText value="#{amigoBean.qtdSolicitacoes}"/>
+			</span>		
+			Solicitações de amizade			
+		</li>	
+		<p:repeat var="amigo" value="#{amigoBean.solicitacoes}">
+		<li class="collection-item avatar white z-depth-4">
+			<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}" />
+			<span class="title"><h:outputText value="#{amigo.nome}"/></span>
+			<p >  
+				<h:outputText value="#{amigo.sobrenome}"/>				
+			</p> 
+			<div class="col s6">
+			<p:commandLink value="Aceitar" action="#{amigoBean.iniciarAmizade}"
+				immediate="true" update="formAmigos" ajax="true">
+				<f:setPropertyActionListener value="#{amigo}"
+					target="#{amigoBean.amigo}" />
+			</p:commandLink>
+			</div>
+			<div class="col s6">
+			
+			<p:commandLink value="Recusar"
+				action="#{amigoBean.finalizarAmizade}" immediate="true"
+				update="formAmigos" ajax="true">
+				<f:setPropertyActionListener value="#{amigo}"
+					target="#{amigoBean.amigo}" />
+			</p:commandLink>
+			</div>
+			
+		</li>
+		</p:repeat>
+		
+		
+		
+		<!-- SUGESTÕES DE AMIZADA -->
+	
+		<li class="collection-item orange darken-1 z-depth-4 white-text">
+			Sugestões de amizade			
+		</li>	
+		<p:repeat var="amigo" value="#{amigoBean.sugestoes}">
+		<li class="collection-item avatar white z-depth-4">
+			<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}" />
+			<span class="title"><h:outputText value="#{amigo.nome}"/></span>
+			<p >  
+				<h:outputText value="#{amigo.sobrenome}"/>
+			</p> 
+			<div class="col s10 offset-s2">
+			<p:commandLink value="Solicitar Amizade"
+				action="#{amigoBean.iniciarAmizade}" immediate="true"
+				update="formAmigos" ajax="true">
+				<f:setPropertyActionListener value="#{amigo}"
+					target="#{amigoBean.amigo}" />
+			</p:commandLink>
+			</div>			
+			
+		</li>
+		</p:repeat>
+		
+		
+	</ul>
+		
+</h:form> 	 	
 </html>

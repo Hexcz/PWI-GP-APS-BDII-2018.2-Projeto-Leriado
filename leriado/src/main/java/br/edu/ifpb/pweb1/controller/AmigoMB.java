@@ -50,9 +50,11 @@ public class AmigoMB {
 		try {
 			qtdAmigos = usuarioDao.qtdAmigos(loginMb.getUsuarioLogado());
 			qtdSolicitacoes = usuarioDao.qtdSolicitacoesAmizades(loginMb.getUsuarioLogado());
+			
 			amigos = usuarioDao.amigos(loginMb.getUsuarioLogado());
-			solicitacoes = usuarioDao.solicitacoesAmizades(loginMb.getUsuarioLogado());
 			usuarioDao.carregarFotoPerfil(amigos);
+			solicitacoes = usuarioDao.solicitacoesAmizades(loginMb.getUsuarioLogado());
+			usuarioDao.carregarFotoPerfil(solicitacoes);
 			sugestoes = usuarioDao.sugestaoAmizade(loginMb.getUsuarioLogado());
 			usuarioDao.carregarFotoPerfil(sugestoes);
 		} catch (DataAccessException e) {		

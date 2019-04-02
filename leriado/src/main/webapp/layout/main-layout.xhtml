@@ -6,32 +6,35 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<h:outputStylesheet library="css" name="file.css" />
-	<h:outputScript library="js" name="locale.js"/>
-	
-	<!-- JQUERY -->
-	<script src="resources/js/JQuery.js"/>
-	<!-- MASCARAS JQUERY PLUGIN -->
-	<script src="resources/js/jQuery-Mask-Plugin-master/src/jquery.mask.js"/>
-	<!-- MASCARAS JQUERY CONFIG -->
-	<script src="resources/js/mascaras.js"/>
-	<!-- MATERIALIZE CSS-->
-	<link rel="stylesheet" href="resources/css/materialize.css"/>
-		<!-- MATERIALIZE JS -->
-	<script src="resources/js/materialize.js"/>
-	<!-- ICONS MATERIALIZA -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-		rel="stylesheet"/>
-		<!-- CUSTOM -->
-	<link rel="stylesheet" href="resources/css/custom.css"/>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<!-- JQUERY -->
+<script src="resources/js/JQuery.js"></script>
+<!-- MASCARAS JQUERY PLUGIN -->
+<script src="resources/js/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+<!-- MASCARAS JQUERY CONFIG -->
+<script src="resources/js/mascaras.js"></script>
+<!-- MATERIALIZE CSS-->
+<link rel="stylesheet" href="resources/css/materialize.css"/>
+<!-- MATERIALIZE JS -->
+<script src="resources/js/materialize.js"></script>
+<!-- ICONS MATERIALIZA -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<!-- CUSTOM -->
+<link rel="stylesheet" href="resources//css/custom.css"/>
+<script src="resources/js/custom.js"></script>
+
 	<title>Leriado</title>
 </h:head>
 <h:body>	  
+ 	<!--JavaScript at end of body for optimized loading-->
+     <script type="text/javascript" src="resources/materialize.min.js"></script>
+
+
     <!--CABEÇALHO-->
 	<ui:insert name="cabecalho">
 		 <ui:include src="../includes/header.xhtml"></ui:include>
 	</ui:insert>
+
     <!--CORPO-->
 	<ui:insert name="conteudo">
 		<p>Conteúdo da página</p>
@@ -42,5 +45,21 @@
 			<ui:include src="../includes/footer.xhtml"/> 
 		</ui:insert>
 	</div>
+	
+	
+<script>
+	$('.dropdown-trigger').dropdown();
+	$(document).ready(function() {
+		$('.modal').modal();
+	});
+	$(document).ready(function() {
+		$('.collapsible').collapsible();
+	});
+	$(document).ready(function(){
+	    $('.scrollspy').scrollSpy();
+	});
+</script>
+	
+	
 </h:body>
 </html>

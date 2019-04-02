@@ -1,13 +1,14 @@
 package br.edu.ifpb.pweb1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.facelets.FaceletContext;
 
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
@@ -26,6 +27,7 @@ public class FeedMB {
 	private int feedQuant;
 	private int feedPorPag;
 	private FeedPublicacao publicacao;
+	private List<Integer> paginacao;
 	
 	
 	private List<FeedPublicacao> feedPublicacoes;
@@ -38,21 +40,45 @@ public class FeedMB {
 	private void inicio() {
 		feedPublDao = new FeedPublicacaoDAOImpDB(loginMb.getUsuarioLogado());
 		feedPorPag = 5;
-		pagAtual = 0;
+		pagAtual = 1;
+		paginacao = new ArrayList<>();
 		listarPublicacoes();
 	}
 	
 	private String listarPublicacoes(){
+		String pag = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pag");		
+		if(pag != null && !pag.isEmpty()) {
+			try {
+				pagAtual = Integer.parseInt(pag);
+			}catch (Exception e) {
+				pagAtual = 1;
+			}
+		} else {
+			pagAtual = 1;
+		}
 		try {
 			feedQuant = feedPublDao.quantFeed();
 			pagQuant =  (int) Math.ceil((double)feedQuant / (double)feedPorPag); 
-			feedPublicacoes = feedPublDao.listaFeed(pagAtual, feedPorPag);			
+			feedPublicacoes = feedPublDao.listaFeed((pagAtual -1) * feedPorPag, feedPorPag);
+			paginacao.clear();
+			for (int i = 0; i < pagQuant; i++) {
+				paginacao.add(i +1);
+			}
+			
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
 		}	
 		return "";
 	}
 	
+	public List<Integer> getPaginacao() {
+		return paginacao;
+	}
+
+	public void setPaginacao(List<Integer> paginacao) {
+		this.paginacao = paginacao;
+	}
+
 	public String curtir() {
 		CurteDAOImpDB curteDao = new CurteDAOImpDB();
 		int textoId = publicacao.getCompartilha().getTexto().getId();

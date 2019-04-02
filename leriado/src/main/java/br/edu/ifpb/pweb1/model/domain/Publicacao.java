@@ -12,6 +12,7 @@ public class Publicacao {
 	private String conteudo;
 	private String latitude;
 	private String longitude;
+	private String endereco;
 	private List<Arquivo> arquivos;	
 
 	public Publicacao() {
@@ -63,6 +64,14 @@ public class Publicacao {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public List<Arquivo> getArquivos() {

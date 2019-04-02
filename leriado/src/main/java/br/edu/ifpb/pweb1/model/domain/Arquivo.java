@@ -6,17 +6,17 @@ public class Arquivo {
 	private String nomeOriginal;
 	private long tamanho;
 	private String descricao;
-	private boolean eFoto;
+	private boolean umaFoto;
 	
 	public Arquivo() {};
 	
-	public Arquivo(String nome, String nomeOriginal, long tamanho, String descricao, boolean eFoto) {
+	public Arquivo(String nome, String nomeOriginal, long tamanho, String descricao, boolean umaFoto) {
 		super();
 		this.nome = nome;
 		this.nomeOriginal = nomeOriginal;
 		this.tamanho = tamanho;
 		this.descricao = descricao;
-		this.eFoto = eFoto;
+		this.umaFoto = umaFoto;
 	}
 
 	public String getNome() {
@@ -51,18 +51,18 @@ public class Arquivo {
 		this.descricao = descricao;
 	}
 
-	public boolean iseFoto() {
-		return eFoto;
+	public boolean isUmaFoto() {
+		return umaFoto;
 	}
 
-	public void seteFoto(boolean eFoto) {
-		this.eFoto = eFoto;
+	public void setUmaFoto(boolean umaFoto) {
+		this.umaFoto = umaFoto;
 	}
 
 	@Override
 	public String toString() {
 		return "Arquivo [nome=" + nome + ", nomeOriginal=" + nomeOriginal + ", tamanho=" + tamanho + ", descricao="
-				+ descricao + ", eFoto=" + eFoto + "]";
+				+ descricao + ", eFoto=" + umaFoto + "]";
 	}
 	
 }

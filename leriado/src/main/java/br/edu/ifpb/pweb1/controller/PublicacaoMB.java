@@ -33,6 +33,8 @@ public class PublicacaoMB {
 	private boolean localizacao;
 	private String latitude;
 	private String longitude;
+	private String endereco;
+	
 	private String grupoCompartilhado;
 	private Part arquivo;
 	
@@ -82,9 +84,11 @@ public class PublicacaoMB {
 			if(localizacao) {
 				publicacao.setLatitude(latitude);
 				publicacao.setLongitude(longitude);
+				publicacao.setEndereco(endereco);
 			} else {
 				publicacao.setLatitude(null);
 				publicacao.setLongitude(null);
+				publicacao.setEndereco(null);
 				
 			}
 			publicacao.setArquivos(arquivos);
@@ -149,6 +153,14 @@ public class PublicacaoMB {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getGrupoCompartilhado() {

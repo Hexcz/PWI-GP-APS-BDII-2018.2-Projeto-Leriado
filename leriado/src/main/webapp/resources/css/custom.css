@@ -6,6 +6,7 @@ p {
 	margin-bottom: 25px;
 }
 
+/*
 .compartilhaPublicacao{
 	width: 600px;
 	height: 400px;
@@ -15,7 +16,7 @@ p {
 	opacity: 10%;
 	margin: 50%;
 }
-
+*/
 .perfil{
     margin-left: 10px !important;
     margin-right: 10px !important;
@@ -32,8 +33,8 @@ p {
 	height: 50px !important;	
 }
 .imgCurte{
-	width: 20px !important;
-	height: 20px !important;
+	width: 30px !important;
+	height: 30px !important;
 }
 
 .publicacao{
