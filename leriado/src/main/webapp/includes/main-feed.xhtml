@@ -15,7 +15,10 @@
     	<h:outputLabel value="Você só poderá realizar publicações quando fizer parte de algum grupo."/>
     </p:panel>
     <!-- FEED -->
+    
+    
 	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
-		<ui:include src="mostrar-publicacao-feed.xhtml" />		
-	</ui:repeat>
+		  <ui:include src="mostrar-publicacao-feed.xhtml" />  		
+	</ui:repeat> 
+	
 </html>

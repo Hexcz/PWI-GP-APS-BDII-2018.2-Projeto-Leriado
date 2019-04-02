@@ -44,6 +44,7 @@ public class CurteDAOImpDB implements CurteDAO{
 			stm.executeUpdate();
 			atualizaTexto(textoId);
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new DataAccessException("Falha ao criar curtida");
 		}
 		

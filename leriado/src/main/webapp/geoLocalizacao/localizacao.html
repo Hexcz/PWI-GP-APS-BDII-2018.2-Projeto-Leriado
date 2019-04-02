@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+			html,body{height:100%; margin:0;padding:0;}
+			#map {height:100%;}
+		</style>
+	</head>
+	<body>	
+		<script type="text/javascript">
+			function initialize(){
+				var myLatLog = new google.maps.Latlng(-6.889797,-38.561197);
+				var mapOptions = {
+						zoom:14,
+						center: myLatlng,
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+				}
+				
+				var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);				
+			}
+			
+			function loadScript(){
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDUsEe1_EK5qhhb_5WHkTWqnit73wX5zdY&callback=initialize";
+				document.body.appendChild(script);
+			}
+							
+			window.onload = loadScript;
+		</script>		
+	</body>
+</html>

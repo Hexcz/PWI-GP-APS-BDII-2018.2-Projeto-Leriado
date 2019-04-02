@@ -4,6 +4,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import br.edu.ifpb.pweb1.model.dao.PublicacaoDAO;
 import br.edu.ifpb.pweb1.model.domain.Publicacao;
@@ -26,6 +27,8 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	private Jedis jedis;
 	private Long jedisTimeout;
 	private static String prefRedis = "publ";	
+	
+	private static Logger log = Logger.getLogger(PublicacaoDAOImpDB.class.getName());
 
 	public PublicacaoDAOImpDB() {
 		dataBase = ConnectionFactory.getInstance().getMongoDataBase();
@@ -37,6 +40,7 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	}
 	
 	private void salvaRedis(Publicacao publicacao) {		
+		log.info("Publicação salva no Redis");
 		String json = gson.toJson(publicacao);
 		jedis.psetex(prefRedis+publicacao.getTextoId(), jedisTimeout, json);		
 	}	
@@ -44,13 +48,17 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	private Publicacao buscaRedis(int id) {		
 		if(!jedis.exists(prefRedis+id))
 			return null;
+		log.info("Publicação buscada no Redis");
 		String json = jedis.get(prefRedis+id);
 		jedis.psetex(prefRedis+id, jedisTimeout, json);
-		return gson.fromJson(json, Publicacao.class);
+		Publicacao publicacao = gson.fromJson(json, Publicacao.class);		
+		return publicacao;
 	}
 	
-	private void excluiRedis(int id) {		
-		jedis.del(prefRedis+id);		
+	private void excluiRedis(int id) {
+		log.info("Publicação excluída no Redis");
+		jedis.del(prefRedis+id);	
+		System.out.println(id);
 	}
 
 	@Override
@@ -83,11 +91,11 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	@Override
 	public Publicacao buscar(int id) throws DataAccessException {
 		Publicacao publicacao = buscaRedis(id);
-		if (publicacao==null) {
-			publicacao = collection.find(eq("_id",id)).first();
-			salvaRedis(publicacao);
+		if (publicacao!=null) {
+			return publicacao;			
 		}
-		
+		publicacao = collection.find(eq("_id",id)).first();
+		salvaRedis(publicacao);
 		return publicacao;
 	}
 
@@ -111,9 +119,9 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	@Override
 	public List<Publicacao> lista() throws DataAccessException {
 		List<Publicacao> pubs = new ArrayList<Publicacao>();
-		for (Publicacao publicacao : collection.find()) {
-			salvaRedis(publicacao);
+		for (Publicacao publicacao : collection.find()) {			
 			pubs.add(publicacao);			
+			salvaRedis(publicacao);
 		}
 		return pubs;
 	}
@@ -121,9 +129,9 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 	@Override
 	public List<Publicacao> lista(int inicio, int quant) throws DataAccessException {
 		List<Publicacao> pubs = new ArrayList<Publicacao>();
-		for (Publicacao publicacao : collection.find().skip(inicio).limit(quant)) {
-			salvaRedis(publicacao);
+		for (Publicacao publicacao : collection.find().skip(inicio).limit(quant)) {			
 			pubs.add(publicacao);			
+			salvaRedis(publicacao);
 		}
 		return pubs;
 	}

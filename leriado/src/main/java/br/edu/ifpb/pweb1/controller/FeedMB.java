@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
@@ -40,14 +42,14 @@ public class FeedMB {
 		listarPublicacoes();
 	}
 	
-	public String listarPublicacoes(){
+	private String listarPublicacoes(){
 		try {
 			feedQuant = feedPublDao.quantFeed();
 			pagQuant =  (int) Math.ceil((double)feedQuant / (double)feedPorPag); 
 			feedPublicacoes = feedPublDao.listaFeed(pagAtual, feedPorPag);			
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
-		}
+		}	
 		return "";
 	}
 	
@@ -55,7 +57,6 @@ public class FeedMB {
 		CurteDAOImpDB curteDao = new CurteDAOImpDB();
 		int textoId = publicacao.getCompartilha().getTexto().getId();
 		int usuarioId = loginMb.getUsuarioLogado().getId();
-		
 		try {
 			int qtdCurtidas = publicacao.getCompartilha().getTexto().getQtdCurtidas();
 			boolean curtido = publicacao.isCurtido();

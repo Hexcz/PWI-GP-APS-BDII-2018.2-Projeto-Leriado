@@ -6,7 +6,7 @@
 	<div class = "row"> </div>
 	<div class="white z-depth-2 publicacao">
  		<div class="row">	
-			<h:form id="formPublicacao">
+			 <h:form id="formPublicacao">
 				<b class="blue-text"><h:outputText value="#{publicacao.compartilha.usuario.nome}"></h:outputText></b>
 				<p>	<small><h:outputText value="#{publicacao.compartilha.grupo.nome}"/></small></p>
 				<h4><h:outputText value="#{publicacao.compartilha.texto.publicacao.titulo}"/></h4>
@@ -17,7 +17,8 @@
 				<p:panelGrid styleClass="semBorda">					
 					<p:row styleClass="semBorda">
 						<p:column styleClass="semBorda">
-							<!-- CURTIR -->
+							<p:outputLabel value="#{publicacao.compartilha.texto.id}"/>
+				
 							<p:commandLink id="btCurtir" title="Curtir" rendered="#{publicacao.curtido==false}" ajax="true" immediate="true"
 								 action="#{feedBean.curtir}" update="formPublicacao"> 
 								<f:setPropertyActionListener value="#{publicacao}"	target="#{feedBean.publicacao}" />
@@ -43,10 +44,7 @@
 						
 					</p:row>
 				</p:panelGrid>
-				
-				
-								
-			</h:form>
+			</h:form> 
 			<div class="divider"></div>
 		</div>
 	</div>	

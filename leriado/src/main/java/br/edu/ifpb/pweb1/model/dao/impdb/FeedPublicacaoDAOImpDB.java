@@ -60,7 +60,7 @@ public class FeedPublicacaoDAOImpDB implements FeedPublicacaoDAO{
 	}
 
 	@Override
-	public List<FeedPublicacao> listaFeed(int inicio, int quant) throws DataAccessException {
+	public List<FeedPublicacao> listaFeed(int inicio, int quant) throws DataAccessException {	
 		return feedCompartilhas(compartilhaDao.feed(self, inicio, quant));		
 	}
 

@@ -93,5 +93,13 @@ public class Texto {
 	public void setComentarios(List<Texto> comentarios) {
 		this.comentarios = comentarios;
 	}
+
+	@Override
+	public String toString() {
+		return "Texto [id=" + id + ", ativo=" + ativo + ", datahora=" + datahora + ", usuario=" + usuario
+				+ ", publicacao=" + publicacao + ", qtdCurtidas=" + qtdCurtidas + ", qtdComentarios=" + qtdComentarios
+				+ ", comentarios=" + comentarios + "]";
+	}
+
 	
 }
