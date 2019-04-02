@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
@@ -23,15 +24,21 @@
 		</h4>	
 		</div>
 		<!-- OPÇÕES DA PUBLICAÇÃO -->
-		
-		
 		<div class="col s1">
-		
-			<a 
-				class="btn-floating btn-Small waves-effect waves-light  orange accent-1"
-				data-target="menuOpcao"
-				><i class="material-icons">dehaze</i></a>
+
+			<span
+				jsf:rendered="#{publicacao.compartilha.usuario.id eq loginBean.usuarioLogado.id}">
+				<a
+				class="btn-floating btn-Small  waves-effect waves-light  orange accent-1"
+				data-target="menuOpcao" jsf:action="#{feedBean.excluir}">
+					<i class="material-icons">delete</i> <f:setPropertyActionListener
+						value="#{publicacao}" target="#{feedBean.publicacao}" />
+			</a>
+			</span>
 		</div>
+
+
+
 		<div class="col s12">	
 			<!-- DATA DE COMPARTILHAMENTO -->
 			<small class="grey-text text-darken-2">
@@ -58,18 +65,15 @@
 		
 		 
 		<!-- TITULO DA PUBLICACAO -->
-		<h:outputLabel rendered="#{publicacao.compartilha.texto.publicacao.titulo!=null}">
-			<div class="col s12">	
-				<h5>		
-					<h:outputText value="#{publicacao.compartilha.texto.publicacao.titulo}"/>
-				</h5>
-			</div>
-		</h:outputLabel>
+		<div class="col s12" jsf:rendered="#{publicacao.compartilha.texto.publicacao.titulo!=null}">
+			<h5>		
+				<h:outputText value="#{publicacao.compartilha.texto.publicacao.titulo}"/>
+			</h5>
+		</div>
+		
 		
 		<!-- IMAGENS DA PUBLICAÇÃO -->
-		<p>
-		<h:outputLabel			 
-			rendered="#{not empty publicacao.compartilha.texto.publicacao.arquivos}">
+		<div class="col s12" jsf:rendered="#{not empty publicacao.compartilha.texto.publicacao.arquivos}">
 			<p:repeat var="arquivo" value="#{publicacao.compartilha.texto.publicacao.arquivos}">
 				
 				<div class="card-panel hoverable col s12">
@@ -89,13 +93,12 @@
 				</div>
 								
 			</p:repeat>			
-		</h:outputLabel>		
-		</p>
+		</div>
 		
 		
 		
 		<!-- CONTEÚDO DA PUBLICACAO -->
-		<h:outputLabel rendered="#{publicacao.compartilha.texto.publicacao.conteudo!=null}">
+		<div class="col s12" jsf:rendered="#{publicacao.compartilha.texto.publicacao.conteudo!=null}">
 			<div class="col s12"> 
 				<p class="valign-wrapper">		
 					<h:outputText
@@ -103,10 +106,10 @@
 						value="#{publicacao.compartilha.texto.publicacao.conteudo}"/>
 				</p>
 			</div>
-		</h:outputLabel>
+		</div>
 		
-		
-		<p>
+		<!-- CURTIDAS-->
+		<div class="col s11">
 			<small>
 				<h:outputText 
 					rendered="#{publicacao.compartilha.texto.qtdCurtidas==1}"
@@ -115,11 +118,8 @@
 					rendered="#{publicacao.compartilha.texto.qtdCurtidas > 1}"
 					value="#{publicacao.compartilha.texto.qtdCurtidas} cutidas."/>
 			</small>
-		</p>
-		
-		<div class="row">
-			<div class="col s1"></div>
-			<div class="col s1">
+		</div>
+		<div class="col s1">
 				<!-- CURTIR -->
 				<p:commandLink 
 					id="btCurtir" 
@@ -155,14 +155,19 @@
 						value="#{loginBean.pathUrlImagem}curtido.png" />
 				</p:commandLink>
 			</div>
-			<div class="col s2">
-				<!-- COMPARTILHA -->
-				<button data-target="modalCompartilha" 
-				class="btn modal-trigger" 
-				onclick="compartilharGrupo(${feed.compartilha.publicacao.id})">Compartilhar</button>			
-			</div>
-		</div>
 		
+			<!-- COMPARTILHAR -->
+			<hr class="col s12"/>
+			<div class="col s5">
+				<!-- COMPARTILHA -->
+				<button
+					class="btn waves-effect waves-light btn-small orange darken-1"
+					name="action">
+					<small class="text-white">Compartilhar</small> <i
+						class="material-icons right">send</i>
+	
+				</button>
+			</div>		
 		</div>
  	</div>		
 	<br/>

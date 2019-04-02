@@ -4,43 +4,31 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="layout/main-layout.xhtml">
+<ui:composition template="layout/feed-layout.xhtml">
 	<!-- MAIN MENU -->
 	<ui:define name="mainmenutopodireita">
-		<ui:include src="includes/main-menu-top-direito.xhtml" />
-		
+		<ui:include src="includes/main-menu-top-direito.xhtml" />		
 	</ui:define>
-	<ui:define name="conteudo">
-		<div class="orange lighten-5">
-			<div class="container hide-on-med-and-down">
-				<div class="row">
-					<!-- MENU USUÁRIO -->
-					<div class="col s2">						
-						<ui:include src="includes/main-menu-usuario.xhtml" />
-					</div>
-					
-					<!-- FEED -->
-					
-					<div class="col s7">
-						<!-- FEED PRINCIPAL -->						
-						<h:panelGroup rendered="#{loginBean.paginaAtual eq 'feed'}">																
-							<ui:include src="includes/main-feed.xhtml" />
-						</h:panelGroup>
-						<!-- FEED BUSCA AMIGO -->
-						<h:panelGroup rendered="#{loginBean.paginaAtual eq 'buscaAmigo'}">																
-							<ui:include src="includes/buscar-amigos.xhtml" />
-						</h:panelGroup>
-						
-						
-					</div>
-					
-					<!-- AMIGOS -->
-					<div class="col s3">
-						<ui:include src="includes/main-amigos.xhtml" />
-					</div>
-				</div>
-			</div>
-		</div>	
+	
+	<ui:define name="main-esquerda">
+		<!-- MENU USUÁRIO -->											
+		<ui:include src="includes/main-menu-usuario.xhtml" />
+	</ui:define>
+	
+	<ui:define name="main-centro">
+		<!-- FEED -->						
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'feed'}">																
+			<ui:include src="includes/main-feed.xhtml" />
+		</h:panelGroup>
+		<!-- FEED BUSCA AMIGO -->
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'buscaAmigo'}">																
+			<ui:include src="includes/buscar-amigos.xhtml" />
+		</h:panelGroup>
+	</ui:define>
+	
+	<ui:define name="main-direita">		
+		<!-- AMIGOS -->
+		<ui:include src="includes/main-amigos.xhtml" />
 	</ui:define>
 
 </ui:composition>

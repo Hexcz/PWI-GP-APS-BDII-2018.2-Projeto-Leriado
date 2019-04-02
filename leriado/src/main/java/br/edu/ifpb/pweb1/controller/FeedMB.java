@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
 
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
+import br.edu.ifpb.pweb1.model.dao.impdb.CompartilhaDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.FeedPublicacaoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
@@ -99,6 +100,16 @@ public class FeedMB {
 		} catch (DataAccessException e) {			
 			e.printStackTrace();
 		}
+		return "";
+	}
+	
+	public String excluir() {
+		try {
+			new CompartilhaDAOImpDB().exclui(publicacao.getCompartilha());
+		} catch (DataAccessException e) {		
+			e.printStackTrace();
+		}	
+		listarPublicacoes();
 		return "";
 	}
 	
