@@ -20,7 +20,40 @@
 	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
 		  <ui:include src="mostrar-publicacao-feed.xhtml" />  		
 	</ui:repeat> 
-	<!-- PAGINAÇÃO -->
+	
+	<h:form prependId="false">
+	 <!-- MODAL EXCLUIR PUBLICACAO -->
+	<div id="modalExcluirPublicacao" class="modal">
+		<div class="modal-content">
+			<h4>Excluir Publicação</h4>
+			<p>Você tem certeza que deseja excluir esta publicação?</p>
+			<h:inputHidden id="publicacaoId" value="#{feedBean.textoId}" />
+		</div>
+		
+		<div class="modal-footer">
+			<a class="modal-close waves-effect waves-light btn-small orange darken-1">Cancelar</a>
+			<a 
+				class="waves-effect waves-teal btn-flat"
+				jsf:action="#{feedBean.excluir}">
+				Excluir
+			</a>
+		</div>
+	</div>
+	
+	</h:form>
+	
+	<script>
+		function excluirPublicacao(id){
+			document.getElementById("publicacaoId").value = id;
+			var instance = M.Modal.getInstance(document.getElementById("modalExcluirPublicacao"));
+			instance.open(); 
+		}
+	</script>
+
+
+
+
+<!-- PAGINAÇÃO -->
 	<ui:include src="paginacao.xhtml" />
 
 

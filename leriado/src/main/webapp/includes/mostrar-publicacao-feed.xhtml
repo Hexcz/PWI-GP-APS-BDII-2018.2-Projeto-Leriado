@@ -5,7 +5,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form id="formPublicacao" >	
+<h:form id="formPublicacao" >		
  	<div class="divider"></div>	
  	<div class="white z-depth-2 publicacao">
  		<div class="row">
@@ -23,21 +23,18 @@
 			</h:outputLabel>
 		</h4>	
 		</div>
+		
 		<!-- OPÇÕES DA PUBLICAÇÃO -->
-		<div class="col s1">
-
+		<div class="col s1">			
 			<span
 				jsf:rendered="#{publicacao.compartilha.usuario.id eq loginBean.usuarioLogado.id}">
 				<a
-				class="btn-floating btn-Small  waves-effect waves-light  orange accent-1"
-				data-target="menuOpcao" jsf:action="#{feedBean.excluir}">
-					<i class="material-icons">delete</i> <f:setPropertyActionListener
-						value="#{publicacao}" target="#{feedBean.publicacao}" />
+				class="btn-floating modal-trigger btn-Small  waves-effect waves-light  orange accent-1"
+				onclick="excluirPublicacao('#{publicacao.compartilha.texto.id}');">				
+					<i class="material-icons">delete</i>
 			</a>
 			</span>
 		</div>
-
-
 
 		<div class="col s12">	
 			<!-- DATA DE COMPARTILHAMENTO -->
@@ -172,4 +169,5 @@
  	</div>		
 	<br/>
 </h:form>	
+
 </html>

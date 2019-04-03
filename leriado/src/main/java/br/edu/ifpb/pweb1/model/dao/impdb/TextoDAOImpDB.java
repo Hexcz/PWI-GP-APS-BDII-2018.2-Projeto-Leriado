@@ -130,16 +130,23 @@ public class TextoDAOImpDB implements TextoDAO {
 	}
 
 	@Override
-	public void exclui(Texto texto) throws DataAccessException {
+	public void exclui(int textoId) throws DataAccessException {
 		try {
 			String query = "DELETE FROM texto" + " WHERE id = ?";
 			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, texto.getId());
+			stm.setInt(1, textoId);
 			stm.executeUpdate();
+			
+			publicacaoDAO.exclui(textoId);
 		} catch (Exception e) {
 			throw new DataAccessException("Falha ao excluir texto");
 		}
-		excluiRedis(texto.getId());
+		excluiRedis(textoId);
+	}
+
+	@Override
+	public void exclui(Texto texto) throws DataAccessException {
+		exclui(texto.getId());
 	}
 
 	@Override

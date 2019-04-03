@@ -7,19 +7,20 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.facelets.FaceletContext;
 
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
 import br.edu.ifpb.pweb1.model.dao.impdb.CompartilhaDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.FeedPublicacaoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
+import br.edu.ifpb.pweb1.model.domain.Compartilha;
 import br.edu.ifpb.pweb1.model.domain.FeedPublicacao;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
 @ManagedBean(name="feedBean")
-@RequestScoped
+@ViewScoped
 public class FeedMB {
 	
 	
@@ -28,8 +29,9 @@ public class FeedMB {
 	private int feedQuant;
 	private int feedPorPag;
 	private FeedPublicacao publicacao;
+	private int textoId;
+
 	private List<Integer> paginacao;
-	
 	
 	private List<FeedPublicacao> feedPublicacoes;
 	private  FeedPublicacaoDAO feedPublDao;
@@ -72,14 +74,6 @@ public class FeedMB {
 		return "";
 	}
 	
-	public List<Integer> getPaginacao() {
-		return paginacao;
-	}
-
-	public void setPaginacao(List<Integer> paginacao) {
-		this.paginacao = paginacao;
-	}
-
 	public String curtir() {
 		CurteDAOImpDB curteDao = new CurteDAOImpDB();
 		int textoId = publicacao.getCompartilha().getTexto().getId();
@@ -105,10 +99,11 @@ public class FeedMB {
 	
 	public String excluir() {
 		try {
-			new CompartilhaDAOImpDB().exclui(publicacao.getCompartilha());
+			new TextoDAOImpDB().exclui(textoId);			
 		} catch (DataAccessException e) {		
 			e.printStackTrace();
 		}	
+		
 		listarPublicacoes();
 		return "";
 	}
@@ -178,5 +173,21 @@ public class FeedMB {
 	}
 	
 	
+	public List<Integer> getPaginacao() {
+		return paginacao;
+	}
+
+	public void setPaginacao(List<Integer> paginacao) {
+		this.paginacao = paginacao;
+	}
+
+	public int getTextoId() {
+		return textoId;
+	}
+
+	public void setTextoId(int textoId) {
+		this.textoId = textoId;
+	}
+
 	
 }

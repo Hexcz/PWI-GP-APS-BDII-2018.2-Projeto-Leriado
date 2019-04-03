@@ -9,6 +9,7 @@ public interface PublicacaoDAO {
 	void cria(Publicacao publicacao) throws DataAccessException;
 	void edita(Publicacao publicacao) throws DataAccessException;
 	void exclui(Publicacao publicacao) throws DataAccessException;
+	void exclui(int publicacaoId) throws DataAccessException;
 	Publicacao buscar(int id) throws DataAccessException;
 	void buscar(Publicacao publicacao) throws DataAccessException;
 	void buscar(int id, Publicacao publicacao) throws DataAccessException;

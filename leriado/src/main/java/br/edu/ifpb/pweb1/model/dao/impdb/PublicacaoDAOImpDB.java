@@ -79,13 +79,19 @@ public class PublicacaoDAOImpDB implements PublicacaoDAO {
 		
 	}
 
+	
+	
 	@Override
-	public void exclui(Publicacao publicacao) throws DataAccessException {
-		excluiRedis(publicacao.getTextoId());
-		DeleteResult rs = collection.deleteOne(eq("_id",(publicacao.getTextoId())));
+	public void exclui(int publicacaoId) throws DataAccessException {
+		excluiRedis(publicacaoId);
+		DeleteResult rs = collection.deleteOne(eq("_id",(publicacaoId)));
 		if(rs.getDeletedCount()==0)
 			throw new DataAccessException("Falha ao deletar publicacao");
-		
+	}
+
+	@Override
+	public void exclui(Publicacao publicacao) throws DataAccessException {
+		exclui(publicacao.getTextoId());
 	}
 
 	@Override
