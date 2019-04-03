@@ -24,6 +24,10 @@
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'buscaAmigo'}">																
 			<ui:include src="includes/buscar-amigos.xhtml" />
 		</h:panelGroup>
+		<!-- GRUPOS -->
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'grupo'}">																
+			<ui:include src="includes/grupo.xhtml" />
+		</h:panelGroup>
 	</ui:define>
 	
 	<ui:define name="main-direita">		

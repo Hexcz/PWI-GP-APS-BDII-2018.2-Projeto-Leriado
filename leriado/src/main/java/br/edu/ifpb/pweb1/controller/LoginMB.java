@@ -61,8 +61,7 @@ public class LoginMB {
 		}
 	}
 	
-	public String home() {		
-		System.out.println("ir para casa");	
+	public String home() {
 		paginaAtual = "feed";
 		if (usuarioLogado != null)
 			return "doHome";
