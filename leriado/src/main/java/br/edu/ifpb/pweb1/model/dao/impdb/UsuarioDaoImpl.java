@@ -572,6 +572,28 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}
 		
 	}
+	
+	
+
+	@Override
+	public List<Usuario> participaGrupo(int grupoId) throws DataAccessException {
+		List<Usuario> usuarios = new ArrayList<>();
+		try {
+			String query = " SELECT * FROM usuario U "+
+					" WHERE EXISTS(SELECT FROM participagrupo " +
+					" WHERE U.id = usuarioid AND grupoid = ?) ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, grupoId);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				usuarios.add(lerTabela(rs));
+			}
+			carregarFotoPerfil(usuarios);			
+		} catch (Exception e) {
+			throw new DataAccessException("Falha ao listar usuarios do grupo"); 
+		}
+		return usuarios;
+	}
 
 	@Override
 	public void mudarStatus(Usuario self, List<Usuario> usuarios) throws DataAccessException {

@@ -15,10 +15,11 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
-import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
+import br.edu.ifpb.pweb1.model.dao.impdb.FeedGrupoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Arquivo;
+import br.edu.ifpb.pweb1.model.domain.FeedGrupo;
 import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
@@ -40,7 +41,7 @@ public class LoginMB {
 	private String pathServImagem;
 	private UsuarioDaoImpl usuarioDao;
 	private int quantGruposParticipa;
-	private List<String> seusGrupos;
+	private List<FeedGrupo> seusGrupos;
 	private Part imagem;
 	private String paginaAtual;
 
@@ -84,14 +85,24 @@ public class LoginMB {
 		return "falha";
 	}
 	
+	public String carrgarGrupos() {
+		try {
+			FeedGrupoDAOImpDB feedGrupoDao = new FeedGrupoDAOImpDB(usuarioLogado);
+			seusGrupos = feedGrupoDao.buscarGruposUsuarioParticipa(usuarioLogado.getId());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
 	public String carregarPerfil() {
 		try {
-			GrupoDaoImpl grupoDao = new GrupoDaoImpl();
+			
 			usuarioDao.buscar(usuarioLogado);
 			usuarioDao.carregarFotoPerfil(usuarioLogado); //<=== CARREGAR A FOTO DO PERFIL
 			usuarioLogado.setSenha("");
 			senha = "";			
-			seusGrupos = grupoDao.buscarGruposUsuarioParticipa(usuarioLogado.getId());
+			carrgarGrupos();
 			quantGruposParticipa = seusGrupos.size();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -195,12 +206,22 @@ public class LoginMB {
 		this.quantGruposParticipa = quantGruposParticipa;
 	}
 
-	public List<String> getSeusGrupos() {
+	public String getPathServImagem() {
+		return pathServImagem;
+	}
+
+	public void setPathServImagem(String pathServImagem) {
+		this.pathServImagem = pathServImagem;
+	}
+
+	public List<FeedGrupo> getSeusGrupos() {
 		return seusGrupos;
 	}
 
-	public void setSeusGrupos(List<String> seusGrupos) {
+	public void setSeusGrupos(List<FeedGrupo> seusGrupos) {
 		this.seusGrupos = seusGrupos;
 	}
+
+
 
 }

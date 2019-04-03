@@ -52,11 +52,17 @@
 			
 			<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
 				<li class="collection-item avatar white z-depth-4">
-					<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{grupo}" />
-					<span class="title"><h:outputText value="#{grupo}"/></span>
-					<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+					<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{grupo.grupo.foto}" />
+					<span class="title"><h:outputText value="#{grupo.grupo.nome}"/></span>					
+					<h:commandLink 
+					 rendered="#{grupo.administrador eq 'true'}" title="Administrador"  class="secondary-content">
+					 	<i class="material-icons">grade</i>
+					 </h:commandLink>
 				</li>
 			</p:repeat>
+			
+			
+			
 			<!-- GRUPOS QUE ADMINISTRA -->
 			<li class="collection-item orange darken-1 z-depth-4 white-text">				
 				<p:commandLink 

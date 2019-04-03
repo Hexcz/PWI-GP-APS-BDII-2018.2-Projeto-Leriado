@@ -34,5 +34,6 @@ public interface UsuarioDao {
 	List<Usuario> sugestaoAmizade(Usuario self) throws DataAccessException;
 	void mudarStatus(Usuario self, Usuario usuario) throws DataAccessException;
 	void mudarStatus(Usuario self, List<Usuario> usuarios) throws DataAccessException;
+	List<Usuario> participaGrupo(int grupoId) throws DataAccessException;
 	
 }

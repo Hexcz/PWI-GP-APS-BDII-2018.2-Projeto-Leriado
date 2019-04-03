@@ -19,8 +19,23 @@ public class GrupoDaoImpl implements GrupoDao{
 		connection = ConnectionFactory.getInstance().getConnection();
 	}
 	
+	private Grupo lerTabela(ResultSet rs) throws DataAccessException{
+		try {
+			return new Grupo(
+				rs.getInt("id"),
+				rs.getBoolean("ativo"),
+				rs.getTimestamp("dataHora").toLocalDateTime(),
+				rs.getString("nome"),
+				rs.getString("descricao"),
+				rs.getString("foto"));
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao recuperar da tabela");
+		}
+	}
+	
 	@Override
-	public void criar(Grupo novoGrupo) throws SQLException {
+	public void criar(Grupo novoGrupo) throws DataAccessException {
+		try {
 		String sql = "INSERT INTO grupo (ativo,nome,descricao,foto)"
 				+ " VALUES (?,?,?,?)"
 				+ " RETURNING id ";
@@ -32,32 +47,93 @@ public class GrupoDaoImpl implements GrupoDao{
 		ResultSet rs = statement.executeQuery();
 		rs.next();
 		novoGrupo.setId(rs.getInt(1));
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao criar Grupo");
+		}
 	}
 
 	@Override
-	public void excluir(int idGrupo) throws SQLException {
+	public void excluir(int idGrupo) throws DataAccessException {
+		try {
 		String query = "update grupo set ativo=false where id=?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setInt(1, idGrupo);
 		statement.execute();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao excluir grupo");
+		}
+	}
+	
+	@Override
+	public boolean participa(int usuarioId, int grupoId) throws DataAccessException {
+		try {
+			String query = "SELECT FROM participagrupo"
+					+ " WHERE usuarioid = ? AND grupoid = ? ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, usuarioId);
+			stm.setInt(2, grupoId);
+			ResultSet rs =  stm.executeQuery();		
+			return rs.next();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao verificar se usuario participa do grupo");			
+		}		
+	}
+	
+	@Override
+	public boolean eAdministrador(int usuarioId, int grupoId) throws DataAccessException {
+		try {
+			String query = "SELECT FROM admgrupo"
+					+ " WHERE usuarioid = ? AND grupoid = ? ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setInt(1, usuarioId);
+			stm.setInt(2, grupoId);
+			ResultSet rs =  stm.executeQuery();		
+			return rs.next();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao verificar se usuario participa do grupo");			
+		}	
 	}
 
 	@Override
-	public void adicionarUsuario(int idGrupo,int idUsuario) throws SQLException {
+	public int qtdParticipantes(int grupoId) throws DataAccessException {
+		try {
+			String query = "SELECT count(*) FROM participagrupo"
+					+ " WHERE grupoid = ? ";
+			PreparedStatement stm = connection.prepareStatement(query);		
+			stm.setInt(1, grupoId);
+			ResultSet rs =  stm.executeQuery();
+			if(rs.next())
+				return rs.getInt(1);
+			return 0;
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao recuperar a quantidade de participantes");
+		}
+	}
+
+	@Override
+	public void adicionarUsuario(int idGrupo,int idUsuario) throws DataAccessException {
+		try {
 		String sql = new String("INSERT INTO participagrupo (usuarioid,grupoid) VALUES (?,?)");
 		PreparedStatement statement = connection.prepareStatement(sql); 		
 		statement.setInt(1, idUsuario);
 		statement.setInt(2,idGrupo);
 		statement.execute();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao adicioanar Usuario ao grupo");
+		}
 	}
 
 	@Override
-	public void removerUsuario(int idGrupo,int idUsuario) throws SQLException {
+	public void removerUsuario(int idGrupo,int idUsuario) throws DataAccessException {
+		try {
 		String sql = new String("DELETE FROM participagrupo WHERE usuarioid = ? and grupoid = ?");
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setInt(1, idUsuario);
 		statement.setInt(2, idGrupo);
 		statement.execute();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao remover usuario ao grupo");
+		}
 	}
 
 	@Override
@@ -69,13 +145,7 @@ public class GrupoDaoImpl implements GrupoDao{
 			stm.setInt(1, id);
 			ResultSet rs = stm.executeQuery();
 			if (rs.next()) {
-				return new Grupo(
-						rs.getInt("id"), 
-						rs.getBoolean("ativo"),
-						rs.getTimestamp("datahora").toLocalDateTime(),
-						rs.getString("nome"),
-						rs.getString("descricao"),
-						rs.getString("foto"));
+				return lerTabela(rs);
 			}
 		}catch (Exception e) {
 			throw new DataAccessException("Fala ao buscar grupo");
@@ -100,16 +170,17 @@ public class GrupoDaoImpl implements GrupoDao{
 	}
 
 	@Override
-	public List<String> buscarGruposUsuarioParticipa(int idUsuario) throws DataAccessException {
-		List<String> gruposUsuarioParticipa = new ArrayList<>();
+	public List<Grupo> buscarGruposUsuarioParticipa(int idUsuario) throws DataAccessException {
+		List<Grupo> gruposUsuarioParticipa = new ArrayList<>();
 		try {
-			String query = "SELECT g.id FROM participagrupo pg, grupo g "
-					+ "WHERE pg.grupoid = g.id and pg.usuarioid = ? and g.ativo = true";
+			String query = "SELECT * FROM grupo G WHERE  "
+					+ " EXISTS(SELECT FROM participagrupo "
+					+ " WHERE G.id = grupoid AND usuarioid = ?)";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, idUsuario);
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
-				gruposUsuarioParticipa.add(busca(rs.getInt(1)).getNome());
+				gruposUsuarioParticipa.add(lerTabela(rs));
 			}
 		}catch (Exception e) {
 			throw new DataAccessException("Fala ao buscar grupo");
