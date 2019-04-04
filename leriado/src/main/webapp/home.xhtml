@@ -7,32 +7,44 @@
 <ui:composition template="layout/feed-layout.xhtml">
 	<!-- MAIN MENU -->
 	<ui:define name="mainmenutopodireita">
-		<ui:include src="includes/main-menu-top-direito.xhtml" />		
+		<ui:include src="includes/menu-conta.xhtml" />		
 	</ui:define>
 	
 	<ui:define name="main-esquerda">
 		<!-- MENU USUÁRIO -->											
-		<ui:include src="includes/main-menu-usuario.xhtml" />
+		<ui:include src="includes/menu-usuario.xhtml" />
 	</ui:define>
 	
 	<ui:define name="main-centro">
+		<!-- MENSAGEM DE ERRO GLOBAL -->
+		<p:messages styleClass="errorMessage" globalOnly="true" />
 		<!-- FEED -->						
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'feed'}">																
-			<ui:include src="includes/main-feed.xhtml" />
+			<ui:include src="includes/feed-main.xhtml" />
 		</h:panelGroup>
 		<!-- FEED BUSCA AMIGO -->
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'buscaAmigo'}">																
-			<ui:include src="includes/buscar-amigos.xhtml" />
+			<ui:include src="includes/amigos-buscar.xhtml" />
 		</h:panelGroup>
 		<!-- GRUPOS -->
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'grupo'}">																
 			<ui:include src="includes/grupo.xhtml" />
 		</h:panelGroup>
+		<!-- CRIAR GRUPOS -->
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'criarGrupo'}">																
+			<ui:include src="includes/grupo-editar.html" />
+		</h:panelGroup>
+		<!-- EDITAR GRUPOS -->
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'editarGrupo'}">																
+			<ui:include src="includes/grupo-editar.html" />
+		</h:panelGroup>
+		
+		
 	</ui:define>
 	
 	<ui:define name="main-direita">		
 		<!-- AMIGOS -->
-		<ui:include src="includes/main-amigos.xhtml" />
+		<ui:include src="includes/amigos-menu.xhtml" />
 	</ui:define>
 
 </ui:composition>

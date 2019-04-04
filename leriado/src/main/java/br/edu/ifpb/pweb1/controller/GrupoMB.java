@@ -13,6 +13,7 @@ import br.edu.ifpb.pweb1.model.domain.FeedGrupo;
 import br.edu.ifpb.pweb1.model.domain.Grupo;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
+import br.edu.ifpb.pweb1.util.JsfUtil;
 
 @ManagedBean(name = "grupoBean")
 @ViewScoped
@@ -22,18 +23,40 @@ public class GrupoMB {
 	private Usuario usuario;
 	private Grupo grupo;
 	private String emailUsuario;
+	private GrupoDaoImpl grupoDao;
 	
 	@ManagedProperty("#{loginBean}")
 	private LoginMB loginMb;
 	
 	@PostConstruct
 	public void inicial() {
+		grupoDao = new GrupoDaoImpl();
 		
 	}
 	
-	public String grupo() {
+	public String paginaGrupo() {
+		loginMb.setPaginaAtual("grupo");		
+		return "";
+	}
+	
+	public String criarGrupo() {
+		grupo = new Grupo();
+		loginMb.setPaginaAtual("criarGrupo");
+		return "";
+	}
+	
+	public String editarGrupo() {
+		loginMb.setPaginaAtual("editarGrupo");
+		return "";
+	}
+	
+	public String salvarGrupo() {
+		try {
+			grupoDao.criar(grupo);
+		} catch (DataAccessException e) {		
+			JsfUtil.addErrorMessage("Impossível salvar o grupo");
+		}
 		loginMb.setPaginaAtual("grupo");
-		System.out.println("Grupo!!");
 		return "";
 	}
 	

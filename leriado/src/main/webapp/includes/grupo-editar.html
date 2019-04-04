@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="col s12 white z-depth-2 publicacao">
+		<h:form>
+			<div class="col s6 offset-s3">
+				<h5><b>Criar Grupo</b></h5>		
+			</div>
+			<div class="col s6">
+				<b>Foto:</b>
+				<h:graphicImage
+					value="#{loginBean.pathUrlImagem}#{grupoBean.grupo.foto}" 
+					styleClass="circle perfil"/>		
+			</div>
+			<div class="col s6">	
+				<p:inputText id="nome" name="nome" value="#{grupoBean.grupo.nome}" maxlength="50" 
+					required="true" requiredMessage="O nome do grupo é obrigatório"/>
+				<label for="nome"><h:outputText value="Nome"/></label>
+				<p:messages autoUpdate="true" for="nome" id="msg-nome" globalOnly="false" />
+			</div>
+			<div class="col s12">
+				<p:inputTextarea id="descricao" 
+					name="descricao" 
+					class="materialize-textarea" 
+					value="#{grupoBean.grupo.descricao}"
+					required="true"
+					requiredMessage="A descrição do grupo é obrigatória" 
+					placeholder="Descição do Grupo" />
+				<label for="descricao"><h:outputText value="Descrição"/></label>
+				<p:messages autoUpdate="true" for="descricao" id="msg-descricao" globalOnly="false" />
+			</div> 
+		</h:form>
+	</div>
+</html>

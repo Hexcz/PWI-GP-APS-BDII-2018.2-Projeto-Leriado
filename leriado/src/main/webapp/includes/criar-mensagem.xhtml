@@ -31,7 +31,7 @@
 			<h:selectOneMenu id="grupoPublicar" value="#{publicacaoBean.grupoCompartilhado}" 
 				required="true" requiredMessage="É obrigatório vincular a mensagem a algum grupo" 
 				styleClass="display: inline-block !important;">
-				<f:selectItems value="#{loginBean.seusGrupos}" var="grupo" itemValue="#{grupo}" itemLabel="#{grupo}"/>								
+				<f:selectItems value="#{loginBean.seusGrupos}" var="grupo" itemValue="#{grupo.grupo.nome}" itemLabel="#{grupo.grupo.nome}"/>								
 			</h:selectOneMenu>
 			
 		</div>		

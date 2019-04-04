@@ -19,7 +19,9 @@
 		<ul class="right hide-on-med-and-down">
 			<li>
 				<h:form>
-				<h:commandLink action="#{grupoBean.grupo}"><i class="material-icons right">group</i><h:outputText value="#{msg['menu.meusgrupos']}"/></h:commandLink>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<i class="material-icons right">group</i>
+					<h:outputText value="#{msg['menu.meusgrupos']}"/></h:commandLink>
 				</h:form>
 			</li>
 
@@ -127,7 +129,7 @@
 			</a>
 		</div>
 	</li>
-	<li><a href="meusGrupos.jsp"><i class="material-icons">group</i><h:outputText value="#{msg['menu.meusgrupos']}"/></a></li>
+	<li><h:commandLink action="#{grupoBean.paginaGrupo}"><i class="material-icons">group</i><h:outputText value="#{msg['menu.meusgrupos']}"/></h:commandLink></li>
 	<li><a href="#"><i class="material-icons">edit</i><h:outputText value="#{msg['menu.atualizarconta']}"/></a></li>
 	<li><a href="#"><i class="material-icons">remove</i><h:outputText value="#{msg['menu.removerconta']}"/></a></li>
 	<li><div class="divider"></div></li>

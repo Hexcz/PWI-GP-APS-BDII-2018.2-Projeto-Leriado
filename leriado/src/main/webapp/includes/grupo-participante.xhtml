@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    
+    
+      <div class="collapsible-header">
+      	<div class="col s12">
+	      	<i class="material-icons">comment</i>
+	      	<h:outputText value="#{grupo.grupo.nome}"/>
+      	</div>      	
+      </div>
+      <div class="collapsible-body card-panel">
+      	<span >
+			<div class="row">  
+				<div class="col s12 center-align"><h5><b>Participante</b></h5></div>
+				<h5><b>Informações:</b></h5>
+					</div>
+					<div class="row" >
+						<div class="col s12 l6">
+							<b>NOME:</b><br/>
+							<h:outputText value="#{grupo.grupo.nome}"/>
+						</div>
+						<div class="col s12 l6">
+							<b>DATA E HORA DE CRIAÇÃO:</b><br/>
+							<h:outputText value="#{grupo.grupo.dataHora}" >
+									<f:converter converterId="dateTimeConverter" />
+								</h:outputText> 
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col s12 l6">
+							<b>DESCRIÇÃO:</b><br/>
+							<h:outputText value="#{grupo.grupo.descricao}"/>
+						</div>
+						<div class="col s12 l6">
+							
+							<b>FOTO: </b>
+								<h:graphicImage
+									value="#{loginBean.pathUrlImagem}#{grupo.grupo.foto}" 
+									styleClass="circle perfil"/>
+									 
+							
+						</div>
+					</div>
+					
+					<div class="row">
+
+
+
+
+						<ul class="collection">
+							<li class="collection-item orange darken-1 z-depth-4 white-text">
+								<span class="badge white-text"> 
+									<h:outputText
+										value="#{grupo.qtdParticipantes}" />
+									</span> Participantes
+							</li>
+							<p:repeat var="usuario" value="#{grupo.usuarios}">
+								<li class="collection-item avatar white z-depth-4"><h:graphicImage
+										class="circle imgAmigo"
+										value="#{loginBean.pathUrlImagem}#{usuario.arquivoFoto}" /> <span
+									class="title"><h:outputText value="#{usuario.nome}" /></span>
+									<p>
+										<h:outputText value="#{usuario.sobrenome}" />
+									</p>
+								</li>
+							</p:repeat>
+						</ul>
+
+			
+					</div>
+					<hr/>
+					<div class="row">			
+						
+					
+						<div class="col s4 offset-s8">							
+							<a class="waves-effect waves-light btn modal-trigger rigth red" href="">SAIR DO GRUPO</a>
+						</div>
+					</div>
+
+					
+					
+						<div id="modalGrupo#{grupo.grupo.id}" class="modal">
+					    <div class="modal-content">
+					      <h4>Deseja realmente Apagar o grupo:<i> <h:outputText value="#{grupo.grupo.nome}"/></i>?</h4>
+					    </div>
+					    <div class="modal-footer">
+				    		<form >
+				    			<div class="input-field">
+				      				<input type="text" name="idGrupo" value="grupo.id" />
+				      			</div>
+				    			<div class="input-field">
+				    				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+				    				<button class="btn modal-close red lighten-2 waves-effect" type="submit">REMOVER</button>
+				      			</div>
+				      		</form>
+						</div> 				
+					</div>
+					
+					
+			</span>
+		</div>
+   
+	
+	</html>
