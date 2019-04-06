@@ -36,11 +36,10 @@
 			</li>	
 			<div class="divider"></div>
 			<!-- GRUPOS PARTICIPA -->
-			<li class="collection-item orange darken-1 z-depth-4 white-text">
-				
-				<p:commandLink 
+			<li class="collection-item orange darken-1 z-depth-4 white-text">				
+				<p:commandLink				 
 					style="collection-item"
-					action="#{loginBean.home}"	styleClass="white-text brand-logo" ajax="false"> 
+					action="#{grupoBean.paginaGrupo}"	styleClass="white-text brand-logo" ajax="false"> 
 					<h:outputText value="#{msg['menu.usuario.grupoparticipa']}"/>
 					
 					<span class="badge white-text">
@@ -48,8 +47,8 @@
 					</span>		
 				</p:commandLink>					
 							
-			</li>	
-			
+			</li>
+						
 			<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
 				<li class="collection-item avatar white z-depth-4">
 					<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{grupo.grupo.foto}" />
@@ -64,18 +63,7 @@
 			
 			
 			<!-- GRUPOS QUE ADMINISTRA -->
-			<li class="collection-item orange darken-1 z-depth-4 white-text">				
-				<p:commandLink 
-					style="collection-item"
-					action="#{grupoBean.paginaGrupo}"	styleClass="white-text brand-logo" ajax="false"> 
-					<h:outputText value="#{msg['menu.usuario.meusgrupos']}"/>
-					
-					<span class="badge white-text">
-						 <i class="material-icons">supervisor_account</i>
-					</span>		
-				</p:commandLink>					
-							
-			</li>	
+			
 						
 		</ul>
 	</h:form>
