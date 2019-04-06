@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
 	private String numero; 
 	private String cep;
 	private String status;
+	private boolean online;
 	public Usuario(int id, String email, String senha, String nome, String sobrenome, String sexo, LocalDate datanasc,
 			Integer acesso, String telefone, String rua, String cidade, String estado, String numero, String cep) {
 		this.id = id;
@@ -145,6 +146,12 @@ public class Usuario implements Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public boolean isOnline() {
+		return online;
+	}
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 	@Override
 	public String toString() {

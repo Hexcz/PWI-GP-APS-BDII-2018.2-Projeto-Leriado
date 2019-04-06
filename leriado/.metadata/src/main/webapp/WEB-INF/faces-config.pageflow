@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15536439107960" configfile="/leriado/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15538576436750" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15538576436761 pf15538576436762 pf15539822624700" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15538576436750" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf15538576436761 pf15538576436762 pf15539822624700 pf15545208521480" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15538576436763" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf15538576436761 pf15538576436764 pf15538576436765 pf15538576436766" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" id="pf15538576436767" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15538576436762 pf15538576436768 pf15538576436769 pf15539822624700" path="/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" id="pf15538576436767" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15538576436762 pf15538576436768 pf15538576436769 pf15539822624700" path="/home.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf155385764367610" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf155385764367611 pf15538576436764 pf15538576436768 pf15538576436765" path="index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" id="pf155385764367612" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf155385764367611" path="/cadastro-sucesso.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastro-sucesso.xhtml" id="pf155385764367613" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15538576436769 pf15538576436766" path="cadastro-sucesso.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="leanderson.xhtml" id="pf15545208521491" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf15545208521480" path="leanderson.xhtml"/>
   <links id="pf15538576436761" target="pf15538576436763" source="pf15538576436750" outcome="goLogin" redirect="true"/>
   <links id="pf15538576436762" target="pf15538576436767" source="pf15538576436750" outcome="goHome" redirect="true"/>
   <links id="pf155385764367611" target="pf155385764367612" source="pf155385764367610" outcome="sucesso" redirect="true" fromaction="#{cadastroBean.cadastrar}"/>
@@ -15,4 +16,5 @@
   <links id="pf15538576436769" target="pf15538576436767" source="pf155385764367613" outcome="sucesso" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
   <links id="pf15538576436766" target="pf15538576436763" source="pf155385764367613" outcome="falha" redirect="true" fromaction="#{loginBean.efetuarLogin}"/>
   <links id="pf15539822624700" target="pf15538576436767" source="pf15538576436750" outcome="feed" redirect="true"/>
+  <links id="pf15545208521480" target="pf15545208521491" source="pf15538576436750" outcome="leanderson"/>
 </pageflow:Pageflow>

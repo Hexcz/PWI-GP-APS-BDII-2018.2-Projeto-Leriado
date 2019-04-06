@@ -10,6 +10,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,9 @@ public class LoginMB {
 	private List<FeedGrupo> seusGrupos;
 	private Part imagem;
 	private String paginaAtual;
+	
+	@ManagedProperty("#{usuariosOnline}")
+	private UsuariosOnline usuariosOnlineMB;
 
 
 	@PostConstruct
@@ -75,6 +79,9 @@ public class LoginMB {
 				usuarioLogado = usuarioDao.buscarPorEmail(email);
 				carregarPerfil();
 				paginaAtual = "feed";
+//				ADICIONA O NOVO USUÁRIO A LISTA DE USUARIOS ONLINE
+				System.out.println("Adicionando Usuario online");
+//				usuariosOnlineMB.adicionarUsuarioOnline(usuarioLogado);
 				return "sucesso";
 			}			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -146,6 +153,9 @@ public class LoginMB {
 	
 	public String logout() {
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//		REMOVE O USUÁRIO LOGADO DA LISTA DE ATIVOS
+//		usuariosOnlineMB.removerUsuarioOnline(usuarioLogado);
+		System.out.println("Removendo Usuário ativo");
 		request.getSession(false).invalidate();
 		return "goLogin";
 	}

@@ -11,7 +11,7 @@ import br.edu.ifpb.pweb1.controller.LoginMB;
 
 public class AuthListener implements PhaseListener{
 	
-	private static String[] paginasPublicas = {"index.xhtml","cadastro-sucesso.xhtml"};
+	private static String[] paginasPublicas = {"index.xhtml","cadastro-sucesso.xhtml", "leanderson.xhtml"};
 	
 	private boolean isPublica(String paginaAtual) {
 		for (String pagina : paginasPublicas) {			
