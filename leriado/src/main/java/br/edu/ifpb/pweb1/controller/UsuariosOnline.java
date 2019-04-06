@@ -3,16 +3,15 @@ package br.edu.ifpb.pweb1.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 
-@ManagedBean
+@ManagedBean(eager=true)
 @ApplicationScoped
 public class UsuariosOnline {
-	List<Usuario> usuariosOn = null;
+	public List<Usuario> usuariosOn = new ArrayList<>();
 
 	public void adicionarUsuarioOnline(Usuario novoUsuario) {
 		novoUsuario.setOnline(true);
@@ -21,11 +20,6 @@ public class UsuariosOnline {
 	
 	public void removerUsuarioOnline(Usuario usuario) {
 		usuariosOn.remove(usuario);
-	}
-	
-	@PostConstruct
-	public void init() {
-		usuariosOn = new ArrayList<>();
 	}
 
 	public List<Usuario> getUsuariosOn() {
