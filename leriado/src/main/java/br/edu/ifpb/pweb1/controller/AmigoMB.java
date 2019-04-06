@@ -12,7 +12,7 @@ import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
-@ManagedBean(name="amigoBean")
+@ManagedBean(name="amigoBean",eager=true)
 @ViewScoped
 public class AmigoMB {
 	
@@ -39,6 +39,7 @@ public class AmigoMB {
 		queryAmigos = "";
 		buscados = new ArrayList<>();
 		listarAmigos();
+		System.out.println("Instância de AmigoMB");
 	}
 	
 	public String getQueryAmigos() {

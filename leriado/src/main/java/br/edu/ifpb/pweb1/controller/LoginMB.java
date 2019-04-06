@@ -64,6 +64,7 @@ public class LoginMB {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Instância de Login");
 	}
 	
 	public String home() {
