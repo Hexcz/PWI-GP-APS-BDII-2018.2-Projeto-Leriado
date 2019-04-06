@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.Part;
 
 import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
@@ -23,6 +24,7 @@ public class GrupoMB {
 	private Usuario usuario;
 	private Grupo grupo;
 	private String emailUsuario;
+	private Part imagem;
 	private GrupoDaoImpl grupoDao;
 	
 	@ManagedProperty("#{loginBean}")
@@ -30,12 +32,23 @@ public class GrupoMB {
 	
 	@PostConstruct
 	public void inicial() {
+		grupo = new Grupo();
 		grupoDao = new GrupoDaoImpl();
 		
 	}
 	
-	public String paginaGrupo() {
-		loginMb.setPaginaAtual("grupo");		
+	public String mudarFotoGrupo() {
+		try {
+			grupo.setFoto(GerirArquivos.salvarArquivoPasta(imagem, loginMb.getPathServImagem()));						
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	public String paginaGrupo() {		
+		loginMb.setPaginaAtual("grupo");
+		loginMb.carrgarGrupos();
 		return "";
 	}
 	
@@ -46,16 +59,35 @@ public class GrupoMB {
 	}
 	
 	public String editarGrupo() {
-		loginMb.setPaginaAtual("editarGrupo");
+		if(grupo == null)
+			loginMb.setPaginaAtual("grupo");
+		else
+			loginMb.setPaginaAtual("editarGrupo");
 		return "";
 	}
 	
-	public String salvarGrupo() {
-		try {
-			grupoDao.criar(grupo);
-		} catch (DataAccessException e) {		
-			JsfUtil.addErrorMessage("Impossível salvar o grupo");
+	public String salvarGrupo() {		
+		switch(loginMb.getPaginaAtual()){
+		case "criarGrupo":{
+			try {									
+				grupoDao.criar(grupo);
+				grupoDao.adicionarUsuario(grupo.getId(), loginMb.getUsuarioLogado().getId());
+				grupoDao.adicionarAdministrador(loginMb.getUsuarioLogado().getId(), grupo.getId());
+				loginMb.carrgarGrupos();
+			}catch (Exception e) {
+				JsfUtil.addErrorMessage("Impossível salvar o grupo");
+			}
+			break;
 		}
+		case "editarGrupo":{
+			try {
+				grupoDao.editar(grupo);
+			}catch (Exception e) {
+				JsfUtil.addErrorMessage("Impossível editar o grupo");
+			}
+			break;
+		}
+		}	
 		loginMb.setPaginaAtual("grupo");
 		return "";
 	}
@@ -146,6 +178,14 @@ public class GrupoMB {
 
 	public void setEmailUsuario(String emailUsuario) {
 		this.emailUsuario = emailUsuario;
+	}
+
+	public Part getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(Part imagem) {
+		this.imagem = imagem;
 	}
 	
 

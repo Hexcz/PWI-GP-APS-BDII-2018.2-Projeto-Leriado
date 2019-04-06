@@ -45,7 +45,7 @@
 			<h:form id="formFoto" enctype="multipart/form-data">
 				<div class="file-field input-field">				
 					<h:graphicImage autoUpdate="true" id="fotoUsuario" class="circle imgUser" value="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}">
-						<h:inputFile title="#{loginBean.usuarioLogado.nome}" value="#{loginBean.imagem}" ajax="true" updadate="fotoUsuario">
+						<h:inputFile title="#{loginBean.usuarioLogado.nome}" value="#{loginBean.imagem}" ajax="true" updadate="@all">
 							 <f:ajax render="fotoUsuario" listener="#{loginBean.mudarFotoPerfil}" />
 						</h:inputFile>						
 					</h:graphicImage>

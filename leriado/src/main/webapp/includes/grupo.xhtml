@@ -8,6 +8,22 @@
 	
 	<ul id ="listaGrupos" class="collapsible">
 	
+		<li>
+			
+    		<div class="collapsible-header" >
+    			<h:form>
+    			<h:commandLink action="#{grupoBean.criarGrupo}">
+		      	<div class="col s12" >
+			      	<i class="material-icons">add</i>
+			      	<h:outputText value="Criar um novo grupo"/>
+		      	</div>
+		      	</h:commandLink>
+		      	</h:form>
+      		</div>
+      		
+	      	  
+      	</li>
+	
 	<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
 		<!-- ADMINISTRADOR -->
 		<li jsf:rendered="#{grupo.administrador eq 'true'}">

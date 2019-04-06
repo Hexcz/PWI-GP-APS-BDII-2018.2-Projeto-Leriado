@@ -21,12 +21,16 @@
       		<div class="col s12">
       		<h:form>
 	      		<div class="col s6 offset-s3 center-align"><h5><b>Administrador</b></h5></div>
-	      		<div class="col s3">      		
+	      		<div class="col s3  right-align">      		
 	      			<h:commandLink
 	      				action="#{grupoBean.editarGrupo}"
+	      				styleClass="btn-floating btn-smal waves-effect waves-light"
 	      				ajax="true"
-	      				update="painelGrupo"
-	      			>
+	      				update="painelGrupo">
+	      				<i class="material-icons">edit</i>
+	      				<f:setPropertyActionListener 
+	      					value="#{grupo.grupo}" 
+	      					target="#{grupoBean.grupo}"></f:setPropertyActionListener>
 	      				Editar Grupo	      				
 	      			</h:commandLink>
 	      		</div>
