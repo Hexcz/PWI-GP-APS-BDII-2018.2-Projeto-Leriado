@@ -54,7 +54,7 @@
 			<a href="#"> 
 				<span class="white-text name">
 						<h:outputText value="#{loginBean.usuarioLogado.nome}" />
-						<h:outputText value="#{loginBean.usuarioLogado.sobrenome}" />
+						<h:outputText value=" #{loginBean.usuarioLogado.sobrenome}" />
 			</span></a> 
 			<a href="#">
 				<span class="white-text email"> 
@@ -66,7 +66,7 @@
 	<li>
 		<!-- EDITAR -->
 		<h:form>
-			<h:commandLink action="#{loginBean.logout}" class="waves-effect waves-teal btn-flat">				
+			<h:commandLink action="#{cadastroBean.editarCadastro}" class="waves-effect waves-teal btn-flat">				
 				<i class="material-icons left">edit</i><h:outputText value="#{msg['menu.atualizarconta']}"/>
 			</h:commandLink>			
 		</h:form>
@@ -76,7 +76,7 @@
 		<!-- REMOVER A CONTA -->
 		
 		<a class="modal-trigger"
-		href="#modal1"><i
+		href="#modalRemoverConta"><i
 			class="material-icons">remove</i>Remover Conta</a>
 				
 	</li>
@@ -93,17 +93,24 @@
 </ul>
 
 
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-	<div class="modal-content">
-		<h4><h:outputText value="#{msg['menu.modal.apagarconta']}"/></h4>
-		<p><h:outputText value="#{msg['menu.modal.apagarconta.msg']}"/></p>
+<!-- Modal REMOVER CONTA -->
+<h:form>
+	<div id="modalRemoverConta" class="modal">
+		<div class="modal-content">
+			<h4><h:outputText styleClass="black-text" value="#{msg['menu.modal.apagarconta']}"/></h4>
+			<p><h:outputText styleClass="black-text" value="#{msg['menu.modal.apagarconta.msg']}"/></p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-close waves-effect waves-green btn-flat"><h:outputText value="#{msg['menu.modal.cancelar']}"/></a>
+			<h:commandLink 
+				styleClass="modal-close waves-effect waves-green btn-flat"
+				action="#{loginBean.removerConta}">				
+				<h:outputText value="#{msg['menu.modal.apagar']}"/>
+			</h:commandLink>
+		</div>
 	</div>
-	<div class="modal-footer">
-		<a href="#" class="modal-close waves-effect waves-green btn-flat"><h:outputText value="#{msg['menu.modal.cancelar']}"/></a>
-		<a href="#" class="modal-close waves-effect waves-green btn-flat"><h:outputText value="#{msg['menu.modal.apagar']}"/></a>
-	</div>
-</div>
+</h:form>
+
 
 
 <!-- MENU MOBILE -->

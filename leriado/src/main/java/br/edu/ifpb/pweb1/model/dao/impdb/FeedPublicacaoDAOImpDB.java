@@ -20,12 +20,14 @@ public class FeedPublicacaoDAOImpDB implements FeedPublicacaoDAO{
 	private CurteDAOImpDB curteDao;
 	private CompartilhaDAOImpDB compartilhaDao;
 	private ComentarioDAOImpDB comentarioDao;
+	private UsuarioDaoImpl usuarioDao;
 	
 	public FeedPublicacaoDAOImpDB(Usuario self) {
 		this.self = self;
 		curteDao = new CurteDAOImpDB();		
 		compartilhaDao = new CompartilhaDAOImpDB();
 		comentarioDao = new ComentarioDAOImpDB();
+		usuarioDao = new UsuarioDaoImpl();
 	}
 	
 		
@@ -36,6 +38,7 @@ public class FeedPublicacaoDAOImpDB implements FeedPublicacaoDAO{
 	private List<FeedPublicacao> feedCompartilhas(List<Compartilha> compartilhas) throws DataAccessException{
 		List<FeedPublicacao> feeds = new ArrayList<>();		
 		for (Compartilha compartilha : compartilhas) {
+			usuarioDao.carregarFotoPerfil(compartilha.getUsuario());
 			FeedPublicacao feed = criarFeed(compartilha);
 			if( feed != null) {
 				feeds.add(feed);
@@ -43,6 +46,8 @@ public class FeedPublicacaoDAOImpDB implements FeedPublicacaoDAO{
 		}
 		return feeds;		
 	}
+	
+	
 
 	@Override
 	public int quantFeed() throws DataAccessException {		
@@ -60,7 +65,7 @@ public class FeedPublicacaoDAOImpDB implements FeedPublicacaoDAO{
 	}
 
 	@Override
-	public List<FeedPublicacao> listaFeed(int inicio, int quant) throws DataAccessException {	
+	public List<FeedPublicacao> listaFeed(int inicio, int quant) throws DataAccessException {		
 		return feedCompartilhas(compartilhaDao.feed(self, inicio, quant));		
 	}
 

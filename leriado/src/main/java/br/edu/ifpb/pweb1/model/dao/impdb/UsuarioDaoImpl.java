@@ -31,6 +31,11 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	
 	private Usuario lerTabela(ResultSet rs) throws SQLException {
 		Usuario usuario = new Usuario();
+		lerTabela(usuario, rs);		
+		return usuario;
+	}
+	
+	private void lerTabela(Usuario usuario, ResultSet rs) throws SQLException {		
 		usuario.setId(rs.getInt("id"));
 		usuario.setAtivo(rs.getBoolean("ativo"));
 		usuario.setEmail(rs.getString("email"));
@@ -45,9 +50,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		usuario.setCidade(rs.getString("cidade"));
 		usuario.setEstado(rs.getString("estado"));
 		usuario.setNumero(rs.getString("numero"));
-		usuario.setCep(rs.getString("cep"));
-		
-		return usuario;
+		usuario.setCep(rs.getString("cep"));		
 	}
 
 	@Override
@@ -126,7 +129,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	@Override
 	public void remover(Integer idUsuario) throws DataAccessException{
 		try {
-		String query = "update usuario set ativo=FALSE where id=?";
+		String query = "DELETE FROM usuario  WHERE id=?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setInt(1, idUsuario);
 		statement.executeUpdate();
@@ -208,20 +211,28 @@ public class UsuarioDaoImpl implements UsuarioDao{
 
 	@Override
 	public Usuario buscarPorId(Integer id) throws DataAccessException {
+		Usuario usuario = new Usuario();
+		buscarPorId(usuario, id);
+		return usuario;
+	}
+	
+	
+	
+	@Override
+	public void buscarPorId(Usuario usuario, Integer id) throws DataAccessException {
 		try {
 			String query = new String("SELECT * FROM usuario WHERE id = ?");
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, id);
 			ResultSet result = statement.executeQuery();
 			if (result.next()) {				
-				return lerTabela(result);
-			}
-			return null;
+				lerTabela(usuario, result);
+			}			
 		} catch (Exception e) {
 			throw new DataAccessException("Falha ao buscar por ID");
-		}
+		}		
 	}
-	
+
 	@Override
 	public Usuario buscarPorEmail(String email) throws DataAccessException {
 		try {
@@ -241,7 +252,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	@Override
 	public void buscar(Usuario usuario) throws DataAccessException {
 		int usuarioId = usuario.getId();
-		usuario = buscarPorId(usuarioId);		
+		buscarPorId(usuario, usuarioId);		
 	}
 
 	@Override

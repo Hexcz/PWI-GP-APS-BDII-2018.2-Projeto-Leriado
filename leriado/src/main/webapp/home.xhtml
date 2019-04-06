@@ -15,9 +15,8 @@
 		<ui:include src="includes/menu-usuario.xhtml" />
 	</ui:define>
 	
-	<ui:define name="main-centro">
-		<!-- MENSAGEM DE ERRO GLOBAL -->
-		<p:messages styleClass="errorMessage" globalOnly="true" />
+	<ui:define name="main-centro">			
+		
 		<!-- FEED -->						
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'feed'}">																
 			<ui:include src="includes/feed-main.xhtml" />
@@ -37,6 +36,10 @@
 		<!-- EDITAR GRUPOS -->
 		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'editarGrupo'}">																
 			<ui:include src="includes/grupo-editar.html" />
+		</h:panelGroup>
+		<!-- EDITAR USUARIO -->
+		<h:panelGroup rendered="#{loginBean.paginaAtual eq 'editarUsuario'}">																
+			<ui:include src="includes/usuario-editar.xhtml" />
 		</h:panelGroup>
 		
 		

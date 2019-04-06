@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.edu.ifpb.pweb1.model.domain.Compartilha;
 import br.edu.ifpb.pweb1.model.domain.Grupo;
-import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
@@ -14,6 +13,7 @@ public interface CompartilhaDAO {
 	void cria(Compartilha compartilha) throws DataAccessException;
 	void cria(int usuarioId, int textoId, int grupoId)throws DataAccessException;
 	void exclui(Compartilha compartilha) throws DataAccessException;
+	void exclui(int usuarioId, int textoId, int grupoId ) throws DataAccessException;
 	boolean existe(int usuarioId, int publicacaoId, int grupoId)throws DataAccessException;
 	int quant()throws DataAccessException;
 	int quant(Grupo grupo) throws DataAccessException;

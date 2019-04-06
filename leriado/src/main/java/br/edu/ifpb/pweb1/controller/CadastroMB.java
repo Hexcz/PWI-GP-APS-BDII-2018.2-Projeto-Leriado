@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
@@ -14,12 +15,16 @@ import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 @RequestScoped
 public class CadastroMB {
 	
-	private Logger log;
-	
+	private Logger log;	
 	private Usuario usuario;
+	private UsuarioDaoImpl usuarioDao;
+	
+	@ManagedProperty("#{loginBean}")
+	private LoginMB loginMb;
 	
 	@PostConstruct
 	private void inicio() {
+		usuarioDao = new UsuarioDaoImpl();
 		limpar();
 	}
 			
@@ -31,13 +36,41 @@ public class CadastroMB {
 	
 	public String cadastrar() {
 		try {
-			new UsuarioDaoImpl().criar(usuario);
+			usuarioDao.criar(usuario);
 		} catch (DataAccessException e) {
 			log.info("Falha ao criar usuário");
 			return "falha";
 		}
 		limpar();
 		return "sucesso";
+	}
+	
+	public String editarCadastro() {
+		usuario = new Usuario();
+		try {
+			usuarioDao.buscarPorId(usuario, loginMb.getUsuarioLogado().getId());
+		} catch (DataAccessException e) {		
+			e.printStackTrace();
+		} 
+		loginMb.setPaginaAtual("editarUsuario");
+		return "";
+	}
+	
+	public String salvarCadastro() {
+		try {
+			switch(loginMb.getPaginaAtual()) {
+			case "editarUsuario":
+				int usuarioId =  loginMb.getUsuarioLogado().getId();
+				usuarioDao.atualizar(usuario, usuarioId);
+				loginMb.carregarPerfil();
+				loginMb.setPaginaAtual("feed");
+				return "goHome";		
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+		
 	}
 
 	public Usuario getUsuario() {
@@ -48,24 +81,14 @@ public class CadastroMB {
 		this.usuario = usuario;
 	}
 
-//	public String getData() {
-//		if(usuario == null)
-//			return "";
-//		if(usuario.getDatanasc()== null)
-//			return "";
-//		DateTimeFormatter frm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//		this.data = usuario.getDatanasc().format(frm);
-//		return this.data;
-//	}
-//
-//	public void setData(String data) {
-//		this.data = data;
-//		if((usuario != null) && (!(data.isEmpty()))) {
-//			DateTimeFormatter frm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//			usuario.setDatanasc(LocalDate.parse(data, frm));			
-//		}
-//				
-//	}
+	public LoginMB getLoginMb() {
+		return loginMb;
+	}
+
+	public void setLoginMb(LoginMB loginMb) {
+		this.loginMb = loginMb;
+	}
+
 
 
 }
