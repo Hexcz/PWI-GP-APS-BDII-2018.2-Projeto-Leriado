@@ -39,7 +39,6 @@ public class AmigoMB {
 		queryAmigos = "";
 		buscados = new ArrayList<>();
 		listarAmigos();
-		System.out.println("Instância de AmigoMB");
 	}
 	
 	public String getQueryAmigos() {
@@ -57,7 +56,7 @@ public class AmigoMB {
 			
 			amigos = usuarioDao.amigos(loginMb.getUsuarioLogado());
 			tratarUsuarios(amigos);
-//			amigosOnline(amigos);
+			amigosOnline(amigos);
 			usuarioDao.carregarFotoPerfil(amigos);
 			solicitacoes = usuarioDao.solicitacoesAmizades(loginMb.getUsuarioLogado());
 			usuarioDao.carregarFotoPerfil(solicitacoes);
@@ -78,19 +77,17 @@ public class AmigoMB {
 		
 	}
 
-//	private void amigosOnline(List<Usuario> amigosUsuario) {
-//		System.out.println("Usuarios amigos que tao ativos:");
-////		lista de amigos
-//		for(Usuario amigoUsuarioLogado: amigosUsuario) {
-////			lista de usuarios online
-//			for(Usuario usuarioAtivo : usuariosOnlineMB.getUsuariosOn()) {
-//				if(amigoUsuarioLogado.getEmail().equals(usuarioAtivo.getEmail())) {
-//					amigoUsuarioLogado.setOnline(true);
-//					System.out.println(amigoUsuarioLogado.getEmail());
-//				}
-//			}
-//		}
-//	}
+	private void amigosOnline(List<Usuario> amigosUsuario) {
+//		lista de amigos
+		for(Usuario amigoUsuarioLogado: amigosUsuario) {
+//			lista de usuarios online
+			for(Usuario usuarioAtivo : usuariosOnlineMB.getUsuariosOn()) {
+				if(amigoUsuarioLogado.getEmail().equals(usuarioAtivo.getEmail())) {
+					amigoUsuarioLogado.setOnline(true);
+				}
+			}
+		}
+	}
 
 	public String buscarAmigos() {		
 		try {
@@ -189,6 +186,14 @@ public class AmigoMB {
 
 	public void setLoginMb(LoginMB loginMb) {
 		this.loginMb = loginMb;
+	}
+
+	public UsuariosOnline getUsuariosOnlineMB() {
+		return usuariosOnlineMB;
+	}
+
+	public void setUsuariosOnlineMB(UsuariosOnline usuariosOnlineMB) {
+		this.usuariosOnlineMB = usuariosOnlineMB;
 	}
 
 
