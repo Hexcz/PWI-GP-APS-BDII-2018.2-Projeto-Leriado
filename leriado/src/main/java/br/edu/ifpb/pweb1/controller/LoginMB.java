@@ -82,7 +82,7 @@ public class LoginMB {
 				paginaAtual = "feed";
 //				ADICIONA O NOVO USUÁRIO A LISTA DE USUARIOS ONLINE
 				System.out.println("Adicionando Usuario online");
-//				usuariosOnlineMB.adicionarUsuarioOnline(usuarioLogado);
+				usuariosOnlineMB.adicionarUsuarioOnline(usuarioLogado);
 				return "sucesso";
 			}			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -155,7 +155,7 @@ public class LoginMB {
 	public String logout() {
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 //		REMOVE O USUÁRIO LOGADO DA LISTA DE ATIVOS
-//		usuariosOnlineMB.removerUsuarioOnline(usuarioLogado);
+		usuariosOnlineMB.removerUsuarioOnline(usuarioLogado);
 		System.out.println("Removendo Usuário ativo");
 		request.getSession(false).invalidate();
 		return "goLogin";
@@ -233,6 +233,11 @@ public class LoginMB {
 		this.seusGrupos = seusGrupos;
 	}
 
+	public UsuariosOnline getUsuariosOnlineMB() {
+		return usuariosOnlineMB;
+	}
 
-
+	public void setUsuariosOnlineMB(UsuariosOnline usuariosOnlineMB) {
+		this.usuariosOnlineMB = usuariosOnlineMB;
+	}
 }
