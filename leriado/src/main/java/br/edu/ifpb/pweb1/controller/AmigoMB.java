@@ -30,6 +30,9 @@ public class AmigoMB {
 	@ManagedProperty("#{loginBean}")
 	private LoginMB loginMb;
 	
+	@ManagedProperty("#{usuariosOnline}")
+	private UsuariosOnline usuariosOnlineMB;
+	
 	@PostConstruct
 	private void incio() {
 		usuarioDao = new UsuarioDaoImpl();		
@@ -52,6 +55,8 @@ public class AmigoMB {
 			qtdSolicitacoes = usuarioDao.qtdSolicitacoesAmizades(loginMb.getUsuarioLogado());
 			
 			amigos = usuarioDao.amigos(loginMb.getUsuarioLogado());
+			tratarUsuarios(amigos);
+//			amigosOnline(amigos);
 			usuarioDao.carregarFotoPerfil(amigos);
 			solicitacoes = usuarioDao.solicitacoesAmizades(loginMb.getUsuarioLogado());
 			usuarioDao.carregarFotoPerfil(solicitacoes);
@@ -63,6 +68,29 @@ public class AmigoMB {
 		return "";
 	}
 	
+	private void tratarUsuarios(List<Usuario> amigosUsuario) {
+//		A FUNÇÃO SETA O ATRIBUTO ONLINE PARA FALSE DE TODOS OS USUÁRIOS AMIGOS RESGATADOS
+//		PARA QUANDO FOR COMPARADO NÃO SEJA LANÇADO UM NULL POINTER
+		for(Usuario usuario: amigosUsuario) {
+			usuario.setOnline(false);
+		}
+		
+	}
+
+//	private void amigosOnline(List<Usuario> amigosUsuario) {
+//		System.out.println("Usuarios amigos que tao ativos:");
+////		lista de amigos
+//		for(Usuario amigoUsuarioLogado: amigosUsuario) {
+////			lista de usuarios online
+//			for(Usuario usuarioAtivo : usuariosOnlineMB.getUsuariosOn()) {
+//				if(amigoUsuarioLogado.getEmail().equals(usuarioAtivo.getEmail())) {
+//					amigoUsuarioLogado.setOnline(true);
+//					System.out.println(amigoUsuarioLogado.getEmail());
+//				}
+//			}
+//		}
+//	}
+
 	public String buscarAmigos() {		
 		try {
 			buscados = usuarioDao.buscar(queryAmigos);
