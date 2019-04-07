@@ -79,8 +79,11 @@
   	</div>
 	</h:form>
 	
+
+	<!-- PAGINAÇÃO -->
+	<ui:include src="paginacao.xhtml" />
 	
-	<script>
+	<script>		
 		function excluirPublicacao(textoId, grupoNome){
 			document.getElementById("excluiTextoId").value = textoId;
 			document.getElementById("grupoNome").value = grupoNome;
@@ -94,9 +97,6 @@
 			instance.open(); 
 		}
 	</script>
-
-<!-- PAGINAÇÃO -->
-	<ui:include src="paginacao.xhtml" />
 
 
 </html>

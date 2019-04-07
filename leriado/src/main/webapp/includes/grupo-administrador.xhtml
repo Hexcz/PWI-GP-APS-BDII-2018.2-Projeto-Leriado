@@ -4,9 +4,8 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
-    
-    
+	 
+   
       <div class="collapsible-header">
       	<div class="col s11">
 	      	<i class="material-icons">comment</i>
@@ -17,7 +16,7 @@
       	</div>
       </div>
       <div id="painelGrupo" class="collapsible-body card-panel">
-      	<span >
+      	<span >      		
       		<div class="col s12">
       		<h:form>
 	      		<div class="col s6 offset-s3 center-align"><h5><b>Administrador</b></h5></div>
@@ -68,35 +67,21 @@
 							
 						</div>
 					</div>
-					<div class="row">
-					
-						<p>Adicionar usuário</p>
-						<h:form >
-							<div class="col s8 l6 input-field">
-								<i class="material-icons prefix">account_circle</i> 
-								<h:inputText	
-									type="email" 
-									name="email" 
-									id="email"
-									value="#{grupoBean.emailUsuario}"									
-									 /> 
-								<label for="email">Email do novo usuário</label>
-							</div>
-							<div class="col s4 l6 input-field">
-								<h:commandLink 
-									class="btn waves-effect waves-light z-depth-0"
-									 name="adicionar"
-									 action="#{grupoBean.adicionarUsuario}"
-									 ajax="true"
-									 update="listaGrupos"
-									 >
-									 <f:setPropertyActionListener 
-										value="#{grupo.grupo}"
-										target="#{grupoBean.grupo}" />
-									Adicionar <i class="material-icons right">send</i>
-								</h:commandLink>
-							</div>
-						</h:form> 
+					<div class="row">						
+						
+						<p>Adicionar usuário </p>
+						<div class="col s8 l6 input-field">
+							<i class="material-icons prefix">account_circle</i> 
+							<input	id="emailAdicionar#{grupo.grupo.id}"  type="text"/>
+							<label for="emailAdicionar#{grupo.grupo.id}">Email do novo usuário</label>
+						</div>
+						
+						<a	class="btn waves-effect waves-light"
+							onclick="adicionarGrupo('emailAdicionar#{grupo.grupo.id}','#{grupo.grupo.id}');" 
+							>
+							Adicionar <i class="material-icons right">send</i>
+	      				</a>
+		      			
 					</div>
 					<div class="row">
 
@@ -164,32 +149,35 @@
 						
 					
 						<div class="col s4 offset-s8">							
-							<a class="waves-effect waves-light btn modal-trigger rigth red" href="">REMOVER GRUPO</a>
+							<a 
+								class="waves-effect waves-light btn modal-trigger rigth red" 
+								href="#modalGrupo#{grupo.grupo.id}">REMOVER GRUPO</a>
 						</div>
 					</div>
 
 					
 					
+					<h:form >
 						<div id="modalGrupo#{grupo.grupo.id}" class="modal">
 					    <div class="modal-content">
-					      <h4>Deseja realmente Apagar o grupo:<i> <h:outputText value="#{grupo.grupo.nome}"/></i>?</h4>
+					    	<h4>Remover Grupo</h4>
+					      <h5>Deseja realmente apagar o grupo "<i> <h:outputText value="#{grupo.grupo.nome}"/></i>" ?</h5>
 					    </div>
-					    <div class="modal-footer">
-				    		<form >
-				    			<div class="input-field">
-				      				<input type="text" name="idGrupo" value="grupo.id" />
-				      			</div>
-				    			<div class="input-field">
-				    				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-				    				<button class="btn modal-close red lighten-2 waves-effect" type="submit">REMOVER</button>
-				      			</div>
-				      		</form>
+					    <div class="modal-footer">				    						    			
+			    			<div class="input-field">
+			    				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			    				<h:commandLink
+			    					action="#{grupoBean.excluirGrupo}"
+			    					styleClass="btn modal-close red lighten-2 waves-effect">
+			    					<f:setPropertyActionListener value="#{grupo.grupo.id}" target="#{grupoBean.grupoId}"></f:setPropertyActionListener>
+			    					REMOVER
+			    				</h:commandLink>
+			      			</div>				      	
 						</div> 				
-					</div>
-					
+						</div>
+					</h:form>	
 					
 			</span>
 		</div>
-   
 	
 	</html>

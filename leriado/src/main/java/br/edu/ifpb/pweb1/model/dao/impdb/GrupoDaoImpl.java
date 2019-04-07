@@ -56,7 +56,7 @@ public class GrupoDaoImpl implements GrupoDao{
 	@Override
 	public void excluir(int idGrupo) throws DataAccessException {
 		try {
-		String query = "DELETE FORM grupo WHERE id=?";
+		String query = "DELETE FROM grupo WHERE id=?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setInt(1, idGrupo);
 		statement.execute();

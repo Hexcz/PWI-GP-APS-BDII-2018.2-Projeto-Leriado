@@ -5,11 +5,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	
-	<ul id ="listaGrupos" class="collapsible">
-	
+	<ul id ="listaGrupos" class="collapsible">	
 		<li>
-			
+			<!-- CRIAR GRUPO -->
     		<div class="collapsible-header" >
     			<h:form>
     			<h:commandLink action="#{grupoBean.criarGrupo}">
@@ -20,22 +18,79 @@
 		      	</h:commandLink>
 		      	</h:form>
       		</div>
-      		
-	      	  
-      	</li>
+      	</li>	
+      	<!-- SEUS GRUPOS -->
+		<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
+			<!-- ADMINISTRADOR -->
+			<li jsf:rendered="#{grupo.administrador eq 'true'}">
+	    		<ui:include src="grupo-administrador.xhtml" />  
+	     	</li>
+	     	<!-- PARTICIPANTE -->
+	     	<li jsf:rendered="#{grupo.administrador eq 'false'}">
+	    		<ui:include src="grupo-participante.xhtml" />  
+	     	</li>
+	    
+	    </p:repeat>
+	</ul>
+
+	<!-- MODAL SAIR DO GRUPO -->
+	<h:form  prependId="false">
+	<div id="modalSairGrupo" class="modal">
+	    <div class="modal-content">
+		    <h4>Sair do grupo</h4>
+		    <h5>Deseja realmente sair do grupo "<span id="labelSairNomeGrupo"></span>" ?</h5>
+		    <h:inputHidden 
+			id="inputSairNomeGrupo"   
+			name="idGrupo" 
+			value="#{grupoBean.grupoId}" />	   
+			<p><hr/></p>	      
+	    </div>		    
+	    <div class="modal-footer">   			
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			<h:commandLink 
+				action="#{grupoBean.sairGrupo}"
+				class="btn modal-close red lighten-2 waves-effect" >
+				Sair
+			</h:commandLink>     		      		
+		</div> 				
+	</div>
+	</h:form>
 	
-	<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
-		<!-- ADMINISTRADOR -->
-		<li jsf:rendered="#{grupo.administrador eq 'true'}">
-    		<ui:include src="grupo-administrador.xhtml" />  
-     	</li>
-     	<!-- PARTICIPANTE -->
-     	<li jsf:rendered="#{grupo.administrador eq 'false'}">
-    		<ui:include src="grupo-participante.xhtml" />  
-     	</li>
-    
-    </p:repeat>
-</ul>
+	<h:form prependId="false">
+		<h:inputHidden 
+			id="emailUsuario"
+			value="#{grupoBean.email}"/>
+		<h:inputHidden
+			id="idGrupo"
+			value="#{grupoBean.grupoId}">
+			<f:convertNumber/>
+		</h:inputHidden>
+		<h:commandLink			
+			id="adicionarAoGrupo"
+			action="#{grupoBean.adicionarUsuario}"
+		/>
+	</h:form>
+	
+
+
+	<script>		
+		function sairGrupo(grupoNome, grupoId){
+			document.getElementById("labelSairNomeGrupo").innerHTML = grupoNome;
+			document.getElementById("inputSairNomeGrupo").value = grupoId;
+			var instance = M.Modal.getInstance(document.getElementById("modalSairGrupo"));
+			instance.open(); 
+		}
+		
+		function adicionarGrupo(nomeInput, grupoId){			
+			var elemInputNome = document.getElementById(nomeInput);
+			document.getElementById("idGrupo").value = grupoId;
+			document.getElementById("emailUsuario").value = elemInputNome.value;
+			elemInputNome.value="";
+			document.getElementById("adicionarAoGrupo").click();
+		}
+		
+		
+	</script>
 	
 	
 	</html>
