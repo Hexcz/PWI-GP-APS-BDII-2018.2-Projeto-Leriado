@@ -8,7 +8,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id = 0;
-	private boolean ativo;
+	private boolean ativo = true;
 	private String email;
 	private String senha;
 	private String nome;

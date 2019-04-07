@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="layout/main-layout.xhtml">
+<ui:composition template="layout/layout-main.xhtml">
 
 	<!-- LOGIN -->
 	<ui:define name="mainmenutopodireita">
@@ -12,6 +12,7 @@
 	</ui:define>
 	<!-- LOGIN -->
 	<ui:define name="conteudo">
+		
 		<div class="row orange lighten-5 separador"></div>
 		<div class="orange lighten-5">
 			<div class="container hide-on-med-and-down">
@@ -23,6 +24,8 @@
 					<!-- CADASTRO -->
 					<div class="col s6">
 						<p:messages autoUpdate="true" id="msg" globalOnly="true" />
+						<h4><h:outputText value="#{msg['cadastro.titulo']}"/></h4>
+						<h5><h:outputText value="#{msg['cadastro.mensagem']}"/></h5>
 						<ui:include src="includes/cadastro.xhtml"></ui:include>
 					</div>
 				</div>

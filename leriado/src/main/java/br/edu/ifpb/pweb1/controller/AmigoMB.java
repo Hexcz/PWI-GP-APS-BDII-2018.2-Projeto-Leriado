@@ -18,6 +18,7 @@ public class AmigoMB {
 	
 	private int qtdAmigos;
 	private int qtdSolicitacoes;
+	private int qtdBuscados;
 	private UsuarioDaoImpl usuarioDao;
 	private List<Usuario> amigos;
 	private List<Usuario> solicitacoes;
@@ -64,8 +65,9 @@ public class AmigoMB {
 	}
 	
 	public String buscarAmigos() {		
-		try {
+		try {			
 			buscados = usuarioDao.buscar(queryAmigos);
+			qtdBuscados = buscados.size();
 			usuarioDao.carregarFotoPerfil(buscados);
 			usuarioDao.mudarStatus(loginMb.getUsuarioLogado(), buscados);
 		} catch (DataAccessException e) {
@@ -152,6 +154,14 @@ public class AmigoMB {
 
 	public void setAmigo(Usuario amigo) {
 		this.amigo = amigo;
+	}
+
+	public int getQtdBuscados() {
+		return qtdBuscados;
+	}
+
+	public void setQtdBuscados(int qtdBuscados) {
+		this.qtdBuscados = qtdBuscados;
 	}
 
 	public LoginMB getLoginMb() {

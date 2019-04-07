@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="col s12 white z-depth-2 publicacao">
+		<h:form enctype="multipart/form-data">
+			<div class="row">
+				<div class="col s6 offset-s3 center-align">
+					<h5 jsf:rendered="#{loginBean.paginaAtual eq 'criarGrupo'}"><b>Criar Grupo</b></h5>		
+					<h5 jsf:rendered="#{loginBean.paginaAtual eq 'editarGrupo'}"><b>Editar Grupo</b></h5>
+				</div>
+			</div>
+			
+			<div class="col s1">
+				<b>Foto:</b>						
+			</div>
+			<div class="col s3 file-field input-field">								
+				<p:graphicImage 
+					id="fotoGrupo"				
+					cache="false"	
+					value="#{loginBean.pathUrlImagem}#{grupoBean.grupo.foto}" 
+					styleClass="circle perfil">
+					<h:inputFile title="#{grupoBean.grupo.nome}" value="#{grupoBean.imagem}" >
+						<f:ajax listener="#{grupoBean.mudarFotoGrupo}"  render="@form"/>						
+					</h:inputFile>
+				</p:graphicImage>
+			</div>
+			
+			<div class="col s8 right-align">
+				<h:commandLink				 
+					styleClass="waves-effect waves-light btn-small "
+					action="#{grupoBean.salvarGrupo}">
+					<f:ajax render="@all"/>					
+					
+					<i class="material-icons left">done</i>Salvar
+				</h:commandLink>
+			</div>
+			
+			
+			<div class="col s12">
+				<label for="nome"><b>Nome</b></label>	
+				<p:inputText id="nome" name="nome" value="#{grupoBean.grupo.nome}" maxlength="50" 
+					required="true" requiredMessage="O nome do grupo é obrigatório"/>
+				<span></span>
+				<p:messages autoUpdate="true" for="nome" id="msg-nome" globalOnly="false" />
+			</div>
+			<div class="col s12">
+				<label for="descricao"><b>Descrição</b></label>
+				<p:inputTextarea id="descricao" 
+					name="descricao" 
+					class="materialize-textarea" 
+					value="#{grupoBean.grupo.descricao}"
+					required="true"
+					requiredMessage="A descrição do grupo é obrigatória" 
+					placeholder="Descição do Grupo" />
+				
+				<p:messages autoUpdate="true" for="descricao" id="msg-descricao" globalOnly="false" />
+			</div>
+			</h:form>
+		<div class="col s12 right-align">
+			<h:form>
+			<h:commandLink 
+				styleClass="waves-effect waves-teal btn-flat"
+				action="#{grupoBean.paginaGrupo}" ajax="true" updadate="@all">
+				<i class="material-icons left">cancel</i>Cancelar
+			</h:commandLink>
+			</h:form>
+			
+		</div>
+		<div class="row"/>
+		
+		
+			
+	</div>
+	
+</html>

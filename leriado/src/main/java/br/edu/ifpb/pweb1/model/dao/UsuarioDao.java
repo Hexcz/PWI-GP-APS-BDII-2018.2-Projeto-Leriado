@@ -17,6 +17,7 @@ public interface UsuarioDao {
 	void carregarFotoPerfil(List<Usuario> usuarios) throws DataAccessException;
 	String carregarFotoPerfil(int usuarioId) throws DataAccessException;	
 	Usuario buscarPorId(Integer id) throws DataAccessException;
+	void buscarPorId(Usuario usuario, Integer id) throws DataAccessException;
 	Usuario buscarPorEmail(String email) throws DataAccessException;
 	void buscar(Usuario usuario)throws DataAccessException; 
 	List<Usuario> buscar(String consulta) throws DataAccessException;

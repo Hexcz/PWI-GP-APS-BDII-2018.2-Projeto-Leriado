@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class GrupoDaoImpl implements GrupoDao{
 	@Override
 	public void excluir(int idGrupo) throws DataAccessException {
 		try {
-		String query = "update grupo set ativo=false where id=?";
+		String query = "DELETE FROM grupo WHERE id=?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setInt(1, idGrupo);
 		statement.execute();
@@ -64,6 +65,26 @@ public class GrupoDaoImpl implements GrupoDao{
 		}
 	}
 	
+	@Override
+	public void editar(Grupo grupo) throws DataAccessException {
+		try {
+			String query = "UPDATE grupo SET"
+					+ " ativo=?, datahora=?, nome=?, descricao=?, foto=? "
+					+ " WHERE id = ? ";
+			PreparedStatement stm = connection.prepareStatement(query);
+			stm.setBoolean(1, grupo.isAtivo());
+			stm.setTimestamp(2, Timestamp.valueOf(grupo.getDataHora()));
+			stm.setString(3, grupo.getNome());
+			stm.setString(4, grupo.getDescricao());
+			stm.setString(5, grupo.getFoto());
+			stm.setInt(6, grupo.getId());
+			stm.executeUpdate();
+		}catch (Exception e) {
+			throw new DataAccessException("Falha ao editar grupo");
+		}
+		
+	}
+
 	@Override
 	public boolean participa(int usuarioId, int grupoId) throws DataAccessException {
 		try {

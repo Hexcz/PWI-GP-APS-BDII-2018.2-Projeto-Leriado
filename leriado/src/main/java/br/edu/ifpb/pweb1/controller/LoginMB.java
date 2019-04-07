@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -24,6 +23,7 @@ import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
+import br.edu.ifpb.pweb1.util.JsfUtil;
 
 /**
  * @author isleimar
@@ -75,14 +75,17 @@ public class LoginMB {
 				usuarioLogado = usuarioDao.buscarPorEmail(email);
 				carregarPerfil();
 				paginaAtual = "feed";
+				
 				return "sucesso";
 			}			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Falha ao efetura login", "Falha ao efetuar login, usuário ou senha inválidos"));
-		} catch (Exception e) {
+					
+			
+		} catch (Exception e) {			
 			e.printStackTrace();
-		}		
-		return "falha";
+		}				
+		JsfUtil.addErrorMessage("Falha ao efetuar login. Usuário ou senha inválido");
+		
+		return null;
 	}
 	
 	public String carrgarGrupos() {
@@ -142,6 +145,18 @@ public class LoginMB {
 				e.printStackTrace();
 			}	
 		return "";
+	}
+	
+	public String removerConta() {
+		try {
+			int usuarioId = usuarioLogado.getId();
+			usuarioLogado = null;
+			usuarioDao.remover(usuarioId);
+			return "removido";
+		}catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return "goLogin";
 	}
 	
 	public String logout() {
@@ -221,7 +236,5 @@ public class LoginMB {
 	public void setSeusGrupos(List<FeedGrupo> seusGrupos) {
 		this.seusGrupos = seusGrupos;
 	}
-
-
 
 }

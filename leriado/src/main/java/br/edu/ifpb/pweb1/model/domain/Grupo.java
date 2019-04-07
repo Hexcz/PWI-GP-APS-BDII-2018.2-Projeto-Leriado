@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Grupo {
 	private int id;
-	private boolean ativo;
+	private boolean ativo = true;
 	private LocalDateTime dataHora;
 	private String nome;
 	private String descricao;

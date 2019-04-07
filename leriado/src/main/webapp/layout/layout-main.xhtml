@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
@@ -22,8 +23,8 @@
 <!-- CUSTOM -->
 <link rel="stylesheet" href="resources//css/custom.css"/>
 <script src="resources/js/custom.js"></script>
-
-	<title>Leriado</title>
+<link rel="icon" type="imagem/png" href="resources/img/icone.png"/>
+<title>Leriado</title>
 </h:head>
 <h:body>	  
  	<!--JavaScript at end of body for optimized loading-->
@@ -35,7 +36,6 @@
 		 <ui:include src="../includes/header.xhtml"></ui:include>
 	</ui:insert>
 	</div>
-  
   
 
     <!--CORPO-->
@@ -57,8 +57,6 @@
 	
 <script>
 	$('.dropdown-trigger').dropdown();
-	
-
 		
 	$(document).ready(function() {
 		$('.modal').modal();

@@ -8,6 +8,7 @@ import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 public interface GrupoDao {
 	public void criar(Grupo novoGrupo) throws DataAccessException;
 	public void excluir(int idGrupo) throws DataAccessException;
+	public void editar(Grupo grupo) throws DataAccessException;
 	boolean participa(int usuarioId, int grupoId)throws DataAccessException;
 	boolean eAdministrador(int usuarioId, int grupoId)throws DataAccessException;
 	int qtdParticipantes(int grupoId) throws DataAccessException;

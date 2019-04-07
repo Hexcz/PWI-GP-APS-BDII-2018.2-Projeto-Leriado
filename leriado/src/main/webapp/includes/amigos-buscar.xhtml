@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+	<ul class="collection">
+		<li class="collection-item orange darken-1 z-depth-4 white-text">
+			<span class="badge white-text">				
+				<i class="material-icons">supervisor_account</i>					
+			</span> Buscar Amigos			
+		</li>
+		
+		<li class="item avatar white z-depth-4">			
+			<div class="input-field col s12 white">
+			
+				<i class="material-icons prefix">search</i>
+          		<h:inputText 
+          			id="inputBusca"
+          			value="#{amigoBean.queryAmigos}"
+          			styleClass="validate"          			
+          			onkeypress="if(event.keyCode == 13){event.target.blur();event.stopPropagation(); return false;} else {return true; window.location.reload();}; ">
+          			<f:ajax event="change" listener="#{amigoBean.buscarAmigos}" update="@from" render="@form"/>
+          		</h:inputText>
+          		<label for="inputBusca">Buscar amigo</label>
+	 		</div>	 		
+		</li>
+		
+		<!-- LISTAGEM DE AMIGOS -->
+		<li class="collection-item orange darken-1 z-depth-4 white-text">
+			<span class="badge white-text">				
+				<h:outputText value="#{amigoBean.qtdBuscados}" />					
+			</span> Resultado			
+		</li>
+		
+		<p:repeat var="amigo" value="#{amigoBean.buscados}">
+		<li class="collection-item avatar white z-depth-4">
+			<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{amigo.arquivoFoto}" />
+			<span class="title"><h:outputText value="#{amigo.nome}"/></span>
+			<p >
+				<div class="col s12">
+					<div class="col s6">  
+						<h:outputText value="#{amigo.sobrenome}"/>						
+					</div>
+					<div class="col s6">
+					<!-- SOLICITAR AMIZADE -->
+					<h:commandLink
+						styleClass="waves-effect waves-light btn-small"
+						action="#{amigoBean.iniciarAmizade}"
+						rendered="#{amigo.status eq 'nada'}">
+						<f:setPropertyActionListener 
+							value="#{amigo}" 
+							target="#{amigoBean.amigo}"/>
+							Solicitar Amizade
+					</h:commandLink>
+					<!-- DESFAZER AMIZADE -->					
+					<h:commandLink
+						styleClass="waves-effect waves-light btn-small red"
+						action="#{amigoBean.finalizarAmizade}"
+						rendered="#{amigo.status eq 'amigo'}">
+						<f:setPropertyActionListener 
+							value="#{amigo}" 
+							target="#{amigoBean.amigo}"/>
+							Desfazer Amizade
+					</h:commandLink>		
+					<!-- AMIZADE SOLICITADA -->
+					<h:commandLink
+						styleClass="waves-effect waves-light btn-small"
+						action="#{amigoBean.iniciarAmizade}"
+						rendered="#{amigo.status eq 'recebida'}">
+						<f:setPropertyActionListener 
+							value="#{amigo}" 
+							target="#{amigoBean.amigo}"/>
+							Aceitar
+					</h:commandLink>
+					<h:commandLink
+						styleClass="waves-effect waves-light btn-small red"
+						action="#{amigoBean.finalizarAmizade}"
+						rendered="#{amigo.status eq 'recebida'}">
+						<f:setPropertyActionListener 
+							value="#{amigo}" 
+							target="#{amigoBean.amigo}"/>
+							Recusar
+					</h:commandLink>	
+					<!-- DESFAZER SOLICITAÇÃO -->	
+					<h:commandLink
+						styleClass="waves-effect waves-light btn-small red"
+						action="#{amigoBean.finalizarAmizade}"
+						rendered="#{amigo.status eq 'enviado'}">
+						<f:setPropertyActionListener 
+							value="#{amigo}" 
+							target="#{amigoBean.amigo}"/>
+							Cancelar Solicitação
+					</h:commandLink>	
+								
+					</div>
+				</div>
+			</p>
+			
+
+
+		</li>
+		</p:repeat>
+	</ul>
+	
+	</h:form>
+	 	 	
+</html>

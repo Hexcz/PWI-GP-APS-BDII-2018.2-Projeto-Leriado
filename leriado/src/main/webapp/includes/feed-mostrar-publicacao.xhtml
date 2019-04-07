@@ -10,9 +10,13 @@
  	<div class="white z-depth-2 publicacao">
  		<div class="row">
  		
+ 		
  		<div class="col s11">
- 		<!-- NOME DE QUEM PUBLICOU --> 		 			
+ 		<!-- NOME DE QUEM PUBLICOU -->
+ 		 		 			
+		
 		<h4>
+		<h:graphicImage class="circle imgAmigo"	value="#{loginBean.pathUrlImagem}#{publicacao.compartilha.usuario.arquivoFoto}" />
 			<b class="blue-text"><h:outputText value="#{publicacao.compartilha.usuario.nome}"></h:outputText></b>
 			<!-- NOME DE QUEM CRIOU A PUBLICACAO -->
 			<h:outputLabel rendered="#{publicacao.compartilha.usuario.id != publicacao.compartilha.texto.usuario.id}">
@@ -24,13 +28,13 @@
 		</h4>	
 		</div>
 		
-		<!-- OPÇÕES DA PUBLICAÇÃO -->
+		<!-- OPÇÕES DA PUBLICAÇÃO -->		
 		<div class="col s1">			
 			<span
 				jsf:rendered="#{publicacao.compartilha.usuario.id eq loginBean.usuarioLogado.id}">
 				<a
 				class="btn-floating modal-trigger btn-Small  waves-effect waves-light  orange accent-1"
-				onclick="excluirPublicacao('#{publicacao.compartilha.texto.id}');">				
+				onclick="excluirPublicacao('#{publicacao.compartilha.texto.id}','#{publicacao.compartilha.grupo.nome}');">				
 					<i class="material-icons">delete</i>
 			</a>
 			</span>
@@ -132,7 +136,7 @@
 					<p:graphicImage 
 						styleClass="imgCurte" 
 						autoUpdate="true"
-						value="#{loginBean.pathUrlImagem}ncurtido.png" />
+						value="resources/img/ncurtido.png" />
 				</p:commandLink>
 				<!-- DESCURTIR -->
 				<p:commandLink 
@@ -149,25 +153,30 @@
 					<p:graphicImage 
 						styleClass="imgCurte" 
 						autoUpdate="true"
-						value="#{loginBean.pathUrlImagem}curtido.png" />
+						value="resources/img/curtido.png" />
 				</p:commandLink>
 			</div>
 		
 			<!-- COMPARTILHAR -->
 			<hr class="col s12"/>
-			<div class="col s5">
+			<div class="col s5" jsf:rendered="#{loginBean.quantGruposParticipa>0}">
 				<!-- COMPARTILHA -->
-				<button
-					class="btn waves-effect waves-light btn-small orange darken-1"
-					name="action">
+				
+				<a
+					href="#modalCompartilhaPublicaco"
+					class="btn waves-effect waves-light btn-small modal-trigger orange darken-1"
+					onclick="compartilharPublicacao('#{publicacao.compartilha.texto.id}');">
 					<small class="text-white">Compartilhar</small> <i
 						class="material-icons right">send</i>
-	
-				</button>
-			</div>		
+				</a>
+			</div>	
+			<div class="col s7">
+			
+			</div>	
 		</div>
  	</div>		
 	<br/>
+	
 </h:form>	
 
 </html>

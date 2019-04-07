@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<!-- CRIAR MENSAGEM -->
+ 	 <div class="row" jsf:rendered="#{loginBean.quantGruposParticipa>0}">                
+    	<ui:include src="feed-criar-mensagem.xhtml" /> 
+	</div>
+	
+	 
+    <div class="row white z-depth-2 center-align " jsf:rendered="#{loginBean.quantGruposParticipa==0}">
+    	<h:outputLabel value="Você só poderá realizar publicações quando fizer parte de algum grupo."/>
+    </div>
+      
+    
+    <!-- FEED -->
+	<ui:repeat var="publicacao" value="#{feedBean.feedPublicacoes}">
+		  <ui:include src="feed-mostrar-publicacao.xhtml" />  		
+	</ui:repeat> 
+	
+	
+	<!-- MODAL EXCLUIR PUBLICACAO -->
+	<h:form prependId="false">
+	<div id="modalExcluirPublicacao" class="modal">
+		<div class="modal-content">
+			<h4>Excluir Publicação</h4>
+			<p>Você tem certeza que deseja excluir esta publicação?</p>
+			<h:inputHidden id="excluiTextoId" value="#{publicacaoBean.textoId}" />
+			<h:inputHidden id="grupoNome" value="#{publicacaoBean.grupoCompartilhado}" />
+		</div>
+		
+		<div class="modal-footer">
+			<a class="modal-close waves-effect waves-teal btn-flat ">Cancelar</a>
+			<h:commandLink 
+				class="waves-effect waves-light btn-small orange darken-1"
+				action="#{publicacaoBean.excluirPublicacao}">
+				Excluir
+			</h:commandLink>
+		</div>
+	</div>
+	</h:form>
+	
+	
+	
+	<!-- MODAL COMPARTILHA -->
+	<h:form prependId="false">		
+	<div id="modalCompartilhaPublicaco" class="modal">
+    <div class="modal-content">
+    	<h5>Compartilhar publicação</h5>
+      	<div class="col s6 input-field">		
+		<div class="input-field col s12"><Label for="grupoPublicar" >Informe um grupo para publicação:</Label></div>
+		<h:inputHidden id="textoId" value="#{publicacaoBean.textoId}">
+			<f:convertNumber/>
+		</h:inputHidden> 
+		<div class="input-field col s12">
+			<h:selectOneMenu id="grupoCompartilhar" value="#{publicacaoBean.grupoCompartilhado}" 
+				required="true" requiredMessage="É obrigatório vincular a mensagem a algum grupo" 
+				styleClass="display: inline-block !important;">
+				<f:selectItems value="#{loginBean.seusGrupos}" var="grupo" itemValue="#{grupo.grupo.nome}" itemLabel="#{grupo.grupo.nome}"/>								
+			</h:selectOneMenu>
+			
+		</div>		
+	</div>
+		<p><hr/></p>
+		
+    </div>
+    
+    <div class="modal-footer">
+      <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <h:commandLink 
+      	class="btn waves-effect waves-light btn-small orange darken-1"
+      	action="#{publicacaoBean.compartilharTexto}">      	
+      		Compartilhar
+      </h:commandLink>
+    </div>
+  	</div>
+	</h:form>
+	
+
+	<!-- PAGINAÇÃO -->
+	<ui:include src="paginacao.xhtml" />
+	
+	<script>		
+		function excluirPublicacao(textoId, grupoNome){
+			document.getElementById("excluiTextoId").value = textoId;
+			document.getElementById("grupoNome").value = grupoNome;
+			var instance = M.Modal.getInstance(document.getElementById("modalExcluirPublicacao"));
+			instance.open(); 
+		}
+		
+		function compartilharPublicacao(id){
+			document.getElementById("textoId").value = id;
+			var instance = M.Modal.getInstance(document.getElementById("modalCompartilharPublicacao"));
+			instance.open(); 
+		}
+	</script>
+
+
+</html>

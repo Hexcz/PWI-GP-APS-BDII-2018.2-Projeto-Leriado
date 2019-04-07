@@ -41,6 +41,7 @@ public class CompartilhaDAOImpDB implements CompartilhaDAO {
 
 	@Override
 	public void cria(Compartilha compartilha) throws DataAccessException {
+		exclui(compartilha);
 		cria(compartilha.getUsuario().getId(),
 				compartilha.getTexto().getId(),
 				compartilha.getGrupo().getId());
@@ -48,7 +49,7 @@ public class CompartilhaDAOImpDB implements CompartilhaDAO {
 
 	@Override
 	public void cria(int usuarioId, int textoId, int grupoId) throws DataAccessException {
-		try {
+		try {			
 			String query = "INSERT INTO compartilha (usuarioid,textoid,grupoid) " + "VALUES (?,?,?) ";
 			PreparedStatement stm = connection.prepareStatement(query);
 			stm.setInt(1, usuarioId);
@@ -62,19 +63,26 @@ public class CompartilhaDAOImpDB implements CompartilhaDAO {
 
 	@Override
 	public void exclui(Compartilha compartilha) throws DataAccessException {
+		exclui(
+				compartilha.getUsuario().getId(),
+				compartilha.getTexto().getId(),
+				compartilha.getGrupo().getId());	
+	}
+	
+	@Override
+	public void exclui(int usuarioId, int textoId, int grupoId) throws DataAccessException {
 		try {
 			String query = "DELETE FROM compartilha " + " WHERE (usuarioid = ?) AND " + " (textoid = ?) AND "
 					+ " (grupoid = ?)";
 			PreparedStatement stm = connection.prepareStatement(query);
-			stm.setInt(1, compartilha.getUsuario().getId());
-			stm.setInt(2, compartilha.getTexto().getId());
-			stm.setInt(3, compartilha.getGrupo().getId());
+			stm.setInt(1, usuarioId);
+			stm.setInt(2, textoId);
+			stm.setInt(3, grupoId);
 			stm.execute();
 		} catch (Exception e) {
 			throw new DataAccessException("Falha ao remover compartilhamento");
 		}
 	}
-	
 	
 
 	@Override
