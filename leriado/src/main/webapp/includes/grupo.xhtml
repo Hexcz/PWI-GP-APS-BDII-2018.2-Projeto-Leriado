@@ -5,175 +5,92 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
+	<ul id ="listaGrupos" class="collapsible">	
+		<li>
+			<!-- CRIAR GRUPO -->
+    		<div class="collapsible-header" >
+    			<h:form>
+    			<h:commandLink action="#{grupoBean.criarGrupo}">
+		      	<div class="col s12" >
+			      	<i class="material-icons">add</i>
+			      	<h:outputText value="Criar um novo grupo"/>
+		      	</div>
+		      	</h:commandLink>
+		      	</h:form>
+      		</div>
+      	</li>	
+      	<!-- SEUS GRUPOS -->
+		<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
+			<!-- ADMINISTRADOR -->
+			<li jsf:rendered="#{grupo.administrador eq 'true'}">
+	    		<ui:include src="grupo-administrador.xhtml" />  
+	     	</li>
+	     	<!-- PARTICIPANTE -->
+	     	<li jsf:rendered="#{grupo.administrador eq 'false'}">
+	    		<ui:include src="grupo-participante.xhtml" />  
+	     	</li>
+	    
+	    </p:repeat>
+	</ul>
+
+	<!-- MODAL SAIR DO GRUPO -->
+	<h:form  prependId="false">
+	<div id="modalSairGrupo" class="modal">
+	    <div class="modal-content">
+		    <h4>Sair do grupo</h4>
+		    <h5>Deseja realmente sair do grupo "<span id="labelSairNomeGrupo"></span>" ?</h5>
+		    <h:inputHidden 
+			id="inputSairNomeGrupo"   
+			name="idGrupo" 
+			value="#{grupoBean.grupoId}" />	   
+			<p><hr/></p>	      
+	    </div>		    
+	    <div class="modal-footer">   			
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			<h:commandLink 
+				action="#{grupoBean.sairGrupo}"
+				class="btn modal-close red lighten-2 waves-effect" >
+				Sair
+			</h:commandLink>     		      		
+		</div> 				
+	</div>
+	</h:form>
 	
-	<ul id ="listaGrupos" class="collapsible">
+	<h:form prependId="false">
+		<h:inputHidden 
+			id="emailUsuario"
+			value="#{grupoBean.email}"/>
+		<h:inputHidden
+			id="idGrupo"
+			value="#{grupoBean.grupoId}">
+			<f:convertNumber/>
+		</h:inputHidden>
+		<h:commandLink			
+			id="adicionarAoGrupo"
+			action="#{grupoBean.adicionarUsuario}"
+		/>
+	</h:form>
 	
-	<p:repeat var="grupo" value="#{loginBean.seusGrupos}">
-	
-	
-    
-    <li jsf:rendered="#{grupo.administrador eq 'true'}">
-      <div class="collapsible-header"><i class="material-icons">comment</i><h:outputText value="#{grupo.grupo.nome}"/></div>
-      <div class="collapsible-body card-panel">
-      	<span >
-			<div class="row">  
-
-				<h5><b>Informações:</b></h5>
-					</div>
-					<div class="row" >
-						<div class="col s12 l6">
-							<b>NOME:</b><br/>
-							<h:outputText value="#{grupo.grupo.nome}"/>
-						</div>
-						<div class="col s12 l6">
-							<b>DATA E HORA DE CRIAÇÃO:</b><br/>
-							<h:outputText value="#{grupo.grupo.dataHora}" >
-									<f:converter converterId="dateTimeConverter" />
-								</h:outputText> 
-						</div>
-					</div>
-					<div class="row" >
-						<div class="col s12 l6">
-							<b>DESCRIÇÃO:</b><br/>
-							<h:outputText value="#{grupo.grupo.descricao}"/>
-						</div>
-						<div class="col s12 l6">
-							
-							<b>FOTO: </b>
-								<h:graphicImage
-									value="#{loginBean.pathUrlImagem}#{grupo.grupo.foto}" 
-									styleClass="circle perfil"/>
-									 
-							
-						</div>
-					</div>
-					<div class="row">
-					
-						<p>Adicionar usuário</p>
-						<h:form >
-							<div class="col s8 l6 input-field">
-								<i class="material-icons prefix">account_circle</i> 
-								<h:inputText	
-									type="email" 
-									name="email" 
-									id="email"
-									value="#{grupoBean.emailUsuario}"									
-									 /> 
-								<label for="email">Email do novo usuário</label>
-							</div>
-							<div class="col s4 l6 input-field">
-								<h:commandLink 
-									class="btn waves-effect waves-light z-depth-0"
-									 name="adicionar"
-									 action="#{grupoBean.adicionarUsuario}"
-									 ajax="true"
-									 update="listaGrupos"
-									 >
-									 <f:setPropertyActionListener 
-										value="#{grupo.grupo}"
-										target="#{grupoBean.grupo}" />
-									Adicionar <i class="material-icons right">send</i>
-								</h:commandLink>
-							</div>
-						</h:form> 
-					</div>
-					<div class="row">
 
 
-
-
-						<ul class="collection">
-							<li class="collection-item orange darken-1 z-depth-4 white-text">
-								<span class="badge white-text"> 
-									<h:outputText
-										value="#{grupo.qtdParticipantes}" />
-									</span> Participantes
-							</li>
-							<p:repeat var="usuario" value="#{grupo.usuarios}">
-								<li class="collection-item avatar white z-depth-4"><h:graphicImage
-										class="circle imgAmigo"
-										value="#{loginBean.pathUrlImagem}#{usuario.arquivoFoto}" /> <span
-									class="title"><h:outputText value="#{usuario.nome}" /></span>
-									<p>
-										<h:outputText value="#{usuario.sobrenome}" />
-										
-										<!-- Modal Trigger -->  									
-										
-									</p> <a href="#modalUsuario#{usuario.id}Grupo#{grupo.grupo.id}" class="secondary-content modal-trigger"><i
-										class="material-icons red-text">delete</i></a></li>
-								
-								
-								<!-- MODAL REMOVER USUÁRIO DO GRUPO -->
-								
-									<div id="modalUsuario#{usuario.id}Grupo#{grupo.grupo.id}" class="modal">
-										<div class="modal-content">
-											<h5>Remover usuário do grupo</h5>
-											Deseja realmente remover o usuario:
-												<b> <h:outputText value="#{usuario.nome}" /></b>?										
-										</div>
-										<div class="modal-footer">
-										<h:form>											
-										 <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a> 
-										<h:commandLink  
-											class="btn modal-close red lighten-2 waves-effect"
-											action="#{grupoBean.removerUsuario}"
-											ajax="true"
-											update="listaGrupos">
-										 	<f:setPropertyActionListener 
-												value="#{usuario}"
-												target="#{grupoBean.usuario}" />
-											<f:setPropertyActionListener 
-												value="#{grupo.grupo}"
-												target="#{grupoBean.grupo}" />
-										 	REMOVER
-										 </h:commandLink>
-										 </h:form>
-																						
-										</div>
-									</div>
-								
-
-							</p:repeat>
-						</ul>
-
-			
-					</div>
-					<hr/>
-					<div class="row">			
-						
-					
-						<div class="col s4 offset-s8">							
-							<a class="waves-effect waves-light btn modal-trigger rigth red" href="">REMOVER GRUPO</a>
-						</div>
-					</div>
-
-					
-					
-						<div id="modalGrupo#{grupo.grupo.id}" class="modal">
-					    <div class="modal-content">
-					      <h4>Deseja realmente Apagar o grupo:<i> <h:outputText value="#{grupo.grupo.nome}"/></i>?</h4>
-					    </div>
-					    <div class="modal-footer">
-				    		<form >
-				    			<div class="input-field">
-				      				<input type="text" name="idGrupo" value="grupo.id" />
-				      			</div>
-				    			<div class="input-field">
-				    				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-				    				<button class="btn modal-close red lighten-2 waves-effect" type="submit">REMOVER</button>
-				      			</div>
-				      		</form>
-						</div> 				
-					</div>
-					
-					
-			</span>
-		</div>
-    </li>
-    
-    
-    </p:repeat>
-</ul>
+	<script>		
+		function sairGrupo(grupoNome, grupoId){
+			document.getElementById("labelSairNomeGrupo").innerHTML = grupoNome;
+			document.getElementById("inputSairNomeGrupo").value = grupoId;
+			var instance = M.Modal.getInstance(document.getElementById("modalSairGrupo"));
+			instance.open(); 
+		}
+		
+		function adicionarGrupo(nomeInput, grupoId){			
+			var elemInputNome = document.getElementById(nomeInput);
+			document.getElementById("idGrupo").value = grupoId;
+			document.getElementById("emailUsuario").value = elemInputNome.value;
+			elemInputNome.value="";
+			document.getElementById("adicionarAoGrupo").click();
+		}
+		
+		
+	</script>
 	
 	
 	</html>

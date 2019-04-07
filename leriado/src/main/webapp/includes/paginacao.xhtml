@@ -12,11 +12,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h:form>
-		<ul class="pagination">
+	<h:form >
+		<ul class="pagination" >
 		
-	    <li jsf:rendered="#{feedBean.pagAtual eq 1}"  class="disabled"><a href="home.xhtml"><i class="material-icons">chevron_left</i></a></li>
-	    <li jsf:rendered="#{feedBean.pagAtual gt 1}"  class="waves-effect"><a href="home.xhtml"><i class="material-icons">chevron_left</i></a></li>
+	    <li jsf:rendered="#{(feedBean.pagAtual eq 1) and ( feedBean.pagQuant gt 0)}"  class="disabled"><a href="home.xhtml"><i class="material-icons">chevron_left</i></a></li>
+	    <li jsf:rendered="#{(feedBean.pagAtual gt 1) and ( feedBean.pagQuant gt 0)}"  class="waves-effect"><a href="home.xhtml"><i class="material-icons">chevron_left</i></a></li>
 	    
 	    <ui:repeat var="pagina" value="#{feedBean.paginacao}">
 	    

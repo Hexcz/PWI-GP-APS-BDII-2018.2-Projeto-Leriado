@@ -1,0 +1,183 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	 
+   
+      <div class="collapsible-header">
+      	<div class="col s11">
+	      	<i class="material-icons">comment</i>
+	      	<h:outputText value="#{grupo.grupo.nome}"/>
+      	</div>
+      	<div class="col s1">      	
+      		<i class="material-icons">grade</i>
+      	</div>
+      </div>
+      <div id="painelGrupo" class="collapsible-body card-panel">
+      	<span >      		
+      		<div class="col s12">
+      		<h:form>
+	      		<div class="col s6 offset-s3 center-align"><h5><b>Administrador</b></h5></div>
+	      		<div class="col s3  right-align">      		
+	      			<h:commandLink
+	      				action="#{grupoBean.editarGrupo}"
+	      				styleClass="btn-floating btn-smal waves-effect waves-light"
+	      				ajax="true"
+	      				update="painelGrupo">
+	      				<i class="material-icons">edit</i>
+	      				<f:setPropertyActionListener 
+	      					value="#{grupo.grupo}" 
+	      					target="#{grupoBean.grupo}"></f:setPropertyActionListener>
+	      				Editar Grupo	      				
+	      			</h:commandLink>
+	      		</div>
+	      	</h:form>
+	      	</div>
+      		
+			<div class="col s12">  
+
+				<h5><b>Informações:</b></h5>
+					</div>
+					<div class="row" >
+						<div class="col s12 l6">
+							<b>NOME:</b><br/>
+							<h:outputText value="#{grupo.grupo.nome}"/>
+						</div>
+						<div class="col s12 l6">
+							<b>DATA E HORA DE CRIAÇÃO:</b><br/>
+							<h:outputText value="#{grupo.grupo.dataHora}" >
+									<f:converter converterId="dateTimeConverter" />
+								</h:outputText> 
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col s12 l6">
+							<b>DESCRIÇÃO:</b><br/>
+							<h:outputText value="#{grupo.grupo.descricao}"/>
+						</div>
+						<div class="col s12 l6">
+							
+							<b>FOTO: </b>
+								<h:graphicImage
+									value="#{loginBean.pathUrlImagem}#{grupo.grupo.foto}" 
+									styleClass="circle perfil"/>
+									 
+							
+						</div>
+					</div>
+					<div class="row">						
+						
+						<p>Adicionar usuário </p>
+						<div class="col s8 l6 input-field">
+							<i class="material-icons prefix">account_circle</i> 
+							<input	id="emailAdicionar#{grupo.grupo.id}"  type="text"/>
+							<label for="emailAdicionar#{grupo.grupo.id}">Email do novo usuário</label>
+						</div>
+						
+						<a	class="btn waves-effect waves-light"
+							onclick="adicionarGrupo('emailAdicionar#{grupo.grupo.id}','#{grupo.grupo.id}');" 
+							>
+							Adicionar <i class="material-icons right">send</i>
+	      				</a>
+		      			
+					</div>
+					<div class="row">
+
+
+
+
+						<ul class="collection">
+							<li class="collection-item orange darken-1 z-depth-4 white-text">
+								<span class="badge white-text"> 
+									<h:outputText
+										value="#{grupo.qtdParticipantes}" />
+									</span> Participantes
+							</li>
+							<p:repeat var="usuario" value="#{grupo.usuarios}">
+								<li class="collection-item avatar white z-depth-4"><h:graphicImage
+										class="circle imgAmigo"
+										value="#{loginBean.pathUrlImagem}#{usuario.arquivoFoto}" /> <span
+									class="title"><h:outputText value="#{usuario.nome}" /></span>
+									<p>
+										<h:outputText value="#{usuario.sobrenome}" />
+										
+										<!-- Modal Trigger -->  									
+										
+									</p> <a href="#modalUsuario#{usuario.id}Grupo#{grupo.grupo.id}" class="secondary-content modal-trigger"><i
+										class="material-icons red-text">delete</i></a></li>
+								
+								
+								<!-- MODAL REMOVER USUÁRIO DO GRUPO -->
+								
+									<div id="modalUsuario#{usuario.id}Grupo#{grupo.grupo.id}" class="modal">
+										<div class="modal-content">
+											<h5>Remover usuário do grupo</h5>
+											Deseja realmente remover o usuario:
+												<b> <h:outputText value="#{usuario.nome}" /></b>?										
+										</div>
+										<div class="modal-footer">
+										<h:form>											
+										 <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a> 
+										<h:commandLink  
+											class="btn modal-close red lighten-2 waves-effect"
+											action="#{grupoBean.removerUsuario}"
+											ajax="true"
+											update="listaGrupos">
+										 	<f:setPropertyActionListener 
+												value="#{usuario}"
+												target="#{grupoBean.usuario}" />
+											<f:setPropertyActionListener 
+												value="#{grupo.grupo}"
+												target="#{grupoBean.grupo}" />
+										 	REMOVER
+										 </h:commandLink>
+										 </h:form>
+																						
+										</div>
+									</div>
+								
+
+							</p:repeat>
+						</ul>
+
+			
+					</div>
+					<hr/>
+					<div class="row">			
+						
+					
+						<div class="col s4 offset-s8">							
+							<a 
+								class="waves-effect waves-light btn modal-trigger rigth red" 
+								href="#modalGrupo#{grupo.grupo.id}">REMOVER GRUPO</a>
+						</div>
+					</div>
+
+					
+					
+					<h:form >
+						<div id="modalGrupo#{grupo.grupo.id}" class="modal">
+					    <div class="modal-content">
+					    	<h4>Remover Grupo</h4>
+					      <h5>Deseja realmente apagar o grupo "<i> <h:outputText value="#{grupo.grupo.nome}"/></i>" ?</h5>
+					    </div>
+					    <div class="modal-footer">				    						    			
+			    			<div class="input-field">
+			    				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			    				<h:commandLink
+			    					action="#{grupoBean.excluirGrupo}"
+			    					styleClass="btn modal-close red lighten-2 waves-effect">
+			    					<f:setPropertyActionListener value="#{grupo.grupo.id}" target="#{grupoBean.grupoId}"></f:setPropertyActionListener>
+			    					REMOVER
+			    				</h:commandLink>
+			      			</div>				      	
+						</div> 				
+						</div>
+					</h:form>	
+					
+			</span>
+		</div>
+	
+	</html>

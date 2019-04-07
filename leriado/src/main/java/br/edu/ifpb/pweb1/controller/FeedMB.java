@@ -6,16 +6,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.edu.ifpb.pweb1.model.dao.FeedPublicacaoDAO;
-import br.edu.ifpb.pweb1.model.dao.impdb.CompartilhaDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.CurteDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.FeedPublicacaoDAOImpDB;
 import br.edu.ifpb.pweb1.model.dao.impdb.TextoDAOImpDB;
-import br.edu.ifpb.pweb1.model.domain.Compartilha;
 import br.edu.ifpb.pweb1.model.domain.FeedPublicacao;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 
@@ -29,7 +26,7 @@ public class FeedMB {
 	private int feedQuant;
 	private int feedPorPag;
 	private FeedPublicacao publicacao;
-	private int textoId;
+
 
 	private List<Integer> paginacao;
 	
@@ -94,17 +91,6 @@ public class FeedMB {
 		} catch (DataAccessException e) {			
 			e.printStackTrace();
 		}
-		return "";
-	}
-	
-	public String excluir() {
-		try {
-			new TextoDAOImpDB().exclui(textoId);			
-		} catch (DataAccessException e) {		
-			e.printStackTrace();
-		}	
-		
-		listarPublicacoes();
 		return "";
 	}
 	
@@ -180,14 +166,5 @@ public class FeedMB {
 	public void setPaginacao(List<Integer> paginacao) {
 		this.paginacao = paginacao;
 	}
-
-	public int getTextoId() {
-		return textoId;
-	}
-
-	public void setTextoId(int textoId) {
-		this.textoId = textoId;
-	}
-
 	
 }

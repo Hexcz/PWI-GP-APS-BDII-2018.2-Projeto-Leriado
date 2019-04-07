@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="col s12 white z-depth-2 ">
+		<div class="col s12 center-align"> <h4>Atualiza Conta</h4> </div>
+		<ui:include src="cadastro.xhtml" />
+		<h:form>
+			<h:commandLink 
+				action="#{loginBean.home}"
+				styleClass="waves-effect waves-light btn-flat">
+				<i class="material-icons right">cancel</i>Cancelar
+			</h:commandLink>
+		</h:form>
+		<div class="row"/>
+	</div>
+</html>

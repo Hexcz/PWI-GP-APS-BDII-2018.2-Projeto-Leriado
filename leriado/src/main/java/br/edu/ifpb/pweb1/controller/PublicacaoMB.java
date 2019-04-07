@@ -22,6 +22,7 @@ import br.edu.ifpb.pweb1.model.domain.Grupo;
 import br.edu.ifpb.pweb1.model.domain.Publicacao;
 import br.edu.ifpb.pweb1.model.domain.Texto;
 import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
+import br.edu.ifpb.pweb1.util.JsfUtil;
 
 @ManagedBean(name = "publicacaoBean")
 @RequestScoped
@@ -34,8 +35,8 @@ public class PublicacaoMB {
 	private String latitude;
 	private String longitude;
 	private String endereco;
-	
 	private String grupoCompartilhado;
+	private int textoId;
 	private Part arquivo;
 	
 	@ManagedProperty("#{loginBean}")
@@ -111,8 +112,52 @@ public class PublicacaoMB {
 			e.printStackTrace();
 		}
 		limpar();
+		return "feed";		
+	}
+	
+	public String compartilharTexto() {
+		try {
+			if (grupoCompartilhado == null)
+				throw new Exception();
+			GrupoDaoImpl grupoDao = new GrupoDaoImpl();
+			Texto texto = new TextoDAOImpDB().buscar(textoId);
+			Grupo grupo = grupoDao.busca(grupoDao.buscaIdPorNome(grupoCompartilhado));
+			Compartilha comp = new Compartilha(
+					LocalDateTime.now(),
+					loginMb.getUsuarioLogado(),
+					texto,
+					grupo);
+			new CompartilhaDAOImpDB().cria(comp);
+			limpar();
+			return "feed";
+		} catch (Exception e) {
+			JsfUtil.addErrorMessage("Falha ao compartilhar publicação");
+			return null;
+		}
+	}
+	
+	public String excluirPublicacao() {
+		try {	
+			TextoDAOImpDB textoDao = new TextoDAOImpDB(); 
+			GrupoDaoImpl grupoDao = new GrupoDaoImpl();
+			Texto texto = textoDao.buscar(textoId);
+			Grupo grupo = grupoDao.busca(grupoDao.buscaIdPorNome(grupoCompartilhado));
+			if ((grupo == null)||(texto == null))
+				throw new Exception();
+			if (texto.getUsuario().getId()==loginMb.getUsuarioLogado().getId()) {
+				textoDao.exclui(textoId);
+			} else {
+				new CompartilhaDAOImpDB().exclui(
+						loginMb.getUsuarioLogado().getId(),
+						textoId,
+						grupo.getId());
+			}
+		}catch (Exception e) {
+			JsfUtil.addErrorMessage("Falha ao excluir publicação");
+			return null;
+		}
+		limpar();
 		return "feed";
-		
 	}
 
 	public String getTitulo() {
@@ -186,6 +231,16 @@ public class PublicacaoMB {
 	public void setLoginMb(LoginMB loginMb) {
 		this.loginMb = loginMb;
 	}
+
+	public int getTextoId() {
+		return textoId;
+	}
+
+	public void setTextoId(int textoId) {
+		this.textoId = textoId;
+	}
+
+
 
 
 

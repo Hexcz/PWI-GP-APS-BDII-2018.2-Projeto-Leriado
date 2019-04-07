@@ -15,7 +15,7 @@ public class DateTimeConverter implements Converter{
 	public Object getAsObject(FacesContext context, UIComponent component, String date) {
 		if (date.isEmpty())
 			return null;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime localDate = LocalDateTime.parse(date,formatter);		
 		return localDate;
 	}
@@ -24,7 +24,7 @@ public class DateTimeConverter implements Converter{
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if(value == null)
 			return "";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String data = ((LocalDateTime) value).format(formatter);
 		return data;
 	}

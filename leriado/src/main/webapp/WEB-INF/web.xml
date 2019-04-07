@@ -23,4 +23,21 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	<!-- PÁGINAS DE ERRO -->
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/erro.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/erro404.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/erro.html</location>
+	</error-page>
+	<error-page>
+		<exception-type>javax.servlet.ServletException</exception-type>
+		<location>/erro.html</location>
+	</error-page>
 </web-app>
