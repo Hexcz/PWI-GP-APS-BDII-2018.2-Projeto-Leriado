@@ -11,7 +11,7 @@ import br.edu.ifpb.pweb1.model.domain.Usuario;
 @ManagedBean(eager=true)
 @ApplicationScoped
 public class UsuariosOnline {
-	public List<Usuario> usuariosOn = new ArrayList<>();
+	private List<Usuario> usuariosOn = new ArrayList<>();
 
 	public void adicionarUsuarioOnline(Usuario novoUsuario) {
 		novoUsuario.setOnline(true);

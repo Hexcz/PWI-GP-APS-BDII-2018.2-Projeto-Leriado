@@ -38,11 +38,10 @@
 					<p>
 						<h:outputText value="#{amigo.sobrenome}" />
 					</p> <h:outputLabel rendered="#{amigo.online==false}">
-						<a href="#!" class="secondary-content"><i
-							class="material-icons">star_border</i></a>
-					</h:outputLabel> <h:outputLabel rendered="#{amigo.online==true}">
-						<a href="#!" class="secondary-content"><i
-							class="material-icons">grade</i></a>
+						<a href="#!" class="secondary-content"><i class="material-icons red-text" title="Offline">star_border</i></a>
+					</h:outputLabel>
+					 <h:outputLabel rendered="#{amigo.online==true}">
+					 	<a href="#!" class="secondary-content"><i class="material-icons green-text" title="Online">grade</i></a>
 					</h:outputLabel>
 				</li>
 			</p:repeat>
