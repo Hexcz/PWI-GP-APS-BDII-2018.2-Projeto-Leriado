@@ -44,16 +44,15 @@
 			<div class="background orange darken-3"></div>
 			<h:form id="formFoto" enctype="multipart/form-data">
 				<div class="file-field input-field">				
-					<h:graphicImage 
-						autoUpdate="true" 
+					<p:graphicImage						 
 						id="fotoUsuario"
 						cache="false" 
 						class="circle imgUser" 
 						value="#{loginBean.pathUrlImagem}#{loginBean.usuarioLogado.arquivoFoto}">
-						<h:inputFile title="#{loginBean.usuarioLogado.nome}" value="#{loginBean.imagem}" ajax="true" updadate="@all">
-							 <f:ajax render="fotoUsuario" listener="#{loginBean.mudarFotoPerfil}" />
+						<h:inputFile title="#{loginBean.usuarioLogado.nome}" value="#{loginBean.imagem}" >
+							 <f:ajax render="fotoUsuario" listener="#{loginBean.mudarFotoPerfil}" updadate="@all" />
 						</h:inputFile>						
-					</h:graphicImage>
+					</p:graphicImage>
 				</div>
 			</h:form>
 			<a href="#"> 

@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb1.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Part;
-import javax.servlet.jsp.el.ELException;
 
 import br.edu.ifpb.pweb1.model.dao.impdb.GrupoDaoImpl;
 import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
@@ -28,20 +28,23 @@ public class GrupoMB {
 	private GrupoDaoImpl grupoDao;
 	private int grupoId;
 	private String email;
+	private String nome;
+	private String descricao;
+	private String foto;
 	
 	@ManagedProperty("#{loginBean}")
 	private LoginMB loginMb;
 	
 	@PostConstruct
 	public void inicial() {
-		grupo = new Grupo();
+		grupo = new Grupo();		
 		grupoDao = new GrupoDaoImpl();
 		
 	}
 	
 	public String mudarFotoGrupo() {
 		try {
-			grupo.setFoto(GerirArquivos.salvarArquivoPasta(imagem, loginMb.getPathServImagem()));						
+			foto = GerirArquivos.salvarArquivoPasta(imagem, loginMb.getPathServImagem());						
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +58,9 @@ public class GrupoMB {
 	}
 	
 	public String criarGrupo() {
-		grupo = new Grupo();
+		nome="";
+		descricao="";
+		foto="";
 		loginMb.setPaginaAtual("criarGrupo");
 		return "";
 	}
@@ -63,15 +68,25 @@ public class GrupoMB {
 	public String editarGrupo() {
 		if(grupo == null)
 			loginMb.setPaginaAtual("grupo");
-		else
+		else {
+			nome = grupo.getNome();
+			descricao = grupo.getDescricao();
+			foto = grupo.getFoto();
 			loginMb.setPaginaAtual("editarGrupo");
+			
+		}
 		return "";
 	}
 	
 	public String salvarGrupo() {		
 		switch(loginMb.getPaginaAtual()){
 		case "criarGrupo":{
-			try {									
+			try {			
+				grupo = new Grupo();
+				grupo.setDataHora(LocalDateTime.now());
+				grupo.setNome(nome);
+				grupo.setDescricao(descricao);
+				grupo.setFoto(foto);
 				grupoDao.criar(grupo);
 				grupoDao.adicionarUsuario(grupo.getId(), loginMb.getUsuarioLogado().getId());
 				grupoDao.adicionarAdministrador(loginMb.getUsuarioLogado().getId(), grupo.getId());
@@ -83,7 +98,10 @@ public class GrupoMB {
 			break;
 		}
 		case "editarGrupo":{
-			try {
+			try {				
+				grupo.setNome(nome);
+				grupo.setDescricao(descricao);
+				grupo.setFoto(foto);				
 				grupoDao.editar(grupo);
 			}catch (Exception e) {
 				JsfUtil.addErrorMessage("Impossível editar o grupo");
@@ -216,7 +234,30 @@ public class GrupoMB {
 	public void setEmail(String emailNova) {
 		this.email = emailNova;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	
 
