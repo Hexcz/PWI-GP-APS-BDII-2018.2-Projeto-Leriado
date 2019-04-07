@@ -17,19 +17,22 @@
 				<b>Foto:</b>						
 			</div>
 			<div class="col s3 file-field input-field">								
-				<h:graphicImage id="fotoGrupo"
+				<p:graphicImage id="fotoGrupo"
+					cache="false"
 					value="#{loginBean.pathUrlImagem}#{grupoBean.grupo.foto}" 
 					styleClass="circle perfil" ajax="true" updadate="@all">
 					<h:inputFile title="#{grupoBean.grupo.nome}" value="#{grupoBean.imagem}" ajax="true" updadate="@all">
-						<f:ajax render="fotoGrupo" listener="#{grupoBean.mudarFotoGrupo}" update="@all" />
+						<f:ajax render="@form" listener="#{grupoBean.mudarFotoGrupo}" update="@all" />
 					</h:inputFile>
-				</h:graphicImage>
+				</p:graphicImage>
 			</div>
 			
 			<div class="col s8 right-align">
 				<h:commandLink				 
 					styleClass="waves-effect waves-light btn-small "
-					action="#{grupoBean.salvarGrupo}">
+					action="#{grupoBean.salvarGrupo}"
+					update="@all">					
+					
 					<i class="material-icons left">done</i>Salvar
 				</h:commandLink>
 			</div>

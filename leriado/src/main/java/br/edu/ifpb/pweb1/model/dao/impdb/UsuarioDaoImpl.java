@@ -137,9 +137,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		try (Session session = driveNeo4j.session()){
 			Map<String, Object> mapa = new HashMap<>();
 			mapa.put("id", idUsuario);
-			session.run("MATCH(u:Usuario{id:$id}"
+			session.run("MATCH(u:Usuario{id:$id}) "
 					+ " DETACH DELETE(u) ", mapa);
-			
 		}
 		}catch (Exception e) {
 			throw new DataAccessException("Falha ao remover usuário");

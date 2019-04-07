@@ -13,7 +13,6 @@ import br.edu.ifpb.pweb1.model.dao.impdb.UsuarioDaoImpl;
 import br.edu.ifpb.pweb1.model.domain.FeedGrupo;
 import br.edu.ifpb.pweb1.model.domain.Grupo;
 import br.edu.ifpb.pweb1.model.domain.Usuario;
-import br.edu.ifpb.pweb1.model.jdbc.DataAccessException;
 import br.edu.ifpb.pweb1.util.JsfUtil;
 
 @ManagedBean(name = "grupoBean")
@@ -88,8 +87,9 @@ public class GrupoMB {
 			break;
 		}
 		}	
+		loginMb.carrgarGrupos();
 		loginMb.setPaginaAtual("grupo");
-		return "";
+		return null;
 	}
 	
 	
