@@ -18,7 +18,7 @@ Ofertadas no curso de Análise e Desenvolvimento de Sistemas, IFPB Campus Cajaze
 4. Leanderson Coelho dos Santos
 5. Luz de Esperanza Apolo Pereira
 
-# Instalando as Dependências
+## Instalando as Dependências
 Este projeto armazena os dados utilizando persistência poliglota, através dos bancos:
  
 * Mongo
@@ -62,10 +62,10 @@ Por fim para instalar o postgreSQL, executar o seguinte comando:
 
 Basta executar o pgadmin3 para iniciar o postgreSQL.
 
-# Criando as Tabelas Necessárias
+## Criando as Tabelas Necessárias
 Para o Leriado funcionar corretamente, ambos PostgreSQL e Neo4j devem contar com as tabelas definidas pelos scripts contidos na pasta "/leriado/src/main/resources/criacao-tabelas/".
 
-#Configurando os Bancos
+## Configurando os Bancos
 Após instalar e criar as tabelas, devemos definir as configurações de conexão dos bancos de dados, as quais são mantidas pelo arquivo "/leriado/src/main/resources/config.properties".
 O arquivo deve ser estruturado conforme o modelo abaixo:
 
