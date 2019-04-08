@@ -220,5 +220,8 @@ select {
 	height: 19vw;
 }
 
-
+.painel .ui-panel-titlebar {
+    background: #FB8C00;
+    color: white;
+}
 

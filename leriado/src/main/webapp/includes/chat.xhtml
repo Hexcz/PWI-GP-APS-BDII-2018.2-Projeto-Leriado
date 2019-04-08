@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<p:panel id="toggleable" header="Chat" closable="true" closeSpeed="500"
+<p:panel id="toggleable" header="Chat" closable="true" closeSpeed="500" styleClass="painel"
 	widgetVar="panel" style="margin-bottom:20px">
 	<div id="toggleableMsgs">
 		<p:dataList hidden="true" var="itemMsg" value="#{mensagemBean.msgs}"
@@ -19,10 +19,21 @@
 	<h:form prependId="false">
 		<p:inputText type="hidden" id="idAmigoSelecionado"
 			value="#{mensagemBean.msg.idDestinatario}"></p:inputText>
-		<p:inputText value="#{mensagemBean.msg.conteudo}"></p:inputText>
-		<p:commandButton action="#{mensagemBean.criarMensagem}" value="enviar" />
+		<div class="input-field col s12 white" style="padding: 0;">	
+			<i class="material-icons prefix">send</i>
+			<p:inputText id="btn-send" value="#{mensagemBean.msg.conteudo}" style="padding-left: 0;"></p:inputText>
+		</div>
+		<p:commandButton type="hidden" action="#{mensagemBean.criarMensagem}" value="enviar"/>
 		<p:poll interval="1" listener="#{mensagemBean.listarMensagens}"
 			update="list" />
 	</h:form>
+	<script type="text/javascript">
+		document.getElementById('btn-send').onkeyup = function(e){
+			if(e.keyCode==13){
+				e.preventDefault();
+				document.getElementById('btn-send').value = "";
+			}
+		}
+	</script>
 </p:panel>
 </html>
