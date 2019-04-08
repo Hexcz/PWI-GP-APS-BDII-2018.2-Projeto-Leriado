@@ -69,4 +69,4 @@ Para o Leriado funcionar corretamente, ambos PostgreSQL e Neo4j devem contar com
 Após instalar e criar as tabelas, devemos definir as configurações de conexão dos bancos de dados, as quais são mantidas pelo arquivo "/leriado/src/main/resources/config.properties".
 O arquivo deve ser estruturado conforme o modelo abaixo:
 
-[[https://ibb.co/cxYWdDb]]
+![Imagem](media/config.png)
