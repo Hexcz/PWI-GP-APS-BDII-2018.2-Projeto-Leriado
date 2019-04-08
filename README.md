@@ -18,7 +18,7 @@ Ofertadas no curso de Análise e Desenvolvimento de Sistemas, IFPB Campus Cajaze
 4. Leanderson Coelho dos Santos
 5. Luz de Esperanza Apolo Pereira
 
-#Configuração Inicial
+# Instalando as Dependências
 Este projeto armazena os dados utilizando persistência poliglota, através dos bancos:
  
 * Mongo
@@ -26,7 +26,7 @@ Este projeto armazena os dados utilizando persistência poliglota, através dos 
 * Redis
 * PostgreSQL
 
-Para instalar o Mongo no Ubuntu e derivados, execute as seguintes linhas de comando no terminal:
+Instalando o Mongo no Ubuntu e derivados:
 
 `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10`
 
@@ -36,4 +36,37 @@ Para instalar o Mongo no Ubuntu e derivados, execute as seguintes linhas de coma
 
 `sudo apt-get install -y mongodb-org`
 
+Para iniciar o servidor do Mongo pelo terminal:
 
+`mongod`
+
+Para utilizar o Neo4j basta apenas baixar o server no site do Neo4j:
+
+[https://neo4j.com/download-center/#releases]
+
+Após baixar e extrair, iniciar o serviço com o seguinte comando no terminal:
+
+`/caminho/da/pasta/bin/neo4j start`
+
+Instalando o Redis no Ubuntu e derivados:
+
+`sudo apt-get install redis-server`
+
+Para iniciar o servidor do redis, execute o seguinte comando no terminal:
+
+`redis-server`
+
+Por fim para instalar o postgreSQL, executar o seguinte comando:
+
+`sudo apt-get install postgresql postgresql-contrib pgadmin3`
+
+Basta executar o pgadmin3 para iniciar o postgreSQL.
+
+# Criando as Tabelas Necessárias
+Para o Leriado funcionar corretamente, ambos PostgreSQL e Neo4j devem contar com as tabelas definidas pelos scripts contidos na pasta "/leriado/src/main/resources/criacao-tabelas/".
+
+#Configurando os Bancos
+Após instalar e criar as tabelas, devemos definir as configurações de conexão dos bancos de dados, as quais são mantidas pelo arquivo "/leriado/src/main/resources/config.properties".
+O arquivo deve ser estruturado conforme o modelo abaixo:
+
+[[https://ibb.co/cxYWdDb]]
