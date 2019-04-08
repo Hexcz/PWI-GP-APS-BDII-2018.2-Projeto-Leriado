@@ -205,7 +205,20 @@ select {
   height: 2rem !important;
 }
 
+#toggleable{
+	width: 22%;
+	height: 29vw;
+	position: fixed;
+	right: 25%;
+	bottom: 0;
+	margin-bottom: 0px !important;
+	display: none;
+}
 
+#toggleableMsgs{
+	overflow: auto;
+	height: 19vw;
+}
 
 
 
